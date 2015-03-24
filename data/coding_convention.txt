@@ -1,0 +1,77 @@
+- if statement
+if (a == NULL)
+{
+
+}
+
+- for statement
+for (i = 0; i < 10; ++i)
+{
+}
+
+- function local variables and return statement
+int fun()
+{
+    int ret = 0;
+    int k = 0;
+    Evas_Object *win = NULL;
+    //Add one new line after the function local variable declaration.
+    ....
+    .... //your code
+    ....
+    //Add one new line before the return statement.
+    return ret;
+}
+
+- gap between two function definitions.
+int func1()
+{
+}
+//add a new line between two function definitions.
+int func2()
+{
+}
+
+- spacing after ,
+elm_object_content_set(sc, box);
+
+- indentation
+4 spaces
+
+- function declaration
+static void _on_click(void *data, Evas_Object *obj, void *event)
+
+- null check
+if (abc == NULL)
+if (abc != NULL)
+
+- variable declaration
+declare variable when it's needed.
+
+- string compare
+if (strcmp(a, "hello"))
+if (!strcmp(a, "bye"))
+
+- plugin code position
+Put get_plugin() right after header file include.
+Put unload_plugin() at the end of file.
+#include "xxxx.h"
+
+static elm_plugin *_ep;
+elm_plugin *get_plugin()
+{
+    _ep = allocate_plugin("Button", "0.1");
+
+    return _ep;
+}
+
+{sample code here}
+
+void unload_plugin()
+{
+    deallocate_plugin(_ep);
+}
+
+- function and variable names
+use lowercases.
+split words by _

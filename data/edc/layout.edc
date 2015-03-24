@@ -1,0 +1,221 @@
+#define COLOR 2 61 132 255
+
+collections {
+   group { name: "elm_demo/main";
+      parts {
+         part { name: "bg"; type: RECT;
+            scale: 1;
+            description { state: "default" 0.0;
+               color: 100 100 100 100;
+            }
+         }
+         part { name: "widget.style.text.pad"; type: SPACER;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel2.relative: 0.0 0.0;
+               align: 0.0 0.0;
+               min: 50 30;
+            }
+         }
+         part { name: "widget.style.text"; type: TEXT;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1 {
+                  relative: 1.0 1.0;
+                  to: "widget.style.text.pad";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  to: "widget.style.text.pad";
+               }
+               align: 0.0 0.0;
+               text {
+                  size: 30;
+                  font: "SVD_Medium";
+                  min: 1 1;
+                  text: "Widget Style";
+               }
+               color: COLOR;
+            }
+         }
+         part { name: "widget.style.pad"; type: SPACER;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1 {
+                  relative: 1.0 0.0;
+                  to: "widget.style.text";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  to: "widget.style.text";
+               }
+               align: 0.0 0.0;
+               min: 30 0;
+            }
+         }
+         part { name: "widget.style"; type: SWALLOW;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1 {
+                  relative: 1.0 0.0;
+                  to: "widget.style.pad";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  to: "widget.style.pad";
+               }
+               align: 0.0 0.5;
+               min: 360 50;
+            }
+         }
+         part { name: "item.style.text.pad"; type: SPACER;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1 {
+                  relative: 0.0 1.0;
+                  to_y: "widget.style";
+               }
+               rel2 {
+                  relative: 0.0 1.0;
+                  to_y: "widget.style";
+               }
+               align: 0.0 0.0;
+               min: 50 30;
+            }
+         }
+         part { name: "item.style.text"; type: TEXT;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1 {
+                  relative: 1.0 1.0;
+                  to: "item.style.text.pad";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  to: "item.style.text.pad";
+               }
+               align: 0.0 0.0;
+               text {
+                  size: 30;
+                  font: "SVD_Medium";
+                  min: 1 1;
+                  text: "Item Style";
+               }
+               color: COLOR;
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         part { name: "item.style.pad"; type: SPACER;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1 {
+                  relative: 1.0 0.0;
+                  to: "item.style.text";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+				  to_x: "widget.style.pad";
+                  to_y: "item.style.text";
+               }
+               align: 0.0 0.5;
+               min: 30 0;
+            }
+         }
+         part { name: "item.style"; type: SWALLOW;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1 {
+                  relative: 1.0 0.0;
+                  to: "item.style.pad";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  to: "item.style.pad";
+               }
+               align: 0.0 0.5;
+               min: 360 50;
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         part { name: "option"; type: SWALLOW;
+            scale: 1;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+                  to_y: "widget.style";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  to_y: "widget.style";
+               }
+               align: 0.5 0.0;
+               min: 0 120;
+	       fixed: 1 1;
+	       visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1.to_y: "item.style";
+               rel2.to_y: "item.style";
+            }
+         }
+         part { name: "widget.pad"; type: SPACER;
+            scale: 1;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+                  to_y: "widget.style";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  to_y: "widget.style";
+               }
+               align: 0.5 0.0;
+               min: 0 30;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1.to_y: "item.style";
+               rel2.to_y: "item.style";
+            }
+         }
+         part { name: "widget"; type: SWALLOW;
+            scale: 1;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+                  to_y: "widget.pad";
+                  //to_y: "option";
+               }
+            }
+         }
+      }
+      programs {
+         program { name: "item.style.show";
+            signal: "item,style,show";
+            source: "elm";
+            action: STATE_SET "visible" 0.0;
+            target: "item.style.text";
+            target: "item.style";
+            target: "option";
+            target: "widget.pad";
+         }
+      }
+   }
+}
