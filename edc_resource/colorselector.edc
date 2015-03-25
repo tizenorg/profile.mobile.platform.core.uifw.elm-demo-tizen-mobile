@@ -1,0 +1,248 @@
+/*
+ * Copyright (c) 2014 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+group { name: "colorselector_layout";
+   parts {
+      part { name: "bg";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 480 0;
+            max: 480 -1;
+         }
+      }
+      part { name: "colorpalette";
+         type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 0 1;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            align: 0.0 0.0;
+         }
+      }
+   }
+}
+
+group { name: "colorselector_popup/rect";
+   images {
+      image: "core_color_picker_palette.png" COMP;
+   }
+   parts {
+      part {
+         name: "color_image";
+         type: IMAGE;
+         mouse_events: 1;
+         scale: 1;
+         description{
+            state: "default" 0.0;
+            image.normal: "core_color_picker_palette.png";
+         }
+      }
+   }
+}
+
+group { name: "colorselector_popup/rect/text";
+   parts{
+      part { name: "bg";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 480 96;
+            max: 480 96;
+         }
+      }
+      part { name: "rect_top_padding";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 0 1;
+            min: 0 20;
+            rel1.to: "bg";
+            rel2 {
+               to: "bg";
+               relative: 1.0 0.0;
+            }
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "rect_left_padding";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 18 0;
+            fixed: 1 0;
+            rel1 {
+               relative: 0 0;
+               to: "bg";
+            }
+            rel2 {
+               relative: 0 1;
+               to: "bg";
+            }
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "rect";
+         type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 60 60;
+            max: 60 60;
+            fixed: 1 1;
+            rel1 {
+               relative: 1.0 1.0;
+               to_y: "rect_top_padding";
+               to_x: "rect_left_padding";
+            }
+            rel2 {
+               to_y: "rect_top_padding";
+               to_x: "rect_left_padding";
+            }
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "rect_right_padding";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 18 0;
+            fixed: 1 0;
+            rel1 {
+               to: "rect";
+               relative: 1.0 0.0;
+            }
+            rel2.to_x: "rect";
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "text";
+         type: SWALLOW;
+         scale: 1;
+         mouse_events: 1;
+         description { state: "default" 0.0;
+            min: 366 96;
+            max: -1 -1;
+            fixed: 1 1;
+            rel1 {
+               relative: 1.0 0.0;
+               to_x: "rect_right_padding";
+               to_y: "bg";
+            }
+            rel2 {
+               to_x: "rect_right_padding";
+               to_y: "bg";
+            }
+            align: 0.0 0.5;
+         }
+      }
+      part { name: "text_right_padding";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 18 0;
+            max: 18 -1;
+            fixed: 1 0;
+            rel1 {
+               to: "text";
+               relative: 1.0 0.0;
+            }
+            rel2.to_x: "text";
+            align: 0.0 0.0;
+         }
+      }
+   }
+}
+
+group { name: "colorselector_popup_layout";
+   parts {
+      part { name: "bg";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 480 254;
+            max: 480 254;
+         }
+      }
+      part { name: "top_padding";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 0 1;
+            rel1.to: "bg";
+            rel2 {
+               to: "bg";
+               relative: 1.0 0.0;
+            }
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "colorplane_popup_top";
+         type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 0 1;
+            rel1 {
+               to_y: "top_padding";
+               to_x: "bg";
+            }
+            rel2 {
+               to: "top_padding";
+               relative: 1.0 0.0;
+            }
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "colorpalette";
+         type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 480 158;
+            max: 480 158;
+            fixed: 1 1;
+            rel1 {
+               relative: 0.0 1.0;
+               to_y: "colorplane_popup_top";
+               to_x: "bg";
+            }
+            rel2 {
+               to_y: "colorplane_popup_top";
+               to_x: "bg";
+            }
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "colorpalette_bottom_padding";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 0 0;
+            fixed: 0 1;
+            rel1 {
+               relative: 0.0 1.0;
+               to_y: "colorpalette";
+               to_x: "bg";
+            }
+            rel2 {
+               to_x: "bg";
+               to_y: "colorpalette";
+            }
+            align: 0.0 0.0;
+         }
+      }
+   }
+}
