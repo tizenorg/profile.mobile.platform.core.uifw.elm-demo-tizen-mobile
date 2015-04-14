@@ -38,6 +38,7 @@ SET(SRCS
 	src/toolbar.c
 	src/toolbar_navigationbar.c
 	src/toolbar_tab.c
+	src/vector.c
 	)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/inc)

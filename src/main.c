@@ -80,6 +80,7 @@ create_list_view(appdata_s *ad)
 	elm_list_item_append(list, "Slider", NULL, NULL, slider_cb, nf);
 	elm_list_item_append(list, "Spinner", NULL, NULL, spinner_cb, nf);
 	elm_list_item_append(list, "Toolbar", NULL, NULL, toolbar_cb, nf);
+	elm_list_item_append(list, "Vector", NULL, NULL, vector_cb, nf);
 
 	elm_list_go(list);
 
