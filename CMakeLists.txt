@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-PROJECT(ui_controls C)
-SET(PACKAGE org.tizen.ui_controls)
+PROJECT(ui-controls C)
+SET(PACKAGE org.tizen.ui-controls)
 
 SET(SRCS
 	src/main.c

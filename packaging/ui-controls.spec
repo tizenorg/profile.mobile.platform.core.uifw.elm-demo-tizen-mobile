@@ -1,4 +1,4 @@
-Name:       org.tizen.ui_controls
+Name:       org.tizen.ui-controls
 Summary:    UI Controls (Elementary)
 Version:    1.0.0
 Release:    1
@@ -20,7 +20,7 @@ UI Controls (Elementary)
 %prep
 %setup -q
 
-%define prefix "/opt/usr/apps/org.tizen.ui_controls"
+%define prefix "/opt/usr/apps/org.tizen.ui-controls"
 
 %build
 rm -rf CMakeFiles CMakeCache.txt && cmake . -DCMAKE_INSTALL_PREFIX=%{prefix}
@@ -30,15 +30,15 @@ make %{?jobs:-j%jobs}
 %make_install
 
 mkdir -p %{buildroot}/%{_datadir}/packages/
-cp %{_builddir}/%{buildsubdir}/org.tizen.ui_controls.xml %{buildroot}/%{_datadir}/packages/org.tizen.ui_controls.xml
+cp %{_builddir}/%{buildsubdir}/org.tizen.ui-controls.xml %{buildroot}/%{_datadir}/packages/org.tizen.ui-controls.xml
 
 mkdir -p %{buildroot}/%{_datadir}/license
 cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/%{_datadir}/license/%{name}
 
 %files
 %defattr(-,root,root,-)
-/opt/usr/apps/org.tizen.ui_controls/bin/*
-/opt/usr/apps/org.tizen.ui_controls/res/*
-%{_datadir}/packages/org.tizen.ui_controls.xml
+/opt/usr/apps/org.tizen.ui-controls/bin/*
+/opt/usr/apps/org.tizen.ui-controls/res/*
+%{_datadir}/packages/org.tizen.ui-controls.xml
 %{_datadir}/license/%{name}
 %manifest %{name}.manifest

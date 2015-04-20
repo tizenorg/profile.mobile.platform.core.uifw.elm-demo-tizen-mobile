@@ -24,16 +24,16 @@
 #ifdef  LOG_TAG
 #undef  LOG_TAG
 #endif
-#define LOG_TAG "ui_controls"
+#define LOG_TAG "ui-controls"
 
 #define KEY_END "XF86Stop"
 
 #if !defined(PACKAGE)
-#define PACKAGE "org.tizen.ui_controls"
+#define PACKAGE "org.tizen.ui-controls"
 #endif
 
-#define ELM_DEMO_EDJ "/opt/usr/apps/org.tizen.ui_controls/res/ui_controls.edj"
-#define ICON_DIR "/opt/usr/apps/org.tizen.ui_controls/res/images"
+#define ELM_DEMO_EDJ "/opt/usr/apps/org.tizen.ui-controls/res/ui-controls.edj"
+#define ICON_DIR "/opt/usr/apps/org.tizen.ui-controls/res/images"
 
 
 typedef struct appdata {
