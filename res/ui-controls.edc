@@ -16,7 +16,7 @@
  */
 
 collections {
-   base_scale: 1.8;
+   base_scale: 1.7;
    #include "../edc_resource/ctxpopup.edc"
    #include "../edc_resource/datetime.edc"
    #include "../edc_resource/entry.edc"
