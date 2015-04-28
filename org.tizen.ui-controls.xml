@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.ui-controls" version="1.0.0" install-location="internal-only">
-   <ui-application appid="org.tizen.ui-controls" exec="/opt/usr/apps/org.tizen.ui-controls/bin/ui-controls" nodisplay="true" multiple="false" type="capp" taskmanage="false">
+   <ui-application appid="org.tizen.ui-controls" exec="/opt/usr/apps/org.tizen.ui-controls/bin/ui-controls" nodisplay="false" multiple="false" type="capp" taskmanage="true">
       <label>ui-controls</label>
+      <icon>org.tizen.ui-controls.png</icon>
+      <application-service>
+         <mime name="ui-controls.uri" />
+      </application-service>
    </ui-application>
 </manifest>

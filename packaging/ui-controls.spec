@@ -40,5 +40,6 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/%{_datadir}/license/%{name}
 /opt/usr/apps/org.tizen.ui-controls/bin/*
 /opt/usr/apps/org.tizen.ui-controls/res/*
 %{_datadir}/packages/org.tizen.ui-controls.xml
+%{_datadir}/icons/default/small/org.tizen.ui-controls.png
 %{_datadir}/license/%{name}
 %manifest %{name}.manifest

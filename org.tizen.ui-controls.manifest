@@ -1,8 +1,12 @@
 <manifest>
+	<define>
+		<domain name="org.tizen.ui-controls"/>
+	</define>
 	<request>
-		<domain name="_"/>
+		<domain name="org.tizen.ui-controls"/>
 	</request>
 	<assign>
-		<filesystem path="/usr/share/locale/*" label="_"/>
+		<filesystem path="/usr/share/icons/default/small/org.tizen.ui-controls.png" label="_"/>
+		<filesystem path="/opt/usr/apps/org.tizen.ui-controls/res/*" label="_"/>
 	</assign>
 </manifest>

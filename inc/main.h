@@ -40,7 +40,6 @@ typedef struct appdata {
 	Evas_Object *win;
 	Evas_Object *conform;
 	Evas_Object *layout;
-	Evas_Object *fb;
 	Evas_Object *nf;
 	Evas_Object *datetime;
 	Evas_Object *popup;
