@@ -132,6 +132,24 @@ create_base_gui(appdata_s *ad)
 
 	elm_object_content_set(ad->conform, ad->layout);
 
+	/* Floating Button */
+	ad->fb = eext_floatingbutton_add(ad->layout);
+	elm_object_part_content_set(ad->layout, "elm.swallow.floatingbutton", ad->fb);
+
+	btn = elm_button_add(ad->fb);
+	elm_object_part_content_set(ad->fb, "button1", btn);
+
+	image = elm_image_add(ad->fb);
+	elm_image_file_set(image, ICON_DIR"/core_floating_icon_01.png", NULL);
+	elm_object_part_content_set(btn, "icon", image);
+
+	btn = elm_button_add(ad->fb);
+	elm_object_part_content_set(ad->fb, "button2", btn);
+
+	image = elm_image_add(ad->fb);
+	elm_image_file_set(image, ICON_DIR"/core_floating_icon_02.png", NULL);
+	elm_object_part_content_set(btn, "icon", image);
+
 	/* Naviframe */
 	ad->nf = elm_naviframe_add(ad->layout);
 	create_list_view(ad);
