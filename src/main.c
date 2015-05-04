@@ -57,6 +57,7 @@ create_list_view(appdata_s *ad)
 	/* Main Menu Items Here */
 	elm_list_item_append(list, "Bg", NULL, NULL, bg_cb, nf);
 	elm_list_item_append(list, "Button", NULL, NULL, button_cb, nf);
+	elm_list_item_append(list, "Calendar", NULL, NULL, calendar_cb, nf);
 	elm_list_item_append(list, "Check", NULL, NULL, check_cb, nf);
 	elm_list_item_append(list, "ColorSelector", NULL, NULL, colorselector_cb, nf);
 	elm_list_item_append(list, "Conformant", NULL, NULL, conformant_cb, ad);

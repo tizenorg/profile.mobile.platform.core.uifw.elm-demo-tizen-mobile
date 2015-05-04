@@ -6,6 +6,7 @@ SET(SRCS
 	src/main.c
 	src/bg.c
 	src/button.c
+	src/calendar.c
 	src/check.c
 	src/colorselector.c
 	src/conformant.c

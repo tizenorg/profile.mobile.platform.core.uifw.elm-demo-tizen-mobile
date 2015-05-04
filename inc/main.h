@@ -48,6 +48,7 @@ typedef struct appdata {
 	struct tm saved_time;
 } appdata_s;
 
+void calendar_cb(void *data, Evas_Object *obj, void *event_info);
 void ctxpopup_cb(void *data, Evas_Object *obj, void *event_info);
 void colorselector_cb(void *data, Evas_Object *obj, void *event_info);
 void conformant_cb(void *data, Evas_Object *obj, void *event_info);
