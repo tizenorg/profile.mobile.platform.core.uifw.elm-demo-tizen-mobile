@@ -109,14 +109,14 @@ create_4_items_icon_tabbar(Evas_Object *parent, const char *style)
 }
 
 static Evas_Object*
-create_4_items_tabbar(Evas_Object *parent)
+create_4_items_tabbar(Evas_Object *parent, const char *style)
 {
 	Evas_Object *toolbar;
 
 	/* Create Tabbar */
 	toolbar = elm_toolbar_add(parent);
 
-	elm_object_style_set(toolbar, "tabbar");
+	elm_object_style_set(toolbar, style);
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
@@ -204,7 +204,7 @@ sixth_page_cb(void *data, Evas_Object *obj, void *event_info)
 	nf_it = elm_naviframe_item_push(nf, NULL, NULL, NULL, content, "tabbar/notitle");
 
 	/* Tabbar */
-	tabbar = create_4_items_tabbar(nf);
+	tabbar = create_4_items_tabbar(nf, "tabbar");
 	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
 
 	/* Bottom Toolbar Button */
@@ -234,7 +234,7 @@ fifth_page_cb(void *data, Evas_Object *obj, void *event_info)
 	nf_it = elm_naviframe_item_push(nf, "Tabbar", NULL, NULL, content, "tabbar");
 
 	/* Tabbar */
-	tabbar = create_4_items_tabbar(nf);
+	tabbar = create_4_items_tabbar(nf, "tabbar_with_title");
 	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
 
 	/* Bottom Toolbar Button */
@@ -338,13 +338,13 @@ second_page_cb(void *data, Evas_Object *obj, void *event_info)
 
 	/* Title Cancel Button */
 	btn = elm_button_add(nf);
-	elm_object_style_set(btn, "naviframe/title_cancel");
+	elm_object_style_set(btn, "naviframe/title_left");
 	evas_object_smart_callback_add(btn, "clicked", third_page_cb, nf);
 	elm_object_item_part_content_set(nf_it, "title_left_btn", btn);
 
 	/* Title Done Button */
 	btn = elm_button_add(nf);
-	elm_object_style_set(btn, "naviframe/title_done");
+	elm_object_style_set(btn, "naviframe/title_right");
 	evas_object_smart_callback_add(btn, "clicked", third_page_cb, nf);
 	elm_object_item_part_content_set(nf_it, "title_right_btn", btn);
 

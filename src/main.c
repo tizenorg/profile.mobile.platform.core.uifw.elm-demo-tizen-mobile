@@ -42,6 +42,12 @@ naviframe_pop_cb(void *data, Elm_Object_Item *it)
 }
 
 static void
+end_btn_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	ui_app_exit();
+}
+
+static void
 create_list_view(appdata_s *ad)
 {
 	Evas_Object *list;
@@ -89,6 +95,7 @@ create_list_view(appdata_s *ad)
 	/* This button is set for devices which doesn't have H/W back key. */
 	btn = elm_button_add(nf);
 	elm_object_style_set(btn, "naviframe/end_btn/default");
+	evas_object_smart_callback_add(btn, "clicked", end_btn_cb, NULL);
 	nf_it = elm_naviframe_item_push(nf, "Tizen UI", btn, NULL, list, NULL);
 	elm_naviframe_item_pop_cb_set(nf_it, naviframe_pop_cb, ad->win);
 }
