@@ -251,6 +251,110 @@ create_button_view(Evas_Object *parent)
 	elm_object_part_content_set(btn, "icon", img);
 
 
+	/* 3 white_bg buttons */
+
+	/* inner box */
+	box2 = elm_box_add(box);
+	elm_box_padding_set(box2, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(10));
+	elm_box_horizontal_set(box2, EINA_TRUE);
+	evas_object_size_hint_weight_set(box2, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box2, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box2);
+	elm_box_pack_end(box, box2);
+
+	/* button 1 */
+	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "white_bg");
+	elm_object_text_set(btn, "White BG");
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)3);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
+	evas_object_show(btn);
+	elm_box_pack_end(box2, btn);
+
+	/* button 2 */
+	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "white_bg");
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
+	evas_object_show(btn);
+	elm_box_pack_end(box2, btn);
+
+	/* button 2 image */
+	img = elm_image_add(btn);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_call.png", NULL);
+	elm_object_part_content_set(btn, "icon", img);
+
+	/* button 3 */
+	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "white_bg");
+	elm_object_disabled_set(btn, EINA_TRUE);
+	elm_object_text_set(btn, "Disabled");
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
+	evas_object_show(btn);
+	elm_box_pack_end(box2, btn);
+
+	/* button 3 image */
+	img = elm_image_add(btn);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_call.png", NULL);
+	elm_object_part_content_set(btn, "icon", img);
+
+
+	/* 3 gradient_bg buttons */
+
+	/* inner box */
+	box2 = elm_box_add(box);
+	elm_box_padding_set(box2, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(10));
+	elm_box_horizontal_set(box2, EINA_TRUE);
+	evas_object_size_hint_weight_set(box2, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box2, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box2);
+	elm_box_pack_end(box, box2);
+
+	/* button 1 */
+	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "gradient_bg");
+	elm_object_text_set(btn, "Gradient BG");
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)3);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
+	evas_object_show(btn);
+	elm_box_pack_end(box2, btn);
+
+	/* button 2 */
+	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "gradient_bg");
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	evas_object_show(btn);
+	elm_box_pack_end(box2, btn);
+
+	/* button 2 image */
+	img = elm_image_add(btn);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_email.png", NULL);
+	elm_object_part_content_set(btn, "icon", img);
+
+	/* button 3 */
+	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "gradient_bg");
+	elm_object_disabled_set(btn, EINA_TRUE);
+	elm_object_text_set(btn, "Disabled");
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
+	evas_object_show(btn);
+	elm_box_pack_end(box2, btn);
+
+	/* button 3 image */
+	img = elm_image_add(btn);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_note.png", NULL);
+	elm_object_part_content_set(btn, "icon", img);
+
+
 	/* 3 bottom buttons */
 
 	/* inner box */
@@ -275,18 +379,22 @@ create_button_view(Evas_Object *parent)
 	/* button 2 */
 	btn = elm_button_add(box2);
 	elm_object_style_set(btn, "bottom");
-	elm_object_text_set(btn, "Disabled");
 	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
+	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
 	elm_box_pack_end(box2, btn);
+
+	/* button 2 image */
+	img = elm_image_add(btn);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_call.png", NULL);
+	elm_object_part_content_set(btn, "icon", img);
 
 	/* button 3 */
 	btn = elm_button_add(box2);
 	elm_object_style_set(btn, "bottom");
 	elm_object_disabled_set(btn, EINA_TRUE);
-	elm_object_text_set(btn, "Bottom");
+	elm_object_text_set(btn, "Disabled");
 	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
