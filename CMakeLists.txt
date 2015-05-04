@@ -15,6 +15,7 @@ SET(SRCS
 	src/drawer.c
 	src/entry.c
 	src/fastscroll.c
+	src/flipselector.c
 	src/gengrid.c
 	src/genlist.c
 	src/handler.c

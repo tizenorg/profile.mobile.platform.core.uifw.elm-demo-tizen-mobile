@@ -66,6 +66,7 @@ create_list_view(appdata_s *ad)
 	elm_list_item_append(list, "Drawer", NULL, NULL, drawer_cb, nf);
 	elm_list_item_append(list, "Entry", NULL, NULL, entry_cb, nf);
 	elm_list_item_append(list, "Fastscroll", NULL, NULL, fastscroll_cb, nf);
+	elm_list_item_append(list, "Flipselector", NULL, NULL, flipselector_cb, nf);
 	elm_list_item_append(list, "Gengrid", NULL, NULL, gengrid_cb, nf);
 	elm_list_item_append(list, "Genlist", NULL, NULL, genlist_cb, nf);
 	elm_list_item_append(list, "Handler", NULL, NULL, handler_cb, nf);
