@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd All Rights Reserved
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,22 +18,22 @@
 #include "main.h"
 
 void
-_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info)
+flipselector_item_select_cb(void *data, Evas_Object *obj, void *event_info)
 {
-   Elm_Object_Item *it;
+	Elm_Object_Item *it;
 
-   it = event_info;
-   printf("label of selected item is: %s\n", elm_object_item_text_get(it));
+	it = event_info;
+	printf("label of selected item is: %s\n", elm_object_item_text_get(it));
 }
 
 void
-_underflow_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+flipselector_underflowed_cb(void *data, Evas_Object *obj, void *event_info)
 {
    printf("underflow!\n");
 }
 
 void
-_overflow_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+flipselector_overflowed_cb(void *data EINA_UNUSED, Evas_Object *obj, void *event_info)
 {
    printf("overflow!\n");
 }
@@ -46,13 +46,13 @@ create_flipselector(Evas_Object *nf)
 	int i;
 
 	flipselector = elm_flipselector_add(nf);
-	evas_object_smart_callback_add(flipselector, "underflowed", _overflow_cb, NULL);
-	evas_object_smart_callback_add(flipselector, "overflowed", _underflow_cb, NULL);
+	evas_object_smart_callback_add(flipselector, "underflowed", flipselector_overflowed_cb, NULL);
+	evas_object_smart_callback_add(flipselector, "overflowed", flipselector_underflowed_cb, NULL);
 	evas_object_size_hint_weight_set(flipselector, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
 	for (i = 0; i <= 99; i++) {
         snprintf(buf, 8, "%u", i);
-        elm_flipselector_item_append(flipselector, buf, _sel_cb, NULL);
+        elm_flipselector_item_append(flipselector, buf, flipselector_item_select_cb, NULL);
      }
 
 	return flipselector;
