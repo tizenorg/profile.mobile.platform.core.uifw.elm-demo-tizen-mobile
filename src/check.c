@@ -88,5 +88,5 @@ check_cb(void *data, Evas_Object *obj, void *event_info)
 	layout = create_checks(scroller);
 	elm_object_content_set(scroller, layout);
 
-	elm_naviframe_item_push(nf, "Normal styles", NULL, NULL, scroller, NULL);
+	elm_naviframe_item_push(nf, "Check", NULL, NULL, scroller, NULL);
 }

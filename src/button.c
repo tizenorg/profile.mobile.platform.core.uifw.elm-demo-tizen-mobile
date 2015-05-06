@@ -419,5 +419,5 @@ button_cb(void *data, Evas_Object *obj, void *event_info)
 	layout = create_button_view(scroller);
 	elm_object_content_set(scroller, layout);
 
-	elm_naviframe_item_push(nf, "Normal Styles", NULL, NULL, scroller, NULL);
+	elm_naviframe_item_push(nf, "Button", NULL, NULL, scroller, NULL);
 }
