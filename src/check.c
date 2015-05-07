@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd All Rights Reserved
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -42,51 +42,119 @@ static Evas_Object*
 create_checks(Evas_Object *parent)
 {
 	Evas_Object *check;
-	Evas_Object *layout;
+	Evas_Object *box;
 
-	layout = elm_layout_add(parent);
-	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	box = elm_box_add(parent);
+	elm_box_padding_set(box, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(10));
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box);
 
-	/* check 1 */
-	check = elm_check_add(layout);
+	/* default check */
+	check = elm_check_add(box);
 	elm_check_state_set(check, EINA_TRUE);
-	elm_object_part_content_set(layout, "check1", check);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)1);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(check, 0.5, 1);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
 
-	/* check 2 */
-	check = elm_check_add(layout);
+	/* default check, diabled(off) */
+	check = elm_check_add(box);
+	elm_object_disabled_set(check, EINA_TRUE);
+	elm_check_state_set(check, EINA_FALSE);
+	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)1);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(check, 0.5, 0);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
+
+	/* default check, diabled(on) */
+	check = elm_check_add(box);
+	elm_object_disabled_set(check, EINA_TRUE);
+	elm_check_state_set(check, EINA_TRUE);
+	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)1);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(check, 0.5, 0);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
+
+	/* favorite check */
+	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
 	elm_check_state_set(check, EINA_FALSE);
-	elm_object_part_content_set(layout, "check2", check);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(check, 0.5, 0);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
 
-	/* check 2 */
-	check = elm_check_add(layout);
-	elm_object_style_set(check, "on&off");
+	/* favorite check, disabled(off) */
+	check = elm_check_add(box);
+	elm_object_style_set(check, "favorite");
+	elm_object_disabled_set(check, EINA_TRUE);
 	elm_check_state_set(check, EINA_FALSE);
-	elm_object_part_content_set(layout, "check3", check);
-	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
+	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(check, 0.5, 0);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
 
-	/* check 4 */
-	check = elm_check_add(layout);
+	/* favorite check, disabled(on) */
+	check = elm_check_add(box);
+	elm_object_style_set(check, "favorite");
+	elm_object_disabled_set(check, EINA_TRUE);
+	elm_check_state_set(check, EINA_TRUE);
+	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(check, 0.5, 0);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
+
+	/* on&off check */
+	check = elm_check_add(box);
 	elm_object_style_set(check, "on&off");
 	elm_check_state_set(check, EINA_TRUE);
-	elm_object_disabled_set(check,EINA_TRUE);
-	elm_object_part_content_set(layout, "check4", check);
+	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(check, 0.5, 0);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
 
-	return layout;
+	/* on&off check, disabled(off) */
+	check = elm_check_add(box);
+	elm_object_style_set(check, "on&off");
+	elm_object_disabled_set(check, EINA_TRUE);
+	elm_check_state_set(check, EINA_FALSE);
+	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(check, 0.5, 0);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
+
+	/* on&off check, disabled(on) */
+	check = elm_check_add(box);
+	elm_object_style_set(check, "on&off");
+	elm_object_disabled_set(check, EINA_TRUE);
+	elm_check_state_set(check, EINA_TRUE);
+	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(check, 0.5, 0);
+	evas_object_show(check);
+	elm_box_pack_end(box, check);
+
+	return box;
 }
 
 void
 check_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *scroller, *layout;
+	Evas_Object *scroller, *box;
 	Evas_Object *nf = data;
 
 	scroller = create_scroller(nf);
-	layout = create_checks(scroller);
-	elm_object_content_set(scroller, layout);
+	box = create_checks(scroller);
+	elm_object_content_set(scroller, box);
 
 	elm_naviframe_item_push(nf, "Check", NULL, NULL, scroller, NULL);
 }

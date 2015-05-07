@@ -23,7 +23,6 @@ collections {
    #include "../edc_resource/slider.edc"
    #include "../edc_resource/colorselector.edc"
    #include "../edc_resource/progressbar.edc"
-   #include "../edc_resource/check.edc"
    #include "../edc_resource/button.edc"
    #include "../edc_resource/radio.edc"
    #include "../edc_resource/nocontents.edc"
