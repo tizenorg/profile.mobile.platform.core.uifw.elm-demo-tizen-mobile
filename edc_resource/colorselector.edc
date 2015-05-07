@@ -21,8 +21,8 @@ group { name: "colorselector_layout";
          type: SPACER;
          scale: 1;
          description { state: "default" 0.0;
-            min: 480 0;
-            max: 480 -1;
+            min: 540 0;
+            max: 540 -1;
          }
       }
       part { name: "colorpalette";
@@ -62,8 +62,8 @@ group { name: "colorselector_popup/rect/text";
          type: SPACER;
          scale: 1;
          description { state: "default" 0.0;
-            min: 480 96;
-            max: 480 96;
+            min: 540 96;
+            max: 540 96;
          }
       }
       part { name: "rect_top_padding";
@@ -101,8 +101,8 @@ group { name: "colorselector_popup/rect/text";
          type: SWALLOW;
          scale: 1;
          description { state: "default" 0.0;
-            min: 60 60;
-            max: 60 60;
+            min: 68 68;
+            max: 68 68;
             fixed: 1 1;
             rel1 {
                relative: 1.0 1.0;
@@ -174,8 +174,8 @@ group { name: "colorselector_popup_layout";
          type: SPACER;
          scale: 1;
          description { state: "default" 0.0;
-            min: 480 254;
-            max: 480 254;
+            min: 540 254;
+            max: 540 254;
          }
       }
       part { name: "top_padding";
@@ -211,8 +211,8 @@ group { name: "colorselector_popup_layout";
          type: SWALLOW;
          scale: 1;
          description { state: "default" 0.0;
-            min: 480 158;
-            max: 480 158;
+            min: 540 178;
+            max: 540 178;
             fixed: 1 1;
             rel1 {
                relative: 0.0 1.0;
