@@ -183,5 +183,5 @@ slider_cb(void *data, Evas_Object *obj, void *event_info)
 	Evas_Object *nf = data;
 
 	list = create_list(nf);
-	elm_naviframe_item_push(nf, "Slider Styles", NULL, NULL, list, NULL);
+	elm_naviframe_item_push(nf, "Slider", NULL, NULL, list, NULL);
 }

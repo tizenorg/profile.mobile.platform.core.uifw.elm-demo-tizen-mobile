@@ -106,5 +106,5 @@ radio_cb(void *data, Evas_Object *obj, void *event_info)
 	scroller = create_scroller(nf);
 	layout = create_radios(scroller);
 	elm_object_content_set(scroller, layout);
-	elm_naviframe_item_push(nf, "Normal styles", NULL, NULL, scroller, NULL);
+	elm_naviframe_item_push(nf, "Radio", NULL, NULL, scroller, NULL);
 }
