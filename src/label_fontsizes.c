@@ -28,23 +28,23 @@ create_labels(Evas_Object *parent)
 
 	label = elm_label_add(layout);
 	elm_object_part_content_set(layout, "label1", label);
-	elm_object_text_set(label, _("<font_size=15><align=center>fontsize is set to 15</align></font_size>"));
+	elm_object_text_set(label, _("<font_size=15><align=center>font size is set to 15</align></font_size>"));
 
 	label2 = elm_label_add(layout);
 	elm_object_part_content_set(layout, "label2", label2);
-	elm_object_text_set(label2, _("<font_size=20><align=center>fontsize is set to 20</align></font_size>"));
+	elm_object_text_set(label2, _("<font_size=20><align=center>font size is set to 20</align></font_size>"));
 
 	label3 = elm_label_add(layout);
 	elm_object_part_content_set(layout, "label3", label3);
-	elm_object_text_set(label3, _("<font_size=25><align=center>fontsize is set to 25</align></font_size>"));
+	elm_object_text_set(label3, _("<font_size=25><align=center>font size is set to 25</align></font_size>"));
 
 	label4 = elm_label_add(layout);
 	elm_object_part_content_set(layout, "label4", label4);
-	elm_object_text_set(label4, _("<font_size=30><align=center>fontsize is set to 30</align></font_size>"));
+	elm_object_text_set(label4, _("<font_size=30><align=center>font size is set to 30</align></font_size>"));
 
 	label5 = elm_label_add(layout);
 	elm_object_part_content_set(layout, "label5", label5);
-	elm_object_text_set(label5, _("<font_size=40><align=center>fontsize is set to 40</align></font_size>"));
+	elm_object_text_set(label5, _("<font_size=40><align=center>font size is set to 40</align></font_size>"));
 
 	return layout;
 }
@@ -61,7 +61,7 @@ create_scroller(Evas_Object *parent)
 }
 
 void
-label_text_styles_cb(void *data, Evas_Object *obj, void *event_info)
+label_font_sizes_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *scroller, *layout_inner;
 	Evas_Object *nf = data;
@@ -71,5 +71,5 @@ label_text_styles_cb(void *data, Evas_Object *obj, void *event_info)
 	layout_inner = create_labels(nf);
 	elm_object_content_set(scroller, layout_inner);
 
-	elm_naviframe_item_push(nf, "Text Styles", NULL, NULL, scroller, NULL);
+	elm_naviframe_item_push(nf, "Font Sizes", NULL, NULL, scroller, NULL);
 }

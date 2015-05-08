@@ -33,11 +33,11 @@ create_list(Evas_Object *nf)
 	list = elm_list_add(nf);
 	elm_list_mode_set(list, ELM_LIST_COMPRESS);
 	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
-	elm_list_item_append(list, "Styles", NULL, NULL, label_text_styles_cb, nf);
+	elm_list_item_append(list, "Font Sizes", NULL, NULL, label_font_sizes_cb, nf);
 	elm_list_item_append(list, "Linebreakmodes", NULL, NULL, label_linebreak_modes_cb, nf);
-	elm_list_item_append(list, "Color style", NULL, NULL, label_color_styles_cb, nf);
+	elm_list_item_append(list, "Color Styles", NULL, NULL, label_color_styles_cb, nf);
 	elm_list_item_append(list, "Ellipsis", NULL, NULL, label_ellipsis_cb, nf);
-	elm_list_item_append(list, "Text slide", NULL, NULL, label_slide_cb, nf);
+	elm_list_item_append(list, "Slide Text", NULL, NULL, label_slide_cb, nf);
 
 	elm_list_go(list);
 
