@@ -54,7 +54,6 @@ void colorselector_cb(void *data, Evas_Object *obj, void *event_info);
 void conformant_cb(void *data, Evas_Object *obj, void *event_info);
 void gengrid_cb(void *data, Evas_Object *obj, void *event_info);
 void genlist_cb(void *data, Evas_Object *obj, void *event_info);
-void drawer_cb(void *data, Evas_Object *obj, void *event_info);
 void fastscroll_cb(void *data, Evas_Object *obj, void *event_info);
 void flipselector_cb(void *data, Evas_Object *obj, void *event_info);
 void naviframe_cb(void *data, Evas_Object *obj, void *event_info);

@@ -69,7 +69,6 @@ create_list_view(appdata_s *ad)
 	elm_list_item_append(list, "Conformant", NULL, NULL, conformant_cb, ad);
 	elm_list_item_append(list, "Ctxpopup", NULL, NULL, ctxpopup_cb, nf);
 	elm_list_item_append(list, "Datetime", NULL, NULL, datetime_cb, ad);
-	elm_list_item_append(list, "Drawer", NULL, NULL, drawer_cb, nf);
 	elm_list_item_append(list, "Entry", NULL, NULL, entry_cb, nf);
 	elm_list_item_append(list, "Fastscroll", NULL, NULL, fastscroll_cb, nf);
 	elm_list_item_append(list, "Flipselector", NULL, NULL, flipselector_cb, nf);

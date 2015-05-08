@@ -12,7 +12,6 @@ SET(SRCS
 	src/conformant.c
 	src/ctxpopup.c
 	src/datetime.c
-	src/drawer.c
 	src/entry.c
 	src/fastscroll.c
 	src/flipselector.c
