@@ -28,34 +28,31 @@ check_changed_cb(void *data , Evas_Object *obj , void *event_info)
 }
 
 static void
-btn_clicked_cb(void *data , Evas_Object *obj, void *event_info)
+btn1_clicked_cb(void *data , Evas_Object *obj, void *event_info)
 {
 	Evas_Object *mbe = data;
 	Elm_Object_Item *clicked_item;
 
 	clicked_item = elm_multibuttonentry_selected_item_get(mbe);
 
-	if (!strcmp(elm_object_text_get(obj), "Item Disabled"))
-	{
-		const Eina_List *items, *l;
-		Elm_Object_Item *it;
-
-		items = elm_multibuttonentry_items_get(mbe);
-
-		EINA_LIST_FOREACH(items, l, it)
-		{
-			if (elm_object_item_disabled_get(it))
-				elm_object_item_disabled_set(it, EINA_FALSE);
-			else
-				elm_object_item_disabled_set(it, EINA_TRUE);
-		}
+	if (elm_object_item_disabled_get(clicked_item)) {
+		elm_object_item_disabled_set(clicked_item, EINA_FALSE);
+	} else {
+		elm_object_item_disabled_set(clicked_item, EINA_TRUE);
 	}
-	else if (!strcmp(elm_object_text_get(obj), "MBE Disabled"))
-	{
-		if (elm_object_disabled_get(mbe))
-			elm_object_disabled_set(mbe, EINA_FALSE);
-		else
-			elm_object_disabled_set(mbe, EINA_TRUE);
+}
+
+static void
+btn2_clicked_cb(void *data , Evas_Object *obj, void *event_info)
+{
+	Evas_Object *mbe = data;
+
+	if (elm_object_disabled_get(mbe)) {
+		elm_object_disabled_set(mbe, EINA_FALSE);
+		elm_object_text_set(obj, "MBE Disable");
+	} else {
+		elm_object_disabled_set(mbe, EINA_TRUE);
+		elm_object_text_set(obj, "MBE Enable");
 	}
 }
 
@@ -284,18 +281,18 @@ multibuttonentry_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_object_part_content_set(layout, "check_box", box);
 
 	btn1 = elm_button_add(layout);
-	elm_object_text_set(btn1, "Item Disabled");
-	evas_object_smart_callback_add(btn1, "clicked", btn_clicked_cb, mbe);
+	elm_object_text_set(btn1, "Item Dim On/Off");
+	evas_object_smart_callback_add(btn1, "clicked", btn1_clicked_cb, mbe);
 	evas_object_size_hint_weight_set(btn1, EVAS_HINT_EXPAND, 0.0);
-	evas_object_size_hint_align_set(btn1, EVAS_HINT_FILL, 0.0);
+	evas_object_size_hint_align_set(btn1, 0.5, 0.0);
 	elm_object_part_content_set(layout, "btn1", btn1);
 	evas_object_show(btn1);
 
 	btn2 = elm_button_add(layout);
-	elm_object_text_set(btn2, "MBE Disabled");
-	evas_object_smart_callback_add(btn2, "clicked", btn_clicked_cb, mbe);
+	elm_object_text_set(btn2, "MBE Disable");
+	evas_object_smart_callback_add(btn2, "clicked", btn2_clicked_cb, mbe);
 	evas_object_size_hint_weight_set(btn2, EVAS_HINT_EXPAND, 0.0);
-	evas_object_size_hint_align_set(btn2, EVAS_HINT_FILL, 0.0);
+	evas_object_size_hint_align_set(btn2, 0.5, 0.0);
 	elm_object_part_content_set(layout, "btn2", btn2);
 	evas_object_show(btn2);
 }
