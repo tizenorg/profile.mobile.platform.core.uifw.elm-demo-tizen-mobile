@@ -37,7 +37,7 @@ bg_image_center_cb(void *data, Evas_Object *obj, void *event_info)
 
 	bg = elm_bg_add(nf);
 	elm_bg_option_set(bg, ELM_BG_OPTION_CENTER);
-	snprintf(buf, sizeof(buf), "%s/iu.png", ICON_DIR);
+	snprintf(buf, sizeof(buf), "%s/tizen.png", ICON_DIR);
 	elm_bg_file_set(bg, buf, NULL);
 
 	elm_naviframe_item_push(nf, "Image - CENTER", NULL, NULL, bg, NULL);
@@ -52,7 +52,7 @@ bg_image_scale_cb(void *data, Evas_Object *obj, void *event_info)
 
 	bg = elm_bg_add(nf);
 	elm_bg_option_set(bg, ELM_BG_OPTION_SCALE);
-	snprintf(buf, sizeof(buf), "%s/iu.png", ICON_DIR);
+	snprintf(buf, sizeof(buf), "%s/tizen.png", ICON_DIR);
 	elm_bg_file_set(bg, buf, NULL);
 
 	elm_naviframe_item_push(nf, "Image - SCALE", NULL, NULL, bg, NULL);
@@ -67,7 +67,7 @@ bg_image_stretch_cb(void *data, Evas_Object *obj, void *event_info)
 
 	bg = elm_bg_add(nf);
 	elm_bg_option_set(bg, ELM_BG_OPTION_STRETCH);
-	snprintf(buf, sizeof(buf), "%s/iu.png", ICON_DIR);
+	snprintf(buf, sizeof(buf), "%s/tizen.png", ICON_DIR);
 	elm_bg_file_set(bg, buf, NULL);
 
 	elm_naviframe_item_push(nf, "Image - STRETCH", NULL, NULL, bg, NULL);
@@ -82,7 +82,7 @@ bg_image_tile_cb(void *data, Evas_Object *obj, void *event_info)
 
 	bg = elm_bg_add(nf);
 	elm_bg_option_set(bg, ELM_BG_OPTION_TILE);
-	snprintf(buf, sizeof(buf), "%s/iu.png", ICON_DIR);
+	snprintf(buf, sizeof(buf), "%s/tizen.png", ICON_DIR);
 	elm_bg_file_set(bg, buf, NULL);
 
 	elm_naviframe_item_push(nf, "Image - TILE", NULL, NULL, bg, NULL);
