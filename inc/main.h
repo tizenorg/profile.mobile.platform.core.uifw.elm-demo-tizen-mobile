@@ -76,7 +76,7 @@ void handler_cb(void *data, Evas_Object *obj, void *event_info);
 void multibuttonentry_cb(void *data, Evas_Object *obj, void *event_info);
 void spinner_cb(void *data, Evas_Object *obj, void *event_info);
 void label_cb(void *data, Evas_Object *obj, void *event_info);
-void label_text_styles_cb(void *data, Evas_Object *obj, void *event_info);
+void label_font_sizes_cb(void *data, Evas_Object *obj, void *event_info);
 void label_linebreak_modes_cb(void *data, Evas_Object *obj, void *event_info);
 void label_slide_cb(void *data, Evas_Object *obj, void *event_info);
 void label_ellipsis_cb(void *data, Evas_Object *obj, void *event_info);

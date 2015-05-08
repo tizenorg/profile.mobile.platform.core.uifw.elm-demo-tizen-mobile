@@ -23,7 +23,7 @@ SET(SRCS
 	src/label_ellipsis.c
 	src/label_linebreakmodes.c
 	src/label_slide.c
-	src/label_textstyles.c
+	src/label_fontsizes.c
 	src/multibuttonentry.c
 	src/naviframe.c
 	src/nocontents.c
