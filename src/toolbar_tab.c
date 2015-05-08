@@ -30,8 +30,27 @@ create_2_icon_text_tabbar(Evas_Object *parent)
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_favorites.png", "Main", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_artists.png", "Artists list", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_alarm.png", "Alarm", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_world_clock.png", "World Clock", toolbar_it_cb, parent);
+
+	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+
+	return toolbar;
+}
+
+static Evas_Object*
+create_3_icon_text_tabbar(Evas_Object *parent)
+{
+	Evas_Object *toolbar;
+
+	toolbar = elm_toolbar_add(parent);
+	elm_object_style_set(toolbar, "tabbar");
+	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_alarm.png", "Alarm", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_world_clock.png", "World Clock", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_timer.png", "Timer", toolbar_it_cb, parent);
 
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
@@ -48,10 +67,29 @@ create_4_icon_text_tabbar(Evas_Object *parent)
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_favorites.png", "Main", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_playlist.png", "Playlist", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_artists.png", "Artists list", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_songs.png", "Songs", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_alarm.png", "Alarm", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_world_clock.png", "World Clock", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_timer.png", "Timer", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_world_stopwatch.png", "Stopwatch", toolbar_it_cb, parent);
+
+	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+
+	return toolbar;
+}
+
+static Evas_Object*
+create_2_text_tabbar(Evas_Object *parent)
+{
+	Evas_Object *toolbar;
+
+	toolbar = elm_toolbar_add(parent);
+
+	elm_object_style_set(toolbar, "tabbar");
+	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+
+	elm_toolbar_item_append(toolbar, NULL, "Tab1", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Tab2", toolbar_it_cb, parent);
 
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
@@ -69,9 +107,30 @@ create_3_text_tabbar(Evas_Object *parent)
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
-	elm_toolbar_item_append(toolbar, NULL, "Main", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, NULL, "Playlist", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, NULL, "Artists list", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Alarm", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "World Clock", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Stopwatch", toolbar_it_cb, parent);
+
+	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+
+	return toolbar;
+}
+
+static Evas_Object*
+create_4_text_tabbar(Evas_Object *parent)
+{
+	Evas_Object *toolbar;
+
+	toolbar = elm_toolbar_add(parent);
+
+	elm_object_style_set(toolbar, "tabbar");
+	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+
+	elm_toolbar_item_append(toolbar, NULL, "Tab1", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Tab2", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Tab3", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Tab4", toolbar_it_cb, parent);
 
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
@@ -108,28 +167,8 @@ create_2_icon_text_with_title_tabbar(Evas_Object *parent)
 	elm_object_style_set(toolbar, "tabbar_with_title");
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_favorites.png", "Main", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_playlist.png",  "Playlist", toolbar_it_cb, parent);
-
-	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
-
-	return toolbar;
-}
-
-static Evas_Object*
-create_4_icon_text_with_title_tabbar(Evas_Object *parent)
-{
-	Evas_Object *toolbar;
-
-	toolbar = elm_toolbar_add(parent);
-	elm_object_style_set(toolbar, "tabbar_with_title");
-	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_favorites.png", "Main", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_playlist.png",  "Playlist", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_artists.png", "Artists list", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, ICON_DIR"/00_controlbar_icon_songs.png", "Songs", toolbar_it_cb, parent);
-
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_alarm.png", "Alarm", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_world_clock.png", "World Clock", toolbar_it_cb, parent);
 
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
@@ -146,8 +185,47 @@ create_2_text_with_title_tabbar(Evas_Object *parent)
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
-	elm_toolbar_item_append(toolbar, NULL, "Main", toolbar_it_cb, parent);
-	elm_toolbar_item_append(toolbar, NULL, "Playlist", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Tab1", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Tab2", toolbar_it_cb, parent);
+
+	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+
+	return toolbar;
+}
+
+static Evas_Object*
+create_3_text_with_title_tabbar(Evas_Object *parent)
+{
+	Evas_Object *toolbar;
+
+	toolbar = elm_toolbar_add(parent);
+	elm_object_style_set(toolbar, "tabbar_with_title");
+	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+
+	elm_toolbar_item_append(toolbar, NULL, "Alarm", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "World Clock", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Stopwatch", toolbar_it_cb, parent);
+
+	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+
+	return toolbar;
+}
+
+static Evas_Object*
+create_4_text_with_title_tabbar(Evas_Object *parent)
+{
+	Evas_Object *toolbar;
+
+	toolbar = elm_toolbar_add(parent);
+	elm_object_style_set(toolbar, "tabbar_with_title");
+	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+
+	elm_toolbar_item_append(toolbar, NULL, "Alarm", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "World Clock", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Timer", toolbar_it_cb, parent);
+	elm_toolbar_item_append(toolbar, NULL, "Stopwatch", toolbar_it_cb, parent);
 
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
@@ -188,6 +266,19 @@ tab_2_icon_text_style_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
+tab_3_icon_text_style_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *tabbar;
+	Elm_Object_Item *nf_it;
+	Evas_Object *nf = data;
+
+	nf_it = elm_naviframe_top_item_get(nf);
+	elm_naviframe_item_style_set(nf_it, "tabbar/icon/notitle");
+	tabbar = create_3_icon_text_tabbar(nf);
+	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
+}
+
+static void
 tab_4_icon_text_style_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *tabbar;
@@ -201,6 +292,19 @@ tab_4_icon_text_style_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
+tab_2_text_style_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *tabbar;
+	Elm_Object_Item *nf_it;
+	Evas_Object *nf = data;
+
+	nf_it = elm_naviframe_top_item_get(nf);
+	elm_naviframe_item_style_set(nf_it, "tabbar/notitle");
+	tabbar = create_2_text_tabbar(nf);
+	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
+}
+
+static void
 tab_3_text_style_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *tabbar;
@@ -210,6 +314,19 @@ tab_3_text_style_cb(void *data, Evas_Object *obj, void *event_info)
 	nf_it = elm_naviframe_top_item_get(nf);
 	elm_naviframe_item_style_set(nf_it, "tabbar/notitle");
 	tabbar = create_3_text_tabbar(nf);
+	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
+}
+
+static void
+tab_4_text_style_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *tabbar;
+	Elm_Object_Item *nf_it;
+	Evas_Object *nf = data;
+
+	nf_it = elm_naviframe_top_item_get(nf);
+	elm_naviframe_item_style_set(nf_it, "tabbar/notitle");
+	tabbar = create_4_text_tabbar(nf);
 	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
 }
 
@@ -242,21 +359,6 @@ tab_2_icon_text_with_title_style_cb(void *data, Evas_Object *obj, void *event_in
 }
 
 static void
-tab_4_icon_text_with_title_style_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	Evas_Object *tabbar;
-	Elm_Object_Item *nf_it;
-	Evas_Object *nf = data;
-
-	nf_it = elm_naviframe_top_item_get(nf);
-	elm_naviframe_item_style_set(nf_it, "tabbar");
-	tabbar = create_4_icon_text_with_title_tabbar(nf);
-	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
-
-	elm_object_item_part_text_set(nf_it, NULL, "4 Icon Text With Title");
-}
-
-static void
 tab_2_text_with_title_style_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *tabbar;
@@ -269,6 +371,36 @@ tab_2_text_with_title_style_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
 
 	elm_object_item_part_text_set(nf_it, NULL, "2 Text With Title");
+}
+
+static void
+tab_3_text_with_title_style_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *tabbar;
+	Elm_Object_Item *nf_it;
+	Evas_Object *nf = data;
+
+	nf_it = elm_naviframe_top_item_get(nf);
+	elm_naviframe_item_style_set(nf_it, "tabbar");
+	tabbar = create_3_text_with_title_tabbar(nf);
+	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
+
+	elm_object_item_part_text_set(nf_it, NULL, "3 Text With Title");
+}
+
+static void
+tab_4_text_with_title_style_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *tabbar;
+	Elm_Object_Item *nf_it;
+	Evas_Object *nf = data;
+
+	nf_it = elm_naviframe_top_item_get(nf);
+	elm_naviframe_item_style_set(nf_it, "tabbar");
+	tabbar = create_4_text_with_title_tabbar(nf);
+	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
+
+	elm_object_item_part_text_set(nf_it, NULL, "4 Text With Title");
 }
 
 static void
@@ -385,14 +517,17 @@ create_main_list(Evas_Object *parent)
 {
 	Evas_Object *list = elm_list_add(parent);
 	elm_list_mode_set(list, ELM_LIST_COMPRESS);
-	elm_list_item_append(list, "2 Icon Text", NULL, NULL, tab_2_icon_text_style_cb, parent);
-	elm_list_item_append(list, "4 Icon Text", NULL, NULL, tab_4_icon_text_style_cb, parent);
-//	elm_list_item_append(list, "Scrollable Icon Text", NULL, NULL, scrollable_icon_text_style_cb, parent);
+	elm_list_item_append(list, "2 Text", NULL, NULL, tab_2_text_style_cb, parent);
 	elm_list_item_append(list, "3 Text", NULL, NULL, tab_3_text_style_cb, parent);
-	elm_list_item_append(list, "Scrollable Text", NULL, NULL, scrollable_text_style_cb, parent);
+	elm_list_item_append(list, "4 Text", NULL, NULL, tab_4_text_style_cb, parent);
+	elm_list_item_append(list, "2 Icon Text", NULL, NULL, tab_2_icon_text_style_cb, parent);
+	elm_list_item_append(list, "3 Icon Text", NULL, NULL, tab_3_icon_text_style_cb, parent);
+	elm_list_item_append(list, "4 Icon Text", NULL, NULL, tab_4_icon_text_style_cb, parent);
+	elm_list_item_append(list, "2 Text with Title", NULL, NULL, tab_2_text_with_title_style_cb, parent);
+	elm_list_item_append(list, "3 Text with Title", NULL, NULL, tab_3_text_with_title_style_cb, parent);
+	elm_list_item_append(list, "4 Text with Title", NULL, NULL, tab_4_text_with_title_style_cb, parent);
 	elm_list_item_append(list, "2 Icon Text with Title Style", NULL, NULL, tab_2_icon_text_with_title_style_cb, parent);
-	elm_list_item_append(list, "4 Icon Text with Title Style", NULL, NULL, tab_4_icon_text_with_title_style_cb, parent);
-	elm_list_item_append(list, "2 Text with Title Style", NULL, NULL, tab_2_text_with_title_style_cb, parent);
+	elm_list_item_append(list, "Scrollable Text", NULL, NULL, scrollable_text_style_cb, parent);
 	elm_list_item_append(list, "Scrollable Text with Title Style", NULL, NULL, scrollable_text_with_title_style_cb, parent);
 
 	elm_list_go(list);

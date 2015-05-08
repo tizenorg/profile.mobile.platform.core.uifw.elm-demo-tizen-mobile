@@ -60,7 +60,7 @@ scrollable_style_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_naviframe_item_style_set(nf_it, "tabbar");
 	tabbar = create_text_only_scrollable_tabbar(nf);
 	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
-	elm_object_item_part_text_set(nf_it, NULL, "Scrollable_style");
+	elm_object_item_part_text_set(nf_it, NULL, "Multiple Items with Title");
 }
 
 static Evas_Object*
@@ -270,10 +270,10 @@ create_main_list(Evas_Object *parent)
 {
 	Evas_Object *list = elm_list_add(parent);
 	elm_list_mode_set(list, ELM_LIST_COMPRESS);
-	elm_list_item_append(list, "2 Items", NULL, NULL, toolbar_2_items_text_style_cb, parent);
-	elm_list_item_append(list, "3 Items", NULL, NULL, toolbar_3_items_text_style_cb, parent);
-	elm_list_item_append(list, "4 Items", NULL, NULL, toolbar_4_items_text_style_cb, parent);
-	elm_list_item_append(list, "Multiple Items", NULL, NULL, scrollable_style_cb, parent);
+	elm_list_item_append(list, "2 Items with Title", NULL, NULL, toolbar_2_items_text_style_cb, parent);
+	elm_list_item_append(list, "3 Items with Title", NULL, NULL, toolbar_3_items_text_style_cb, parent);
+	elm_list_item_append(list, "4 Items with Title", NULL, NULL, toolbar_4_items_text_style_cb, parent);
+	elm_list_item_append(list, "Multiple Items with Title", NULL, NULL, scrollable_style_cb, parent);
 
 	elm_list_go(list);
 	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
