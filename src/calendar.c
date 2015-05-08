@@ -20,18 +20,25 @@
 static Evas_Object*
 create_calendar(Evas_Object *nf)
 {
-	Evas_Object *calendar;
+	Evas_Object *box, *calendar;
 	time_t the_time;
 
 	time(&the_time); /* Get Current Time */
 
+	box = elm_box_add(nf);
+	evas_object_show(box);
+
 	calendar = elm_calendar_add(nf);
 	elm_calendar_first_day_of_week_set(calendar, ELM_DAY_SUNDAY);
 	evas_object_size_hint_weight_set(calendar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(calendar, 0.5, 0);
 	elm_calendar_selected_time_set(calendar, gmtime(&the_time));
 	elm_calendar_min_max_year_set(calendar, 1973, 2030);
+	evas_object_show(calendar);
 
-	return calendar;
+	elm_box_pack_end(box, calendar);
+
+	return box;
 }
 
 void
