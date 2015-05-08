@@ -26,5 +26,6 @@ collections {
    #include "../edc_resource/popup_custom.edc"
    #include "../edc_resource/multibuttonentry.edc"
    #include "../edc_resource/label.edc"
+   #include "../edc_resource/genlist.edc"
 }
 
