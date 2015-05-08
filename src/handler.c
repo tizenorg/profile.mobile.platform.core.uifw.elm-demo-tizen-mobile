@@ -61,7 +61,7 @@ list_it_handler_v_cb(void *data, Evas_Object *obj, void *event_info)
 	for (index = 0; index < 4 * NUM_OF_ITEMS; index++) {
 		elm_genlist_item_append(genlist, &itc, (void *)index, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	}
-	elm_naviframe_item_push(nf, "Vert-Handler", NULL, NULL, genlist, NULL);
+	elm_naviframe_item_push(nf, "Vertical Handler", NULL, NULL, genlist, NULL);
 }
 
 static Evas_Object*
@@ -97,7 +97,7 @@ list_it_handler_h_cb(void *data, Evas_Object *obj, void *event_info)
 	Evas_Object *nf = data;
 
 	layout = create_horz_handler_layout(nf);
-	elm_naviframe_item_push(nf, "Horz-Handler", NULL, NULL, layout, NULL);
+	elm_naviframe_item_push(nf, "Horizontal Handler", NULL, NULL, layout, NULL);
 }
 
 static void
