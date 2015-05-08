@@ -65,7 +65,7 @@ create_list_view(appdata_s *ad)
 	elm_list_item_append(list, "Button", NULL, NULL, button_cb, nf);
 	elm_list_item_append(list, "Calendar", NULL, NULL, calendar_cb, nf);
 	elm_list_item_append(list, "Check", NULL, NULL, check_cb, nf);
-	elm_list_item_append(list, "ColorSelector", NULL, NULL, colorselector_cb, nf);
+	elm_list_item_append(list, "Colorselector", NULL, NULL, colorselector_cb, nf);
 	elm_list_item_append(list, "Conformant", NULL, NULL, conformant_cb, ad);
 	elm_list_item_append(list, "Ctxpopup", NULL, NULL, ctxpopup_cb, nf);
 	elm_list_item_append(list, "Datetime", NULL, NULL, datetime_cb, ad);
@@ -77,11 +77,11 @@ create_list_view(appdata_s *ad)
 	elm_list_item_append(list, "Genlist", NULL, NULL, genlist_cb, nf);
 	elm_list_item_append(list, "Handler", NULL, NULL, handler_cb, nf);
 	elm_list_item_append(list, "Label", NULL, NULL, label_cb, nf);
-	elm_list_item_append(list, "MultiButtonEntry", NULL, NULL, multibuttonentry_cb, nf);
+	elm_list_item_append(list, "Multibuttonentry", NULL, NULL, multibuttonentry_cb, nf);
 	elm_list_item_append(list, "Naviframe", NULL, NULL, naviframe_cb, nf);
 	elm_list_item_append(list, "Nocontents", NULL, NULL, nocontents_cb, nf);
 	elm_list_item_append(list, "Notify", NULL, NULL, notify_cb, nf);
-	elm_list_item_append(list, "PageControl", NULL, NULL, pagecontrol_cb, nf);
+	elm_list_item_append(list, "Pagecontrol", NULL, NULL, pagecontrol_cb, nf);
 	elm_list_item_append(list, "Popup", NULL, NULL, popup_cb, ad);
 	elm_list_item_append(list, "Progressbar", NULL, NULL, progressbar_cb, nf);
 	elm_list_item_append(list, "Radio", NULL, NULL, radio_cb, nf);
