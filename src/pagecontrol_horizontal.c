@@ -234,6 +234,6 @@ pagecontrol_horizontal_cb(void *data, Evas_Object *obj, void *event_info)
 	Evas_Object *nf = data;
 
 	layout = create_index(nf);
-	elm_naviframe_item_push(nf, "PageControl", NULL, NULL, layout, NULL);
+	elm_naviframe_item_push(nf, "Horizontal Style", NULL, NULL, layout, NULL);
 }
 
