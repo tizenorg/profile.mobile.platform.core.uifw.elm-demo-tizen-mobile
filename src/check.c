@@ -61,8 +61,8 @@ create_checks(Evas_Object *parent)
 
 	/* default check, diabled(off) */
 	check = elm_check_add(box);
-	elm_object_disabled_set(check, EINA_TRUE);
 	elm_check_state_set(check, EINA_FALSE);
+	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)1);
 	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
 	evas_object_size_hint_align_set(check, 0.5, 0);
@@ -71,8 +71,8 @@ create_checks(Evas_Object *parent)
 
 	/* default check, diabled(on) */
 	check = elm_check_add(box);
-	elm_object_disabled_set(check, EINA_TRUE);
 	elm_check_state_set(check, EINA_TRUE);
+	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)1);
 	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(check, 0.5, 0);
@@ -92,8 +92,8 @@ create_checks(Evas_Object *parent)
 	/* favorite check, disabled(off) */
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
-	elm_object_disabled_set(check, EINA_TRUE);
 	elm_check_state_set(check, EINA_FALSE);
+	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
 	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
 	evas_object_size_hint_align_set(check, 0.5, 0);
@@ -103,8 +103,8 @@ create_checks(Evas_Object *parent)
 	/* favorite check, disabled(on) */
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
-	elm_object_disabled_set(check, EINA_TRUE);
 	elm_check_state_set(check, EINA_TRUE);
+	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
 	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(check, 0.5, 0);
@@ -124,8 +124,8 @@ create_checks(Evas_Object *parent)
 	/* on&off check, disabled(off) */
 	check = elm_check_add(box);
 	elm_object_style_set(check, "on&off");
-	elm_object_disabled_set(check, EINA_TRUE);
 	elm_check_state_set(check, EINA_FALSE);
+	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
 	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
 	evas_object_size_hint_align_set(check, 0.5, 0);
@@ -135,8 +135,8 @@ create_checks(Evas_Object *parent)
 	/* on&off check, disabled(on) */
 	check = elm_check_add(box);
 	elm_object_style_set(check, "on&off");
-	elm_object_disabled_set(check, EINA_TRUE);
 	elm_check_state_set(check, EINA_TRUE);
+	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
 	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(check, 0.5, 0);
