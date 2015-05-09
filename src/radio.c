@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Samsung Electronics Co., Ltd All Rights Reserved
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -43,15 +43,18 @@ static Evas_Object*
 create_radios(Evas_Object *parent)
 {
 	Evas_Object *radio, *radio_group;
-	Evas_Object *layout;
+	Evas_Object *box;
 
-	layout = elm_layout_add(parent);
-	elm_layout_file_set(layout, ELM_DEMO_EDJ, "radio_layout");
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	box = elm_box_add(parent);
+	elm_box_padding_set(box, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(10));
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box);
 
 	/* adding a radio instance */
-	radio = elm_radio_add(layout);
-	elm_object_part_content_set(layout, "radio1", radio);
+	radio = elm_radio_add(box);
+	evas_object_show(radio);
+	elm_box_pack_end(box, radio);
 
 	/* assigning a unique value(within the group) to the radio instance */
 	elm_radio_state_value_set(radio, 10);
@@ -60,51 +63,54 @@ create_radios(Evas_Object *parent)
 	/* creating a radio group with first radio */
 	radio_group = radio;
 
-	radio = elm_radio_add(layout);
+	radio = elm_radio_add(box);
+	evas_object_show(radio);
+	elm_box_pack_end(box, radio);
 
 	/* assigning a unique value(within the group) to the radio instance */
 	elm_radio_state_value_set(radio, 20);
 
 	/* adding this radio to the group containing the first radio */
 	elm_radio_group_add(radio, radio_group);
-	elm_object_part_content_set(layout, "radio2", radio);
 	evas_object_smart_callback_add(radio, "changed", radio_changed_cb, (void *)2);
 
-	radio = elm_radio_add(layout);
+	radio = elm_radio_add(box);
+	evas_object_show(radio);
+	elm_box_pack_end(box, radio);
 
 	/* assigning a unique value(within the group) to the radio instance */
 	elm_radio_state_value_set(radio, 30);
 
 	/* adding this radio to the group containing the first radio */
 	elm_radio_group_add(radio, radio_group);
-	elm_object_part_content_set(layout, "radio3", radio);
 	evas_object_smart_callback_add(radio, "changed", radio_changed_cb, (void *)3);
 
-	radio = elm_radio_add(layout);
+	radio = elm_radio_add(box);
+	evas_object_show(radio);
+	elm_box_pack_end(box, radio);
 
 	/* assigning a unique value(within the group) to the radio instance */
 	elm_radio_state_value_set(radio, 40);
 
 	/* adding this radio to the group containing the first radio */
 	elm_radio_group_add(radio, radio_group);
-	elm_object_part_content_set(layout, "radio4", radio);
 	elm_object_disabled_set(radio, EINA_TRUE);
 	evas_object_smart_callback_add(radio, "changed", radio_changed_cb, (void *)4);
 
 	/* selecting the second radio in the group with value set to 10. This will set the 2nd radio instance */
 	elm_radio_value_set(radio_group, 10);
 
-	return layout;
+	return box;
 }
 
 void
 radio_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *scroller, *layout;
+	Evas_Object *scroller, *box;
 	Evas_Object *nf = data;
 
 	scroller = create_scroller(nf);
-	layout = create_radios(scroller);
-	elm_object_content_set(scroller, layout);
+	box = create_radios(scroller);
+	elm_object_content_set(scroller, box);
 	elm_naviframe_item_push(nf, "Radio", NULL, NULL, scroller, NULL);
 }
