@@ -27,7 +27,6 @@ SET(SRCS
 	src/multibuttonentry.c
 	src/naviframe.c
 	src/nocontents.c
-	src/notify.c
 	src/pagecontrol.c
 	src/pagecontrol_horizontal.c
 	src/pagecontrol_horizontal_loop.c

@@ -79,7 +79,6 @@ create_list_view(appdata_s *ad)
 	elm_list_item_append(list, "Multibuttonentry", NULL, NULL, multibuttonentry_cb, nf);
 	elm_list_item_append(list, "Naviframe", NULL, NULL, naviframe_cb, nf);
 	elm_list_item_append(list, "Nocontents", NULL, NULL, nocontents_cb, nf);
-	elm_list_item_append(list, "Notify", NULL, NULL, notify_cb, nf);
 	elm_list_item_append(list, "Pagecontrol", NULL, NULL, pagecontrol_cb, nf);
 	elm_list_item_append(list, "Popup", NULL, NULL, popup_cb, ad);
 	elm_list_item_append(list, "Progressbar", NULL, NULL, progressbar_cb, nf);
