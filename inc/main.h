@@ -26,8 +26,6 @@
 #endif
 #define LOG_TAG "ui-controls"
 
-#define KEY_END "XF86Stop"
-
 #if !defined(PACKAGE)
 #define PACKAGE "org.tizen.ui-controls"
 #endif
