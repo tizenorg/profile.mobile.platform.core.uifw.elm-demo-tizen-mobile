@@ -65,39 +65,37 @@ list_it_handler_v_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static Evas_Object*
-create_horz_handler_layout(Evas_Object *parent)
+create_horz_handler_scroller(Evas_Object *parent)
 {
-	Evas_Object *layout;
 	Evas_Object *img;
 	Evas_Object *scroller;
 
-	layout = elm_layout_add(parent);
-	elm_layout_file_set(layout, ELM_DEMO_EDJ, "handler_layout");
-
-	scroller = elm_scroller_add(layout);
+	scroller = elm_scroller_add(parent);
 	elm_object_style_set(scroller, "handler");
 	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_FALSE);
 	elm_scroller_policy_set(scroller,ELM_SCROLLER_POLICY_AUTO, ELM_SCROLLER_POLICY_AUTO);
+	evas_object_show(scroller);
 
 	img = elm_image_add(scroller);
 	elm_image_file_set(img, ICON_DIR"/horz_scrollbar.jpg", NULL);
 	elm_image_resizable_set(img, EINA_TRUE, EINA_FALSE);
+	evas_object_size_hint_align_set(img, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_size_hint_weight_set(img, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_show(img);
 
 	elm_object_content_set(scroller, img);
-	elm_object_part_content_set(layout, "scroller", scroller);
 
-	return layout;
+	return scroller;
 }
 
 static void
 list_it_handler_h_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *layout;
+	Evas_Object *scroller;
 	Evas_Object *nf = data;
 
-	layout = create_horz_handler_layout(nf);
-	elm_naviframe_item_push(nf, "Horizontal Handler", NULL, NULL, layout, NULL);
+	scroller = create_horz_handler_scroller(nf);
+	elm_naviframe_item_push(nf, "Horizontal Handler", NULL, NULL, scroller, NULL);
 }
 
 static void

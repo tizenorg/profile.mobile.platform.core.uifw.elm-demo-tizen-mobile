@@ -24,7 +24,6 @@ collections {
    #include "../edc_resource/button.edc"
    #include "../edc_resource/pagecontrol.edc"
    #include "../edc_resource/popup_custom.edc"
-   #include "../edc_resource/handler.edc"
    #include "../edc_resource/multibuttonentry.edc"
    #include "../edc_resource/label.edc"
 }
