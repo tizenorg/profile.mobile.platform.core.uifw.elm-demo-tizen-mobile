@@ -89,9 +89,6 @@ list_it_multiline_cb(void *data, Evas_Object *obj, void *event_info)
 	evas_object_show(layout);
 
 	elm_naviframe_item_push(nf, "Multiline Entry", NULL, NULL, scroller, NULL);
-
-	/* Sample Code for custom menu using elm_entry_context_menu_item_add()
-		elm_entry_context_menu_item_add(en, "Menu",NULL, ELM_ICON_NONE, callback, NULL); */
 }
 
 static void

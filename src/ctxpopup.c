@@ -39,15 +39,6 @@ move_ctxpopup(Evas_Object *ctxpopup, Evas_Object *btn)
 }
 
 static void
-move_dropdown(Evas_Object *ctxpopup, Evas_Object *btn)
-{
-	Evas_Coord x, y, w , h;
-	evas_object_geometry_get(btn, &x, &y, &w, &h);
-	evas_object_move(ctxpopup, x + (w / 2), y + h);
-}
-
-
-static void
 move_more_ctxpopup(Evas_Object *ctxpopup)
 {
 	Evas_Object *win;
