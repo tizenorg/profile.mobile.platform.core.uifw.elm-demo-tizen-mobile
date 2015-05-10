@@ -62,6 +62,7 @@
             min:  1 0;\
             align: 0.0 0.0;\
             text: str;\
+            ellipsis: -1; \
          }\
       }\
    }\
