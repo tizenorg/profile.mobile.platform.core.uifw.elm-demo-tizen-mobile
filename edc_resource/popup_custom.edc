@@ -69,7 +69,7 @@
 group { name: "popup_image_list_layout";
    styles {
       style { name: "popup_content_style";
-         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#FFFFFF color_class=T023 wrap=mixed ellipsis=1.0 text_class=T023";
+         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 color_class=T023 wrap=mixed ellipsis=1.0 text_class=T023";
          tag: "br" "\n";
          tag: "tab" "\t";
       }
@@ -120,7 +120,7 @@ group { name: "popup_image_list_layout";
             }
          }
       }
-      part { name: "elm.swallow.content.bg";
+      part { name: "content_bg";
          type: SPACER;
          scale: 1;
          description { state: "default" 0.0;
@@ -143,8 +143,8 @@ group { name: "popup_image_list_layout";
          scale: 1;
          description { state: "default" 0.0;
             fixed: 1 0;
-            rel1.to: "elm.swallow.content.bg";
-            rel2.to: "elm.swallow.content.bg";
+            rel1.to: "content_bg";
+            rel2.to: "content_bg";
          }
       }
       part { name: "pad_b";
@@ -187,6 +187,7 @@ group { name: "popup_image_list_layout";
                style: "popup_content_style";
                min: 0 1;
             }
+            color: 0 0 0 255;
          }
       }
       part { name: "pad_bottom";
@@ -289,7 +290,7 @@ group { name: "popup_checkview_layout";
 group { name: "processing_view_layout";
    styles {
       style { name: "popup_processing_style";
-         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#FFFFFF color_class=T123 wrap=mixed ellipsis=1.0 text_class=T123";
+         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 color_class=T123 wrap=mixed ellipsis=1.0 text_class=T123";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
@@ -476,7 +477,7 @@ group { name: "popup_text_progressbar_view_layout";
 group { name: "popup_2text_progressbar_view_layout";
    styles {
       style { name: "popup_subtext_style";
-         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE2" color=#FFFFFF color_class=T024 wrap=mixed ellipsis=1.0 text_class=T024";
+         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE2" color=#000000 color_class=T024 wrap=mixed ellipsis=1.0 text_class=T024";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
@@ -591,7 +592,7 @@ group { name: "popup_2text_progressbar_view_layout";
 group { name: "popup_groupindex_view_layout";
    styles {
       style { name: "popup_groupindex_style";
-         base: "font=Tizen:style=Regular align=right font_size="POPUP_TEXT_FONT_SIZE3" color=#FFFFFF color_class=T028 wrap=mixed ellipsis=1.0 text_class=T028";
+         base: "font=Tizen:style=Regular align=right font_size="POPUP_TEXT_FONT_SIZE3" color=#000000 color_class=T028 wrap=mixed ellipsis=1.0 text_class=T028";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
@@ -959,12 +960,11 @@ group { name: "popup_input_text";
 group { name: "popup_text_input_text";
    styles {
       style { name: "popup_input_style";
-         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#FFFFFF color_class=T123 wrap=mixed text_class=T123";
+         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 color_class=T123 wrap=mixed text_class=T123";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
    }
-
    parts {
       part { name: "bg";
          type: SPACER;

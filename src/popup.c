@@ -1062,129 +1062,6 @@ list_it_title_text_1button_cb(void *data, Evas_Object *obj, void *event_info)
 	evas_object_show(popup);
 }
 
-static void
-item_clicked_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	int r = 0, g = 0, b = 0 ,a = 0;
-	Elm_Object_Item *color_it = (Elm_Object_Item *) event_info;
-	elm_colorselector_palette_item_color_get(color_it, &r, &g, &b, &a);
-	evas_object_color_set(data, r, g, b , a);
-}
-
-static Evas_Object *
-create_colorselector(Evas_Object *parent)
-{
-	/* add color palette widget */
-	Evas_Object *colorselector;
-	Elm_Object_Item *it;
-
-	colorselector = elm_colorselector_add(parent);
-	elm_colorselector_mode_set(colorselector, ELM_COLORSELECTOR_PALETTE);
-	evas_object_size_hint_fill_set(colorselector, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	evas_object_size_hint_weight_set(colorselector, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-	elm_colorselector_palette_color_add(colorselector, 255, 255, 255, 255); /* White */
-	elm_colorselector_palette_color_add(colorselector, 253, 255, 45, 255); /* Yellow */
-	elm_colorselector_palette_color_add(colorselector, 255, 131, 93, 255); /* Coral */
-	elm_colorselector_palette_color_add(colorselector, 188, 4, 33, 255); /* Red */
-	elm_colorselector_palette_color_add(colorselector, 255, 73, 201, 255); /* Hot pink */
-	elm_colorselector_palette_color_add(colorselector, 202, 133, 255, 255); /* Plum */
-	elm_colorselector_palette_color_add(colorselector, 122, 55, 222, 255); /* Blue Violet */
-	elm_colorselector_palette_color_add(colorselector, 91, 221, 56, 255); /* Lime Green */
-	elm_colorselector_palette_color_add(colorselector, 34, 139, 34, 255); /* Forest Green */
-
-	it = elm_colorselector_palette_color_add(colorselector, 56, 168, 255, 255); /* Sky Blue */
-	elm_object_item_signal_emit(it, "elm,state,selected", "elm"); //default selected item at launch
-
-	elm_colorselector_palette_color_add(colorselector, 51, 103, 253, 255); /*  Royal Blue */
-	elm_colorselector_palette_color_add(colorselector, 10, 57, 107, 255); /* Dark Blue */
-	elm_colorselector_palette_color_add(colorselector, 164, 165, 165, 255); /* Dark Grey */
-	elm_colorselector_palette_color_add(colorselector, 0, 0, 0, 255); /* Black */
-
-	return colorselector;
-}
-
-static Evas_Object*
-create_colorselector_layout(Evas_Object *parent)
-{
-	Evas_Object *layout, *layout2, *layout3;
-	Evas_Object *entry;
-	Evas_Object *colorselector;
-
-	/* layout */
-	layout = elm_layout_add(parent);
-	elm_layout_file_set(layout, ELM_DEMO_EDJ, "colorselector_popup_layout");
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
-
-	/* layout2 */
-	layout2 = elm_layout_add(layout);
-	elm_layout_file_set(layout2, ELM_DEMO_EDJ, "colorselector_popup/rect/text");
-	evas_object_size_hint_weight_set(layout2, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(layout2, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	evas_object_show(layout2);
-	elm_object_part_content_set(layout, "colorplane_popup_top", layout2);
-
-	/* layout3 */
-	layout3 = elm_layout_add(layout2);
-	elm_layout_file_set(layout3, ELM_DEMO_EDJ, "colorselector_popup/rect");
-	evas_object_size_hint_weight_set(layout3, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(layout3, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	elm_object_part_content_set(layout2, "rect", layout3);
-
-	/* entry */
-	entry = elm_entry_add(layout2);
-	evas_object_size_hint_weight_set(entry, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(entry, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	eext_entry_selection_back_event_allow_set(entry, EINA_TRUE);
-	elm_entry_entry_insert(entry, "Text");
-	elm_entry_editable_set(entry, EINA_FALSE);
-	elm_object_part_content_set(layout2, "text", entry);
-
-	colorselector = create_colorselector(layout);
-	elm_object_part_content_set(layout, "colorpalette", colorselector);
-	evas_object_color_set(layout3, 56, 168, 255, 255);
-	evas_object_smart_callback_add(colorselector, "color,item,selected", item_clicked_cb, layout3);
-
-	evas_object_show(layout);
-
-	return layout;
-}
-
-static void
-list_it_colorselector_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	Evas_Object *popup, *btn;
-	Evas_Object *colorplane;
-	Evas_Object *win = data;
-
-	/* popup */
-	popup = elm_popup_add(win);
-	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
-	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
-	elm_object_part_text_set(popup, "title,text", "Title");
-	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-	colorplane = create_colorselector_layout(popup);
-	elm_object_content_set(popup, colorplane);
-
-	/* cancel button */
-	btn = elm_button_add(popup);
-	elm_object_style_set(btn, "popup");
-	elm_object_text_set(btn, "Cancel");
-	elm_object_part_content_set(popup, "button1", btn);
-	evas_object_smart_callback_add(btn, "clicked", popup_btn_clicked_cb, popup);
-
-	/* save button */
-	btn = elm_button_add(popup);
-	elm_object_style_set(btn, "popup");
-	elm_object_text_set(btn, "Save");
-	elm_object_part_content_set(popup, "button2", btn);
-	evas_object_smart_callback_add(btn, "clicked", popup_btn_clicked_cb, popup);
-
-	evas_object_show(popup);
-}
-
 void
 popup_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -1204,7 +1081,6 @@ popup_cb(void *data, Evas_Object *obj, void *event_info)
 
 	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
 	elm_list_item_append(list, "popup - text", NULL, NULL, list_it_text_cb, win);
-	elm_list_item_append(list, "popup - colorselector", NULL, NULL, list_it_colorselector_cb, win);
 	elm_list_item_append(list, "popup - input text", NULL, NULL, list_it_input_text_cb, ad);
 	elm_list_item_append(list, "popup - text + input text", NULL, NULL, list_it_text_input_text_cb, ad);
 	elm_list_item_append(list, "popup - text + 1 button", NULL, NULL, list_it_text_1button_cb, win);
@@ -1218,12 +1094,12 @@ popup_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_list_item_append(list, "popup - image + text", NULL, NULL, list_it_image_text_cb, win);
 	elm_list_item_append(list, "popup - list", NULL, NULL, list_it_list_cb, win);
 	elm_list_item_append(list, "popup - 2 line", NULL, NULL, list_it_2line_cb, win);
-	elm_list_item_append(list, "popup - text+check", NULL, NULL, list_it_text_check_cb, win);
+	elm_list_item_append(list, "popup - text + check", NULL, NULL, list_it_text_check_cb, win);
 	elm_list_item_append(list, "popup - processing", NULL, NULL, list_it_processing_cb, win);
 	elm_list_item_append(list, "popup - text + progressbar", NULL, NULL, list_it_text_progressbar_cb, win);
 	elm_list_item_append(list, "popup - 2text + progressbar", NULL, NULL, list_it_2text_progressbar_cb, win);
 	elm_list_item_append(list, "popup - groupindex + list", NULL, NULL, list_it_groupindex_list_cb, win);
-	elm_list_item_append(list, "popup - list+radio", NULL, NULL, list_it_list_radio_cb, win);
+	elm_list_item_append(list, "popup - list + radio", NULL, NULL, list_it_list_radio_cb, win);
 	elm_list_item_append(list, "popup - text + slider", NULL, NULL, list_it_text_slider_cb, win);
 	elm_list_item_append(list, "popup - 2text + slider", NULL, NULL, list_it_2text_slider_cb, win);
 	elm_list_item_append(list, "popup - scrollable text", NULL, NULL, list_it_scrollable_text, win);
