@@ -112,8 +112,8 @@ create_list(Evas_Object *parent)
 {
 	Evas_Object *list = elm_list_add(parent);
 	elm_list_mode_set(list, ELM_LIST_COMPRESS);
-	elm_list_item_append(list, "Vert Handler", NULL, NULL, list_it_handler_v_cb, parent);
-	elm_list_item_append(list, "Horz Handler", NULL, NULL, list_it_handler_h_cb, parent);
+	elm_list_item_append(list, "Vertical Handler", NULL, NULL, list_it_handler_v_cb, parent);
+	elm_list_item_append(list, "Horizontal Handler", NULL, NULL, list_it_handler_h_cb, parent);
 	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
 	elm_list_go(list);
 
