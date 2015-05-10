@@ -22,7 +22,6 @@ collections {
    #include "../edc_resource/slider.edc"
    #include "../edc_resource/progressbar.edc"
    #include "../edc_resource/button.edc"
-   #include "../edc_resource/nocontents.edc"
    #include "../edc_resource/pagecontrol.edc"
    #include "../edc_resource/popup_custom.edc"
    #include "../edc_resource/handler.edc"

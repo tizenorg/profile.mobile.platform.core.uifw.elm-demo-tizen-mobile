@@ -20,16 +20,10 @@
 static Evas_Object *
 create_nocontents(Evas_Object *parent)
 {
-	Evas_Object *layout, *nocontents;
-
-	/* Full view layout */
-	layout = elm_layout_add(parent);
-	elm_layout_file_set(layout, ELM_DEMO_EDJ, "nocontents_layout");
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	Evas_Object  *nocontents;
 
 	/* Create elm_layout and set its style as nocontents/text */
-	nocontents = elm_layout_add(layout);
+	nocontents = elm_layout_add(parent);
 	elm_layout_theme_set(nocontents, "layout", "nocontents", "default");
 	evas_object_size_hint_weight_set(nocontents, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(nocontents, EVAS_HINT_FILL, EVAS_HINT_FILL);
@@ -38,9 +32,7 @@ create_nocontents(Evas_Object *parent)
 	elm_layout_signal_emit(nocontents, "text,disabled", "");
 	elm_layout_signal_emit(nocontents, "align.center", "elm");
 
-	elm_object_part_content_set (layout, "contents", nocontents);
-
-	return layout;
+	return nocontents;
 }
 
 void
