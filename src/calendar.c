@@ -20,15 +20,23 @@
 static Evas_Object*
 create_calendar(Evas_Object *nf)
 {
-	Evas_Object *box, *calendar;
+	Evas_Object *scroller, *box, *calendar;
 	time_t the_time;
 
 	time(&the_time); /* Get Current Time */
 
-	box = elm_box_add(nf);
-	evas_object_show(box);
+	scroller = elm_scroller_add(nf);
+	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
+	elm_scroller_policy_set(scroller,ELM_SCROLLER_POLICY_OFF,ELM_SCROLLER_POLICY_AUTO);
+	evas_object_show(scroller);
 
-	calendar = elm_calendar_add(nf);
+	box = elm_box_add(scroller);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box);
+	elm_object_content_set(scroller, box);
+
+	calendar = elm_calendar_add(box);
 	elm_calendar_first_day_of_week_set(calendar, ELM_DAY_SUNDAY);
 	evas_object_size_hint_weight_set(calendar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(calendar, 0.5, 0);
@@ -38,7 +46,7 @@ create_calendar(Evas_Object *nf)
 
 	elm_box_pack_end(box, calendar);
 
-	return box;
+	return scroller;
 }
 
 void
