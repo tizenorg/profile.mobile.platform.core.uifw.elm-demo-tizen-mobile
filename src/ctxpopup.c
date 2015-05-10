@@ -142,60 +142,6 @@ btn_text_only_cb(void *data, Evas_Object *obj, void *event_info)
 	evas_object_show(ctxpopup);
 }
 
-/* DropDown: List style */
-static void
-btn_dropdown_list_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	Evas_Object *nf = data;
-
-	if (ctxpopup != NULL) {
-		evas_object_del(ctxpopup);
-	}
-
-	ctxpopup = elm_ctxpopup_add(nf);
-	elm_object_style_set(ctxpopup, "dropdown/list");
-	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
-	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, NULL);
-
-	elm_ctxpopup_item_append(ctxpopup, "Message", NULL, ctxpopup_item_select_cb, NULL);
-	elm_ctxpopup_item_append(ctxpopup, "Email", NULL, ctxpopup_item_select_cb, NULL);
-	elm_ctxpopup_item_append(ctxpopup, "Facebook", NULL, ctxpopup_item_select_cb, NULL);
-	elm_ctxpopup_item_append(ctxpopup, "Bluetooth", NULL, ctxpopup_item_select_cb, NULL);
-	elm_ctxpopup_item_append(ctxpopup, "Flickr", NULL, ctxpopup_item_select_cb, NULL);
-
-	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_DOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
-
-	move_dropdown(ctxpopup, obj);
-	evas_object_show(ctxpopup);
-}
-
-/* DropDown: Label style */
-static void
-btn_dropdown_label_style_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	Evas_Object *nf = data;
-
-	if (ctxpopup != NULL) {
-		evas_object_del(ctxpopup);
-	}
-
-	ctxpopup = elm_ctxpopup_add(nf);
-	elm_object_style_set(ctxpopup, "dropdown/label");
-	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
-	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, NULL);
-
-	elm_ctxpopup_item_append(ctxpopup, "Message", NULL, ctxpopup_item_select_cb, NULL);
-	elm_ctxpopup_item_append(ctxpopup, "Email", NULL, ctxpopup_item_select_cb, NULL);
-	elm_ctxpopup_item_append(ctxpopup, "Facebook", NULL, ctxpopup_item_select_cb, NULL);
-	elm_ctxpopup_item_append(ctxpopup, "Bluetooth", NULL, ctxpopup_item_select_cb, NULL);
-	elm_ctxpopup_item_append(ctxpopup, "Flickr", NULL, ctxpopup_item_select_cb, NULL);
-
-	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_DOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
-
-	move_dropdown(ctxpopup, obj);
-	evas_object_show(ctxpopup);
-}
-
 /* Icon + Text (More button style : Naviframe Toolbar) */
 static void
 create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
@@ -252,7 +198,7 @@ create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
 void
 ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *layout;
+	Evas_Object *box;
 	Evas_Object *btn;
 	Evas_Object *scroller;
 	Evas_Object *nf = data;
@@ -263,38 +209,28 @@ ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
 	elm_scroller_policy_set(scroller,ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
 
-	/* layout */
-	layout = elm_layout_add(nf);
-	elm_layout_file_set(layout, ELM_DEMO_EDJ, "ctxpopup_layout");
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	/* box */
+	box = elm_box_add(scroller);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box);
+	elm_object_content_set(scroller, box);
+
+	/* Text Only */
+	btn = elm_button_add(box);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	elm_object_text_set(btn, "Text Only");
+	evas_object_smart_callback_add(btn, "clicked", btn_text_only_cb, nf);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
 	nf_it = elm_naviframe_item_push(nf, "CtxPopup", NULL, NULL, scroller, NULL);
 	elm_naviframe_item_pop_cb_set(nf_it, naviframe_pop_cb, NULL);
-
-	elm_object_content_set(scroller, layout);
 
 	/* This button is set for devices which doesn't have H/W more key. */
 	btn = elm_button_add(nf);
 	elm_object_style_set(btn, "naviframe/more/default");
 	evas_object_smart_callback_add(btn, "clicked", create_ctxpopup_more_button_cb, nf);
 	elm_object_item_part_content_set(nf_it, "toolbar_more_btn", btn);
-
-	/* Text Only */
-	btn = elm_button_add(layout);
-	elm_object_text_set(btn, "Text Only");
-	evas_object_smart_callback_add(btn, "clicked", btn_text_only_cb, nf);
-	elm_object_part_content_set(layout, "btn1", btn);
-
-	/* DropDown List */
-	btn = elm_button_add(layout);
-	elm_object_text_set(btn, "DropDown List");
-	elm_object_style_set(btn, "dropdown");
-	evas_object_smart_callback_add(btn, "clicked", btn_dropdown_list_cb, nf);
-	elm_object_part_content_set(layout, "btn2", btn);
-
-	/* DropDown Label */
-	btn = elm_button_add(layout);
-	elm_object_text_set(btn, "DropDown Label");
-	elm_object_style_set(btn, "dropdown");
-	evas_object_smart_callback_add(btn, "clicked", btn_dropdown_label_style_cb, nf);
-	elm_object_part_content_set(layout, "btn3", btn);
 }
