@@ -23,7 +23,7 @@ create_colorselector(Evas_Object *parent)
 	/* add color palette widget */
 	Evas_Object *colorselector;
 	Elm_Object_Item *it;
-	Eina_List *color_list;
+	const Eina_List *color_list;
 
 	colorselector = elm_colorselector_add(parent);
 	elm_colorselector_mode_set(colorselector, ELM_COLORSELECTOR_PALETTE);

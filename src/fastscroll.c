@@ -48,7 +48,6 @@ index_language_changed_cb(void *data, Evas_Object *obj, void *event_info)
 	int i = 0, j, len;
 	char *str;
 	char buf[PATH_MAX] = {0, };
-	Elm_Object_Item *it;
 
 	elm_index_item_clear(obj);
 
@@ -62,11 +61,11 @@ index_language_changed_cb(void *data, Evas_Object *obj, void *event_info)
 	while (i < len)
 	{
 		j = i;
-		eina_unicode_utf8_get_next(str, &i);
+		eina_unicode_utf8_next_get(str, &i);
 		snprintf(buf, i - j + 1, "%s", str + j);
 		buf[i - j + 1] = 0;
 
-		it = elm_index_item_append(obj, buf, NULL, NULL);
+		elm_index_item_append(obj, buf, NULL, NULL);
 	}
 
 	elm_index_level_go(obj, 0);
@@ -110,7 +109,6 @@ create_fastscroll(Evas_Object *scroller)
 	int i = 0, j, len;
 	char *str;
 	char buf[PATH_MAX] = {0, };
-	Elm_Object_Item *it;
 
 	layout = elm_layout_add(scroller);
 	elm_layout_theme_set(layout, "layout", "application", "fastscroll");
@@ -131,11 +129,11 @@ create_fastscroll(Evas_Object *scroller)
 
 	while (i < len) {
 		j = i;
-		eina_unicode_utf8_get_next(str, &i);
+		eina_unicode_utf8_next_get(str, &i);
 		snprintf(buf, i - j + 1, "%s", str + j);
 		buf[i - j + 1] = 0;
 
-		it = elm_index_item_append(index, buf, NULL, NULL);
+		elm_index_item_append(index, buf, NULL, NULL);
 	}
 
 	elm_index_level_go(index, 0);

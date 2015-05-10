@@ -161,7 +161,7 @@ mbe_expand_state_changed_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static Eina_Bool
-mbe_item_filter_cb(Evas_Object *obj, const char* item_label, const void *item_data, const void *data)
+mbe_item_filter_cb(Evas_Object *obj, const char* item_label, void *item_data, void *data)
 {
 	printf("\"%s\" item will be added\n", item_label);
 

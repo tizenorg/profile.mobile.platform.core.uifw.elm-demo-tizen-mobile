@@ -138,9 +138,8 @@ slider_vertical_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EI
 {
 	Evas_Object *content;
 	Evas_Object *nf = data;
-	Elm_Object_Item *it;
 	content = create_content(nf, EINA_FALSE);
-	it = elm_naviframe_item_push(nf, "Vertical Style", NULL, NULL, content, NULL);
+	elm_naviframe_item_push(nf, "Vertical Style", NULL, NULL, content, NULL);
 }
 
 void
@@ -148,9 +147,8 @@ slider_horizontal_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info 
 {
 	Evas_Object *content;
 	Evas_Object *nf = data;
-	Elm_Object_Item *it;
 	content = create_content(nf, EINA_TRUE);
-	it = elm_naviframe_item_push(nf, "Horizontal Style", NULL, NULL, content, NULL);
+	elm_naviframe_item_push(nf, "Horizontal Style", NULL, NULL, content, NULL);
 }
 
 static void

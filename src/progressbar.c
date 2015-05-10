@@ -181,9 +181,8 @@ progressbar_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_U
 {
 	Evas_Object *content;
 	Evas_Object *nf = data;
-	Elm_Object_Item *it;
 
 	content = create_content(nf);
-	it = elm_naviframe_item_push(nf, "Progressbar", NULL, NULL, content, NULL);
+	elm_naviframe_item_push(nf, "Progressbar", NULL, NULL, content, NULL);
 }
 

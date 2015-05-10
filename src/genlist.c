@@ -51,15 +51,6 @@ create_image(Evas_Object *parent)
 	return img;
 }
 
-static Evas_Object *
-create_check(Evas_Object *parent)
-{
-	Evas_Object *check = elm_check_add(parent);
-	evas_object_size_hint_align_set(check, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	return check;
-}
-
 static Evas_Object*
 gl_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
