@@ -20,7 +20,6 @@ collections {
    #include "../edc_resource/datetime.edc"
    #include "../edc_resource/entry.edc"
    #include "../edc_resource/slider.edc"
-   #include "../edc_resource/colorselector.edc"
    #include "../edc_resource/progressbar.edc"
    #include "../edc_resource/button.edc"
    #include "../edc_resource/nocontents.edc"

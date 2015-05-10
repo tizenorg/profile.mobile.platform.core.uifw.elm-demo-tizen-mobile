@@ -27,8 +27,9 @@ create_colorselector(Evas_Object *parent)
 
 	colorselector = elm_colorselector_add(parent);
 	elm_colorselector_mode_set(colorselector, ELM_COLORSELECTOR_PALETTE);
-	evas_object_size_hint_fill_set(colorselector, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	evas_object_size_hint_weight_set(colorselector, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(colorselector, 0, EVAS_HINT_FILL);
+	evas_object_show(colorselector);
 
 	color_list = elm_colorselector_palette_items_get(colorselector);
 	it = eina_list_nth(color_list, 3);
@@ -36,25 +37,6 @@ create_colorselector(Evas_Object *parent)
 	elm_object_item_signal_emit(it, "elm,state,selected", "elm");
 
 	return colorselector;
-}
-
-static Evas_Object*
-create_colorplane_layout(Evas_Object *scroller)
-{
-	Evas_Object *layout;
-	Evas_Object *colorselector;
-
-	/* make base layout for a colorpalette and colorplane */
-	layout = elm_layout_add(scroller);
-	elm_layout_file_set(layout, ELM_DEMO_EDJ, "colorselector_layout");
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	evas_object_show(layout);
-
-	colorselector = create_colorselector(layout);
-	elm_object_part_content_set(layout, "colorpalette", colorselector);
-
-	return layout;
 }
 
 static Evas_Object*
@@ -72,12 +54,12 @@ create_scroller(Evas_Object *parent)
 void
 colorselector_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *layout, *scroller;
+	Evas_Object *colorselector, *scroller;
 	Evas_Object *nf = data;
 
 	scroller = create_scroller(nf);
-	layout = create_colorplane_layout(scroller);
-	elm_object_content_set(scroller, layout);
+	colorselector = create_colorselector(scroller);
+	elm_object_content_set(scroller, colorselector);
 
 	elm_naviframe_item_push(nf, "Colorselector", NULL, NULL, scroller, NULL);
 }
