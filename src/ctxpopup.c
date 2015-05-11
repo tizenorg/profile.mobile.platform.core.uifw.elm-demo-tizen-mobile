@@ -35,7 +35,7 @@ move_ctxpopup(Evas_Object *ctxpopup, Evas_Object *btn)
 {
 	Evas_Coord x, y, w , h;
 	evas_object_geometry_get(btn, &x, &y, &w, &h);
-	evas_object_move(ctxpopup, (w / 2), y + (h / 2));
+	evas_object_move(ctxpopup, x + (w / 2), y + (h / 2));
 }
 
 static void
@@ -116,9 +116,7 @@ btn_text_only_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *nf = data;
 
-	if (ctxpopup != NULL) {
-		evas_object_del(ctxpopup);
-	}
+	evas_object_del(ctxpopup);
 
 	ctxpopup = elm_ctxpopup_add(nf);
 	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
