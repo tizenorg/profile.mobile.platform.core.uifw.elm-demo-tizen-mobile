@@ -587,5 +587,5 @@ void genlist_cb(void *data, Evas_Object *obj, void *event_info)
 
 	elm_list_go(list);
 
-	elm_naviframe_item_push(nf, "Item Styles", NULL, NULL, list, NULL);
+	elm_naviframe_item_push(nf, "Genlist", NULL, NULL, list, NULL);
 }
