@@ -143,6 +143,7 @@ create_base_gui(appdata_s *ad)
 	ad->fb = eext_floatingbutton_add(ad->layout);
 	elm_object_part_content_set(ad->layout, "elm.swallow.floatingbutton", ad->fb);
 
+	/* Floating Button 1 */
 	btn = elm_button_add(ad->fb);
 	elm_object_part_content_set(ad->fb, "button1", btn);
 
@@ -150,6 +151,7 @@ create_base_gui(appdata_s *ad)
 	elm_image_file_set(image, ICON_DIR"/core_floating_icon_01.png", NULL);
 	elm_object_part_content_set(btn, "icon", image);
 
+	/* Floating Button 2 */
 	btn = elm_button_add(ad->fb);
 	elm_object_part_content_set(ad->fb, "button2", btn);
 
