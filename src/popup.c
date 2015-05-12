@@ -883,7 +883,7 @@ list_it_toast_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_object_style_set(popup, "toast");
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
-	elm_object_part_text_set(popup,"elm.text", "Toast popup text ...");
+	elm_object_text_set(popup, "Toast popup text Toast popup text");
 	evas_object_smart_callback_add(popup, "block,clicked", popup_block_clicked_cb, win);
 	elm_popup_timeout_set(popup, 2.0);
 	evas_object_smart_callback_add(popup, "timeout", popup_timeout_cb, NULL);
