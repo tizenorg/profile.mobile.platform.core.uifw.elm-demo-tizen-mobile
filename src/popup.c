@@ -736,7 +736,13 @@ list_it_scrollable_text(void *data, Evas_Object *obj, void *event_info)
 		"inside its layout,and height of popup will be fixed to its maximum height, and "
 		"excess text can be seen by scroller the scroller available inside popup. In this "
 		"way applications need not to add layout and scroller from their side,popup internally "
-		"handles it. ");
+		"handles it. This popup has only long text,which can be set directly"
+		"to popup.If this text fit in screen,then popup view will be normal. However if "
+		"this text exceeds popup permissible size,then popup will internally add a scroller "
+		"inside its layout,and height of popup will be fixed to its maximum height, and "
+		"excess text can be seen by scroller the scroller available inside popup. In this "
+		"way applications need not to add layout and scroller from their side,popup internally "
+		"handles it");
 
 	/* ok button */
 	btn = elm_button_add(popup);
