@@ -170,6 +170,8 @@ create_button_view(Evas_Object *parent)
 
 	/* button 1 */
 	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "circle");
+	elm_object_text_set(btn, "Phone");
 	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)7);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0.5, 0.5);
@@ -183,6 +185,7 @@ create_button_view(Evas_Object *parent)
 
 	/* button 2 */
 	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "circle");
 	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)8);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0.5, 0.5);
@@ -196,6 +199,8 @@ create_button_view(Evas_Object *parent)
 
 	/* button 3 */
 	btn = elm_button_add(box2);
+	elm_object_style_set(btn, "circle");
+	elm_object_text_set(btn, "Note");
 	elm_object_disabled_set(btn, EINA_TRUE);
 	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)9);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
