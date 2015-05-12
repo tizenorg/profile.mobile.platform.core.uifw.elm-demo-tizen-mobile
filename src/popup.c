@@ -334,10 +334,7 @@ list_it_text_check_cb(void *data, Evas_Object *obj, void *event_info)
 
 	/* check */
 	check = elm_check_add(popup);
-	elm_object_style_set(check, "popup");
-	elm_object_text_set(check, "Description text.");
-	evas_object_size_hint_align_set(check, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_object_text_set(check, "Do not show again");
 	elm_object_part_content_set(layout, "elm.swallow.end", check);
 
 	/* scroller */
