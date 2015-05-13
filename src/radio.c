@@ -53,6 +53,7 @@ create_radios(Evas_Object *parent)
 
 	/* adding a radio instance */
 	radio = elm_radio_add(box);
+	elm_object_text_set(radio, "Radio 1");
 	evas_object_show(radio);
 	elm_box_pack_end(box, radio);
 
@@ -64,6 +65,7 @@ create_radios(Evas_Object *parent)
 	radio_group = radio;
 
 	radio = elm_radio_add(box);
+	elm_object_text_set(radio, "Radio 2");
 	evas_object_show(radio);
 	elm_box_pack_end(box, radio);
 
@@ -75,6 +77,7 @@ create_radios(Evas_Object *parent)
 	evas_object_smart_callback_add(radio, "changed", radio_changed_cb, (void *)2);
 
 	radio = elm_radio_add(box);
+	elm_object_text_set(radio, "Radio 3");
 	evas_object_show(radio);
 	elm_box_pack_end(box, radio);
 
@@ -86,6 +89,7 @@ create_radios(Evas_Object *parent)
 	evas_object_smart_callback_add(radio, "changed", radio_changed_cb, (void *)3);
 
 	radio = elm_radio_add(box);
+	elm_object_text_set(radio, "Radio 4");
 	evas_object_show(radio);
 	elm_box_pack_end(box, radio);
 
