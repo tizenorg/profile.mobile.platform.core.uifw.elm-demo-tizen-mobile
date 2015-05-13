@@ -178,30 +178,25 @@ mbe_item_filter_cb(Evas_Object *obj, const char* item_label, void *item_data, vo
 }
 
 static Evas_Object*
-create_scroller(Evas_Object* parent ,Evas_Object* mbe)
+create_multibuttonentry(Evas_Object* parent)
 {
-	Evas_Object* scroller;
+	Evas_Object *scroller, *mbe;
 
+	/* scroller */
 	scroller = elm_scroller_add(parent);
 	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
 	elm_scroller_policy_set(scroller,ELM_SCROLLER_POLICY_OFF,ELM_SCROLLER_POLICY_AUTO);
+	evas_object_size_hint_weight_set(scroller, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(scroller, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	evas_object_show(scroller);
-	elm_object_content_set(scroller, mbe);
-	return scroller;
-}
-
-
-static Evas_Object*
-create_multibuttonentry(Evas_Object* parent)
-{
-	Evas_Object* mbe;
 
 	/* add a multibuttonentry object */
 	mbe = elm_multibuttonentry_add(parent);
 	elm_object_text_set(mbe, "To: ");
 	elm_object_part_text_set(mbe, "guide", "Tap to add recipient");
-	evas_object_size_hint_weight_set(mbe, EVAS_HINT_EXPAND, 0.0);
+	evas_object_size_hint_weight_set(mbe, EVAS_HINT_EXPAND, 0);
 	evas_object_size_hint_align_set(mbe, EVAS_HINT_FILL, 0.0);
+	evas_object_show(mbe);
 
 	/* add item filter callback */
 	elm_multibuttonentry_item_filter_append(mbe, mbe_item_filter_cb, NULL);
@@ -225,7 +220,9 @@ create_multibuttonentry(Evas_Object* parent)
 
 	elm_object_focus_set(mbe, EINA_TRUE);
 
-	return mbe;
+	elm_object_content_set(scroller, mbe);
+
+	return scroller;
 }
 
 static Evas_Object*
@@ -234,25 +231,23 @@ create_checks(Evas_Object *parent, Evas_Object *mbe)
 	Evas_Object *box, *check;
 
 	box = elm_box_add(parent);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, 0);
 	elm_box_horizontal_set(box, EINA_TRUE);
 	evas_object_show(box);
 
 	check = elm_check_add(box);
-	elm_object_style_set(check,"popup");
 	elm_object_text_set(check, "Editable");
 	elm_check_state_set(check, EINA_TRUE);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(check, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, mbe);
 	elm_box_pack_end(box, check);
 	evas_object_show(check);
 
 	check = elm_check_add(box);
-	elm_object_style_set(check,"popup");
 	elm_object_text_set(check, "Expanded");
 	elm_check_state_set(check, EINA_TRUE);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(check, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, mbe);
 	elm_box_pack_end(box, check);
 	evas_object_show(check);
@@ -260,39 +255,53 @@ create_checks(Evas_Object *parent, Evas_Object *mbe)
 	return box;
 }
 
-void
-multibuttonentry_cb(void *data, Evas_Object *obj, void *event_info)
+static Evas_Object *
+create_buttons(Evas_Object *parent, Evas_Object *mbe)
 {
-	Evas_Object *layout, *mbe, *scroller, *box;
-	Evas_Object *btn1, *btn2;
-	Evas_Object *nf = data;
+	Evas_Object *box, *btn1, *btn2;
 
-	layout = elm_layout_add(nf);
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	elm_layout_file_set(layout, ELM_DEMO_EDJ, "multibuttonentry_layout");
-	elm_naviframe_item_push(nf, "Multibuttonentry", NULL, NULL, layout, NULL);
+	//Box (Button 1, Button 2)
+	box = elm_box_add(parent);
+	elm_box_horizontal_set(box, EINA_TRUE);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, 0.3);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, 0);
+	evas_object_show(box);
 
-	mbe = create_multibuttonentry(layout );
-
-	scroller = create_scroller(layout, mbe );
-	elm_object_part_content_set(layout, "multibuttonentry", scroller);
-
-	box = create_checks(layout, mbe);
-	elm_object_part_content_set(layout, "check_box", box);
-
-	btn1 = elm_button_add(layout);
-	elm_object_text_set(btn1, "Item Dim On/Off");
+	//Button 1
+	btn1 = elm_button_add(box);
+	elm_object_text_set(btn1, "Item On/Off");
 	evas_object_smart_callback_add(btn1, "clicked", btn1_clicked_cb, mbe);
 	evas_object_size_hint_weight_set(btn1, EVAS_HINT_EXPAND, 0.0);
 	evas_object_size_hint_align_set(btn1, 0.5, 0.0);
-	elm_object_part_content_set(layout, "btn1", btn1);
 	evas_object_show(btn1);
+	elm_box_pack_end(box, btn1);
 
-	btn2 = elm_button_add(layout);
+	//Button 2
+	btn2 = elm_button_add(box);
 	elm_object_text_set(btn2, "MBE Disable");
 	evas_object_smart_callback_add(btn2, "clicked", btn2_clicked_cb, mbe);
 	evas_object_size_hint_weight_set(btn2, EVAS_HINT_EXPAND, 0.0);
 	evas_object_size_hint_align_set(btn2, 0.5, 0.0);
-	elm_object_part_content_set(layout, "btn2", btn2);
 	evas_object_show(btn2);
+	elm_box_pack_end(box, btn2);
+
+	return box;
+}
+
+void
+multibuttonentry_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *mbe, *box, *box2, *box3;
+	Evas_Object *nf = data;
+
+	box = elm_box_add(nf);
+	elm_box_padding_set(box, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(20));
+	mbe = create_multibuttonentry(box);
+	elm_box_pack_end(box, mbe);
+	box2 = create_checks(box, mbe);
+	elm_box_pack_end(box, box2);
+	box3 = create_buttons(box, mbe);
+	elm_box_pack_end(box, box3);
+
+	elm_naviframe_item_push(nf, "Multibuttonentry", NULL, NULL, box, NULL);
 }
