@@ -23,9 +23,8 @@ typedef struct view_data {
 	Evas_Object *gengrid;
 	int item_width;
 	int item_height;
-	Evas_Object *ctxpopup;
-	Eina_Bool rotate_flag;
 	Eina_Bool longpressed;
+	char *style;
 } view_data_s;
 
 typedef struct item_data {
@@ -33,6 +32,15 @@ typedef struct item_data {
 	const char *path;
 	view_data_s *vd;
 } item_data_s;
+
+char *item_names[] = {
+	"AAAAA",
+	"BBBBB",
+	"CCCCC",
+	"DDDDD",
+	"EEEEE",
+	NULL
+};
 
 static void
 gengrid_moved_cb(void *data, Evas_Object *obj, void *event_info)
@@ -64,6 +72,18 @@ gengrid_longpress_cb(void *data, Evas_Object *obj, void *event_info)
 		set elm_gengrid_item_selected_set as EINA_FALSE.
 		elm_gengrid_item_selected_set(ei, EINA_FALSE); */
 }
+
+static char*
+gengrid_text_get_cb(void *data, Evas_Object *obj, const char *part)
+{
+	char buf[1024];
+	item_data_s *id = data;
+	int index = id->index;
+
+	snprintf(buf, 1023, "%s", item_names[index%5]);
+	return strdup(buf);
+}
+
 
 static Evas_Object*
 gengrid_content_get_cb(void *data, Evas_Object *obj, const char *part)
@@ -129,9 +149,9 @@ create_gengrid(view_data_s *vd)
 	evas_object_smart_callback_add(gengrid, "realized", gengrid_realized_cb, NULL);
 
 	gic = elm_gengrid_item_class_new();
-	gic->item_style = "default";
+	gic->item_style = vd->style;
 
-	gic->func.text_get = NULL;
+	gic->func.text_get = gengrid_text_get_cb;
 	gic->func.content_get = gengrid_content_get_cb;
 	gic->func.state_get = NULL;
 	gic->func.del = NULL;
@@ -151,142 +171,44 @@ create_gengrid(view_data_s *vd)
 	return gengrid;
 }
 
-static Eina_Bool
-naviframe_pop_cb(void *data, Elm_Object_Item *it)
-{
-	view_data_s *vd = data;
-
-	if (vd->ctxpopup != NULL) {
-		evas_object_del(vd->ctxpopup);
-		vd->ctxpopup = NULL;
-	}
-
-	free(vd);
-
-	return EINA_TRUE;
-}
-
 static void
-ctxpopup_it_cb(void *data, Evas_Object *obj, void *event_info)
+gengrid_type1_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	view_data_s *vd = data;
-	Elm_Object_Item *it, *ctxpopup_it;
-	ctxpopup_it = event_info;
-	const char *label = elm_object_item_text_get(ctxpopup_it);
-
-	if (label != NULL) {
-		if (!strcmp(label, "Small Size")) {
-			vd->item_width = 106;
-			vd->item_height = 106;
-		} else if (!strcmp(label, "Large Size")) {
-			vd->item_width = 160;
-			vd->item_height = 160;
-		}
-	}
+	vd->item_width = 134;
+	vd->item_height= 134;
+	vd->style = "default";  //type1 = default
+							//You can both use of them for dafault gengrid style.
 
 	vd->gengrid = create_gengrid(vd);
 
-	it = elm_gengrid_last_item_get(vd->gengrid);
-	elm_gengrid_item_show(it, ELM_GENGRID_ITEM_SCROLLTO_IN);
-
-	elm_object_content_set(vd->nf, vd->gengrid);
-
-	evas_object_del(obj);
+	elm_naviframe_item_push(vd->nf, "Gengrid Type1", NULL, NULL, vd->gengrid, NULL);
 }
 
 static void
-move_ctxpopup(Evas_Object *win, Evas_Object *ctxpopup)
-{
-	Evas_Coord w, h;
-	int pos = -1;
-
-	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
-	pos = elm_win_rotation_get(win);
-	switch (pos) {
-		case 0:
-		case 180:
-			evas_object_move(ctxpopup, 0, h);
-			break;
-		case 90:
-			evas_object_move(ctxpopup, 0, w);
-			break;
-		case 270:
-			evas_object_move(ctxpopup, h, w);
-			break;
-	}
-	evas_object_show(ctxpopup);
-}
-
-static void
-ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+gengrid_type2_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	view_data_s *vd = data;
+	vd->item_width = 134;
+	vd->item_height= 164;
+	vd->style = "type2";
 
-	if (!vd->rotate_flag) {
-		evas_object_del(obj);
-	}
-	else {
-		move_ctxpopup(vd->win, obj);
-		vd->rotate_flag = EINA_FALSE;
-	}
+	vd->gengrid = create_gengrid(vd);
+
+	elm_naviframe_item_push(vd->nf, "Gengrid Type2", NULL, NULL, vd->gengrid, NULL);
 }
 
 static void
-naviframe_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+list_selected_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	view_data_s *vd = data;
-
-	if (vd->ctxpopup != NULL)
-		vd->rotate_flag = EINA_TRUE;
-	else
-		vd->rotate_flag = EINA_FALSE;
-}
-
-static void
-win_rotation_changed_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	view_data_s *vd = data;
-	move_ctxpopup(vd->win, vd->ctxpopup);
-}
-
-static void
-ctxpopup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	Evas_Object *nf = data;
-
-	evas_object_event_callback_del(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb);
-	evas_object_smart_callback_del(elm_object_top_widget_get(obj), "rotation,changed", win_rotation_changed_cb);
-}
-
-static void
-toolbar_more_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	Evas_Object *ctxpopup;
-	view_data_s *vd = data;
-	double scale = elm_config_scale_get();
-
-	ctxpopup = elm_ctxpopup_add(vd->nf);
-	elm_object_style_set(ctxpopup, "more/default");
-	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
-	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, vd);
-	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, ctxpopup_del_cb, vd);
-	evas_object_event_callback_add(vd->nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, vd);
-	evas_object_smart_callback_add(elm_object_top_widget_get(ctxpopup), "rotation,changed", win_rotation_changed_cb, vd);
-	elm_ctxpopup_item_append(ctxpopup, "Small Size", NULL, ctxpopup_it_cb, vd);
-	elm_ctxpopup_item_append(ctxpopup, "Large Size", NULL, ctxpopup_it_cb, vd);
-	evas_object_size_hint_max_set(ctxpopup, scale * 500, scale * 600);
-	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
-
-	move_ctxpopup(vd->win, ctxpopup);
-
-	vd->ctxpopup = ctxpopup;
+    Elm_Object_Item *it = event_info;
+    elm_list_item_selected_set(it, EINA_FALSE);
 }
 
 void
 gengrid_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *btn;
-	Elm_Object_Item *navi_it;
+	Evas_Object *list;
 	view_data_s *vd;
 	Evas_Object *nf = data;
 
@@ -295,16 +217,15 @@ gengrid_cb(void *data, Evas_Object *obj, void *event_info)
 	/* We convince the top widget is a window */
 	vd->win = elm_object_top_widget_get(nf);
 	vd->nf = nf;
-	vd->item_width = 160;
-	vd->item_height = 160;
 
-	vd->gengrid = create_gengrid(vd);
+	/* List */
+	list = elm_list_add(nf);
+	elm_list_mode_set(list, ELM_LIST_COMPRESS);
+	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
 
-	navi_it = elm_naviframe_item_push (vd->nf, "Default", NULL, NULL, vd->gengrid, NULL);
-	elm_naviframe_item_pop_cb_set(navi_it, naviframe_pop_cb, vd);
+	elm_list_item_append(list, "Gengrid Type1", NULL, NULL, gengrid_type1_cb, vd);
+	elm_list_item_append(list, "Gengrid Type2", NULL, NULL, gengrid_type2_cb, vd);
+	elm_list_go(list);
 
-	btn = elm_button_add(nf);
-	elm_object_style_set(btn, "naviframe/more/default");
-	evas_object_smart_callback_add(btn, "clicked", toolbar_more_btn_clicked_cb, vd);
-	elm_object_item_part_content_set(navi_it, "toolbar_more_btn", btn);
+	elm_naviframe_item_push(nf, "Gengrid", NULL, NULL, list, NULL);
 }
