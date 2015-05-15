@@ -77,3 +77,4 @@ void label_ellipsis_cb(void *data, Evas_Object *obj, void *event_info);
 void label_color_styles_cb(void *data, Evas_Object *obj, void *event_info);
 void bg_cb(void *data, Evas_Object *obj, void *event_info);
 void vector_cb(void *data, Evas_Object *obj, void *event_info);
+void hoversel_cb(void *data, Evas_Object *obj, void *event_info);

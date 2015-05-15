@@ -75,6 +75,7 @@ create_list_view(appdata_s *ad)
 	elm_list_item_append(list, "Gengrid", NULL, NULL, gengrid_cb, nf);
 	elm_list_item_append(list, "Genlist", NULL, NULL, genlist_cb, nf);
 	elm_list_item_append(list, "Handler", NULL, NULL, handler_cb, nf);
+	elm_list_item_append(list, "Hoversel", NULL, NULL, hoversel_cb, nf);
 	elm_list_item_append(list, "Label", NULL, NULL, label_cb, nf);
 	elm_list_item_append(list, "Multibuttonentry", NULL, NULL, multibuttonentry_cb, nf);
 	elm_list_item_append(list, "Naviframe", NULL, NULL, naviframe_cb, nf);
