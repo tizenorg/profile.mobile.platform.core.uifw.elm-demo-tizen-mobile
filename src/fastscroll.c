@@ -71,37 +71,6 @@ index_language_changed_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_index_level_go(obj, 0);
 }
 
-static void
-index_level_up_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	const Elm_Object_Item *index_obj;
-	const char *index_letter;
-	int i = 0, j = 0, k;
-	int level = elm_index_item_level_get(obj);
-
-	index_obj = elm_index_selected_item_get(obj, level - 1);
-	index_letter = elm_index_item_letter_get(index_obj);
-	for(i = 0; i < 5; i++)
-	{
-		char buf[32];
-		snprintf(buf, sizeof(buf), "%c", index_letter[0] + i + 1);
-		if(buf[0] > 90 || buf[0] < 65)
-		{
-			j = 0;
-			k = 65;
-			while(i < 5) {
-				snprintf(buf, sizeof(buf), "%c", k + j);
-				elm_index_item_append(obj, buf, NULL, NULL);
-				i++;
-				j++;
-			}
-			break;
-		}
-		elm_index_item_append(obj, buf, NULL, NULL);
-	}
-	elm_index_level_go(obj, 1);
-}
-
 static Evas_Object*
 create_fastscroll(Evas_Object *scroller)
 {
@@ -140,7 +109,6 @@ create_fastscroll(Evas_Object *scroller)
 	elm_index_item_level_set(index,1);
 
 	evas_object_smart_callback_add(index, "selected", index_selected_cb, NULL);
-	evas_object_smart_callback_add(index, "level,up", index_level_up_cb, NULL);
 	evas_object_smart_callback_add(index, "changed", index_changed_cb, NULL);
 	evas_object_smart_callback_add(index, "language,changed", index_language_changed_cb, NULL);
 
