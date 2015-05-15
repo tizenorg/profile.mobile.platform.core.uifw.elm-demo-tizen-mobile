@@ -131,6 +131,60 @@ btn_text_only_cb(void *data, Evas_Object *obj, void *event_info)
 	evas_object_show(ctxpopup);
 }
 
+/* Icon Only */
+static void
+btn_icon_only_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *nf = data;
+	Evas_Object *img;
+
+	evas_object_del(ctxpopup);
+
+	ctxpopup = elm_ctxpopup_add(nf);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, NULL);
+
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_call.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_email.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_note.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+
+	move_ctxpopup(ctxpopup, obj);
+	evas_object_show(ctxpopup);
+}
+
+/* Icon + Text */
+static void
+btn_icon_text_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *nf = data;
+	Evas_Object *img;
+
+	evas_object_del(ctxpopup);
+
+	ctxpopup = elm_ctxpopup_add(nf);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, NULL);
+
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_call.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Call", img, ctxpopup_item_select_cb, NULL);
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_email.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Email", img, ctxpopup_item_select_cb, NULL);
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_note.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Note", img, ctxpopup_item_select_cb, NULL);
+
+	move_ctxpopup(ctxpopup, obj);
+	evas_object_show(ctxpopup);
+}
+
 /* Icon + Text (More button style : Naviframe Toolbar) */
 static void
 create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
@@ -216,6 +270,24 @@ ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 
 	nf_it = elm_naviframe_item_push(nf, "CtxPopup", NULL, NULL, scroller, NULL);
 	elm_naviframe_item_pop_cb_set(nf_it, naviframe_pop_cb, NULL);
+
+	/* Icon Only */
+	btn = elm_button_add(box);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	elm_object_text_set(btn, "Icon Only");
+	evas_object_smart_callback_add(btn, "clicked", btn_icon_only_cb, nf);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	/* Icon + Text */
+	btn = elm_button_add(box);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	elm_object_text_set(btn, "Icon + Text");
+	evas_object_smart_callback_add(btn, "clicked", btn_icon_text_cb, nf);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
 
 	/* This button is set for devices which doesn't have H/W more key. */
 	btn = elm_button_add(nf);
