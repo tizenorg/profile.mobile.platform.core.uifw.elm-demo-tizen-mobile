@@ -40,10 +40,6 @@ typedef struct appdata {
 	Evas_Object *layout;
 	Evas_Object *fb;
 	Evas_Object *nf;
-	Evas_Object *datetime;
-	Evas_Object *popup;
-	Evas_Object *button;
-	struct tm saved_time;
 } appdata_s;
 
 void calendar_cb(void *data, Evas_Object *obj, void *event_info);
