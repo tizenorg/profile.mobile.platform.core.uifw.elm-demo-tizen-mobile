@@ -18,6 +18,7 @@ SET(SRCS
 	src/gengrid.c
 	src/genlist.c
 	src/handler.c
+	src/hoversel.c
 	src/label.c
 	src/label_colorstyles.c
 	src/label_ellipsis.c
