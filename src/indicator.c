@@ -194,7 +194,7 @@ create_scroller(Evas_Object *parent)
 }
 
 void
-conformant_cb(void *data, Evas_Object *obj, void *event_info)
+indicator_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *scroller, *layout;
 	appdata_s *ad = data;
@@ -203,5 +203,5 @@ conformant_cb(void *data, Evas_Object *obj, void *event_info)
 	layout = create_conform_view(scroller, ad);
 	elm_object_content_set(scroller, layout);
 
-	elm_naviframe_item_push(ad->nf, "Conformant", NULL, NULL, scroller, NULL);
+	elm_naviframe_item_push(ad->nf, "Indicator", NULL, NULL, scroller, NULL);
 }

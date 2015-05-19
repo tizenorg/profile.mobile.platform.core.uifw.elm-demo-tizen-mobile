@@ -45,7 +45,7 @@ typedef struct appdata {
 void calendar_cb(void *data, Evas_Object *obj, void *event_info);
 void ctxpopup_cb(void *data, Evas_Object *obj, void *event_info);
 void colorselector_cb(void *data, Evas_Object *obj, void *event_info);
-void conformant_cb(void *data, Evas_Object *obj, void *event_info);
+void indicator_cb(void *data, Evas_Object *obj, void *event_info);
 void gengrid_cb(void *data, Evas_Object *obj, void *event_info);
 void genlist_cb(void *data, Evas_Object *obj, void *event_info);
 void fastscroll_cb(void *data, Evas_Object *obj, void *event_info);

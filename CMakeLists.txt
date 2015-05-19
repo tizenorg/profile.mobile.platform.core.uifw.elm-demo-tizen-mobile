@@ -9,7 +9,6 @@ SET(SRCS
 	src/calendar.c
 	src/check.c
 	src/colorselector.c
-	src/conformant.c
 	src/ctxpopup.c
 	src/datetime.c
 	src/entry.c
@@ -19,6 +18,7 @@ SET(SRCS
 	src/genlist.c
 	src/handler.c
 	src/hoversel.c
+	src/indicator.c
 	src/label.c
 	src/label_colorstyles.c
 	src/label_ellipsis.c
