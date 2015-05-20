@@ -180,7 +180,7 @@ app_create(void *data)
 	   If this function returns false, the application is terminated */
 	appdata_s *ad = data;
 
-	elm_app_base_scale_set(1.8);
+	elm_app_base_scale_set(1.7);
 	create_base_gui(ad);
 
 	return true;
