@@ -1,0 +1,12 @@
+
+#
+# Start the UI Controls App.
+# when TV's application merge from TV profile, must have remove this file.
+
+[Unit]
+Description=UI Controls
+After=e17.service
+
+[Service]
+NotifyAccess=all
+ExecStart=/opt/usr/apps/org.tizen.ui-controls/bin/ui-controls
