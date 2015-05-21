@@ -137,7 +137,7 @@ third_page_cb(void *data, Evas_Object *obj, void *event_info)
 	content = create_content(nf, "Naviframe Demo<br>Page 3", fourth_page_cb);
 
 	/* Push a new item */
-	nf_it = elm_naviframe_item_push(nf, "Title", NULL, NULL, content, "drawers");
+	nf_it = elm_naviframe_item_push(nf, "Title", NULL, NULL, content, NULL);
 
 	/* Subtitle */
 	elm_object_item_part_text_set(nf_it, "subtitle", "Subtitle");
