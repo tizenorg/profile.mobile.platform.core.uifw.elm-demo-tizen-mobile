@@ -5,11 +5,20 @@ Release:    1
 Group:      TO_BE/FILLED_IN
 License:    Apache License, Version 2.0
 Source0:    %{name}-%{version}.tar.gz
+
+#####################################################################
+#FIXME: when TV's application merge from TV profile, must have remove.
+%if "%{?tizen_profile_name}" == "mobile"||"%{?tizen_profile_name}" == "wearable"
+# not build in mobile, wearable
+ExcludeArch: %{arm} %ix86 x86_64
+%endif
+
 %if "%{?tizen_profile_name}" == "tv"
 #Systemd for Tizen-TV
-#FIXME: when TV's application merge from TV profile, must have remove.
 Source2:        packaging/ui-controls.service
 %endif
+#####################################################################
+
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-system-system-settings)
@@ -34,13 +43,15 @@ make %{?jobs:-j%jobs}
 %install
 %make_install
 
-%if "%{?tizen_profile_name}" == "tv"
-#Systemd for Tizen-TV
+#####################################################################
 #FIXME: when TV's application merge from TV profile, must have remove.
+#Systemd for Tizen-TV
+%if "%{?tizen_profile_name}" == "tv"
 mkdir -p %{buildroot}/usr/lib/systemd/system/basic.target.wants
 install -m 0644 %SOURCE2 %{buildroot}/usr/lib/systemd/system
 ln -s ../ui-controls.service %{buildroot}/usr/lib/systemd/system/basic.target.wants/ui-controls.service
 %endif
+#####################################################################
 
 mkdir -p %{buildroot}/%{_datadir}/packages/
 cp %{_builddir}/%{buildsubdir}/org.tizen.ui-controls.xml %{buildroot}/%{_datadir}/packages/org.tizen.ui-controls.xml
@@ -56,9 +67,11 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/%{_datadir}/license/%{name}
 %{_datadir}/icons/default/small/org.tizen.ui-controls.png
 %{_datadir}/license/%{name}
 %manifest %{name}.manifest
-%if "%{?tizen_profile_name}" == "tv"
-#Systemd for Tizen-TV
+#####################################################################
 #FIXME: when TV's application merge from TV profile, must have remove.
+#Systemd for Tizen-TV
+%if "%{?tizen_profile_name}" == "tv"
 %{_libdir}/systemd/system/ui-controls.service
 %{_libdir}/systemd/system/basic.target.wants/ui-controls.service
 %endif
+#####################################################################
