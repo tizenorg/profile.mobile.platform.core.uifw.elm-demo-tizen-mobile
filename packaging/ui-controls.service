@@ -9,4 +9,4 @@ After=e17.service
 
 [Service]
 NotifyAccess=all
-ExecStart=/opt/usr/apps/org.tizen.ui-controls/bin/ui-controls
+ExecStart=/usr/bin/launch_app org.tizen.ui-controls
