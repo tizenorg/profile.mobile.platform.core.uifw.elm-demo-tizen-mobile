@@ -135,7 +135,6 @@ static Evas_Object*
 create_scroller(Evas_Object *parent)
 {
 	Evas_Object *scroller = elm_scroller_add(parent);
-	elm_object_style_set(scroller, "effect");
 	elm_scroller_policy_set(scroller,ELM_SCROLLER_POLICY_OFF,ELM_SCROLLER_POLICY_AUTO);
 	evas_object_show(scroller);
 
