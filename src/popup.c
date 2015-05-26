@@ -436,7 +436,6 @@ list_it_text_progressbar_cb(void *data, Evas_Object *obj, void *event_info)
 
 	/* progressbar */
 	progressbar = elm_progressbar_add(layout);
-	elm_object_style_set(progressbar, "list_progress");
 	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
 	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_progressbar_pulse(progressbar, EINA_TRUE);
@@ -486,7 +485,6 @@ list_it_2text_progressbar_cb(void *data, Evas_Object *obj, void *event_info)
 
 	/* progressbar */
 	progressbar = elm_progressbar_add(layout);
-	elm_object_style_set(progressbar, "list_progress");
 	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
 	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_progressbar_pulse(progressbar, EINA_TRUE);
