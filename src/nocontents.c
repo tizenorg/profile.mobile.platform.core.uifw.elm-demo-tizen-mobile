@@ -29,7 +29,6 @@ create_nocontents(Evas_Object *parent)
 	evas_object_size_hint_align_set(nocontents, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	elm_object_part_text_set(nocontents, "elm.text", "No Items");
 	elm_object_part_text_set(nocontents, "elm.help.text", "No Contents help text. This part is for hints and useful information for users. No Contents help text. This part is for hints and useful information for users.");
-	elm_layout_signal_emit(nocontents, "text,disabled", "");
 	elm_layout_signal_emit(nocontents, "align.center", "elm");
 
 	return nocontents;

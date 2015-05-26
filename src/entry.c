@@ -81,7 +81,6 @@ list_it_multiline_cb(void *data, Evas_Object *obj, void *event_info)
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, 0.0);
 
 	entry = elm_entry_add(layout);
-	elm_object_signal_emit(entry, "elm,state,scroll,enabled", "");
 	eext_entry_selection_back_event_allow_set(entry, EINA_TRUE);
 	elm_object_part_content_set(layout, "entry_part", entry);
 
