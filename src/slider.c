@@ -25,17 +25,6 @@ static char *slider_type[] = {
 	NULL
 };
 
-static void
-create_icon(Evas_Object *slider)
-{
-	Evas_Object *img;
-	img = elm_image_add(slider);
-	elm_image_file_set(img, ICON_DIR"/core_icon_brightness.png", NULL);
-	evas_object_size_hint_aspect_set(img, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
-	elm_object_part_content_set(slider, "elm.swallow.icon", img);
-	evas_object_show(img);
-}
-
 static Evas_Object
 *create_slider(Evas_Object *parent, Eina_Bool is_center_point)
 {
@@ -111,8 +100,6 @@ static Evas_Object
 				slider = create_slider(main_box, EINA_FALSE);
 			elm_slider_horizontal_set(slider, is_horizontal);
 			elm_slider_value_set(slider, (idx + 1));
-			if (idx % 2 == 0)
-				create_icon(slider);
 			evas_object_show(slider);
 			elm_box_pack_end(main_box, slider);
 		}
