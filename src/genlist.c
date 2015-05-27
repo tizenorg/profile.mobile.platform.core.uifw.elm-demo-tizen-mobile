@@ -431,6 +431,59 @@ full_content_get_cb(void *data, Evas_Object *obj, const char *part)
 	return layout;
 }
 
+// group_index
+// -------------------------------------------------
+// |   elm.text   | elm.swallow.end (elm.text.end) |
+// -------------------------------------------------
+static Evas_Object*
+group_index_content_get_cb(void *data, Evas_Object *obj, const char *part)
+{
+	item_data_s *id = data;
+
+	if ((id->index / 7) % 3 == 0)
+	{
+		Evas_Object *image;
+
+		image = elm_image_add(obj);
+		elm_image_file_set(image, ICON_DIR"/core_icon_expand_close.png", NULL);
+		evas_object_color_set(image, 61, 185, 204, 255);
+		evas_object_size_hint_min_set(image, 60, 60);
+
+		return image;
+	}
+	else if ((id->index / 7) % 3 == 1)
+	{
+		Evas_Object *check;
+
+		check = elm_check_add(obj);
+		elm_check_state_set(check, EINA_TRUE);
+
+		return check;
+	}
+
+	return NULL;
+}
+
+static char*
+group_index_text_get_cb(void *data, Evas_Object *obj, const char *part)
+{
+	item_data_s *id = data;
+	char buf[1024];
+
+	if (!strcmp("elm.text", part))
+	{
+		snprintf(buf, sizeof(buf), "Group index %d", (id->index / 7));
+		return strdup(buf);
+	}
+	else if(!strcmp("elm.text.end", part) && ((id->index / 7) % 3 == 2))
+	{
+		snprintf(buf, sizeof(buf), "Text");
+		return strdup(buf);
+	}
+
+	return NULL;
+}
+
 ////////////////////////////////////////////////////////////////////////////
 
 static void
@@ -468,10 +521,15 @@ static void
 gl_selected_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Elm_Object_Item *it = event_info;
+	Eina_Bool expanded = EINA_FALSE;
+
 	item_data_s *id = elm_object_item_data_get(it);
 	printf("%s: [%d]\n", __func__, id->index);
 	/* Unhighlight item */
 	elm_genlist_item_selected_set(it, EINA_FALSE);
+
+	expanded = elm_genlist_item_expanded_get(it);
+	elm_genlist_item_expanded_set(it, !expanded);
 }
 
 static void
@@ -484,12 +542,52 @@ gl_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
+gl_expanded_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
+{
+	Elm_Object_Item *it = event_info;
+	Evas_Object *image, *genlist = elm_object_item_widget_get(it);
+	Elm_Genlist_Item_Class *itc;
+	item_data_s *id;
+	int i;
+
+	image = elm_object_item_part_content_get(it, "elm.swallow.end");
+	elm_image_file_set(image, ICON_DIR"/core_icon_expand_open.png", NULL);
+
+	itc = elm_genlist_item_class_new();
+	itc->item_style = "type1";
+	itc->func.text_get = type1_text_get_cb;
+	itc->func.del = gl_del_cb;
+
+	for (i = 0; i < 6; i++)
+	{
+		id = calloc(sizeof(item_data_s), 1);
+		id->index = i;
+
+		elm_genlist_item_append(genlist, itc, id, it, ELM_GENLIST_ITEM_NONE, NULL, id);
+	}
+
+	elm_genlist_item_class_free(itc);
+}
+
+static void
+gl_contracted_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info)
+{
+	Evas_Object *image;
+	Elm_Object_Item *it = event_info;
+
+	elm_genlist_item_subitems_clear(it);
+
+	image = elm_object_item_part_content_get(it, "elm.swallow.end");
+	elm_image_file_set(image, ICON_DIR"/core_icon_expand_close.png", NULL);
+}
+
+static void
 genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 {
 	Evas_Object *genlist;
 	Evas_Object *nf = data;
 	Elm_Object_Item *it = event_info;
-	Elm_Genlist_Item_Class *itc;
+	Elm_Genlist_Item_Class *itc, *itc2 = NULL;
 
 	int index;
 	int n_items = NUM_OF_ITEMS;
@@ -515,13 +613,26 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 		itc->func.text_get = multiline_text_get_cb;
 		itc->func.del = gl_del_cb;
 	}
-	else
+	else if (!strcmp("full", style))
 	{
 		itc = elm_genlist_item_class_new();
 		itc->item_style = style;
 		itc->func.content_get = full_content_get_cb;
 		itc->func.text_get = NULL;
 		itc->func.del = gl_del_cb;
+	}
+	else
+	{
+		itc = elm_genlist_item_class_new();
+		itc->item_style = "default";
+		itc->func.text_get = type1_text_get_cb;
+		itc->func.del = gl_del_cb;
+
+		itc2 = elm_genlist_item_class_new();
+		itc2->item_style = style;
+		itc2->func.content_get = group_index_content_get_cb;
+		itc2->func.text_get = group_index_text_get_cb;
+		itc2->func.del = gl_del_cb;
 	}
 
 	/* Create genlist */
@@ -543,23 +654,42 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	evas_object_smart_callback_add(genlist, "loaded", gl_loaded_cb, NULL);
 	evas_object_smart_callback_add(genlist, "selected", gl_selected_cb, NULL);
 	evas_object_smart_callback_add(genlist, "longpressed", gl_longpressed_cb, NULL);
+	evas_object_smart_callback_add(genlist, "expanded", gl_expanded_cb, NULL);
+	evas_object_smart_callback_add(genlist, "contracted", gl_contracted_cb, NULL);
 
 	for (index = 0; index < n_items; index++)
 	{
 		item_data_s *id = calloc(sizeof(item_data_s), 1);
 		id->index = index;
-		it = elm_genlist_item_append(genlist, // genlist object
-						itc,  // item class
-						id,   // item class user data
-						NULL,
-						ELM_GENLIST_ITEM_NONE, // item type
-						NULL, // select smart callback
-						id);  // smart callback user data
+		if (!strcmp("group_index", style))
+		{
+			if ((index % 7) == 0)
+			{
+				it = elm_genlist_item_append(genlist, // genlist object
+								itc2,  // item class (append group_index item per 7 items)
+								id,   // item class user data
+								NULL, // parent
+								ELM_GENLIST_ITEM_TREE, // item type
+								NULL, // select smart callback
+								id);  // smart callback user data
+
+				if (index != 0) elm_genlist_item_expanded_set(it, EINA_TRUE);
+			}
+		}
+		else
+			it = elm_genlist_item_append(genlist, // genlist object
+							itc,  // item class
+							id,   // item class user data
+							NULL,
+							ELM_GENLIST_ITEM_NONE, // item type
+							NULL, // select smart callback
+							id);  // smart callback user data
+
 		id->item = it;
-		if (index == 0) elm_object_item_disabled_set(it, EINA_TRUE);
 	}
 
 	elm_genlist_item_class_free(itc);
+	if (itc2) elm_genlist_item_class_free(itc2);
 
 	elm_naviframe_item_push(nf, style, NULL, NULL, genlist, NULL);
 }
@@ -571,6 +701,7 @@ void genlist_cb(void *data, Evas_Object *obj, void *event_info)
 		"type2",
 		"multiline",
 		"full",
+		"group_index",
 		NULL
 	};
 
