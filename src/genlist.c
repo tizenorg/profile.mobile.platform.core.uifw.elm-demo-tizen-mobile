@@ -673,7 +673,7 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 								NULL, // select smart callback
 								id);  // smart callback user data
 
-				if (index != 0) elm_genlist_item_expanded_set(it, EINA_TRUE);
+				if ((index / 7) == 1) elm_genlist_item_expanded_set(it, EINA_TRUE);
 			}
 		}
 		else
