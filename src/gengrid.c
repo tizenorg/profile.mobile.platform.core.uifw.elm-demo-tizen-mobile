@@ -97,6 +97,11 @@ gengrid_content_get_cb(void *data, Evas_Object *obj, const char *part)
 		elm_image_preload_disabled_set(img, EINA_FALSE);
 		evas_object_show(img);
 		return img;
+	} else if (!strcmp(part, "elm.swallow.end") && id->index == 199) {
+		Evas_Object *layout = elm_layout_add(obj);
+		elm_layout_theme_set(layout, "layout", "badge", "default");
+		elm_object_part_text_set(layout, "elm.text", "199");
+		return layout;
 	}
 
 	return NULL;
