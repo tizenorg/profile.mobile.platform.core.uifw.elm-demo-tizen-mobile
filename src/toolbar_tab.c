@@ -24,14 +24,24 @@ static Evas_Object*
 create_2_icon_text_tabbar(Evas_Object *parent)
 {
 	Evas_Object *toolbar;
+	Evas_Object *badge_layout;
+	Elm_Object_Item *item;
 
 	toolbar = elm_toolbar_add(parent);
 	elm_object_style_set(toolbar, "tabbar");
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
-	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_alarm.png", "Alarm", toolbar_it_cb, parent);
+	item = elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_alarm.png", "Alarm", toolbar_it_cb, parent);
 	elm_toolbar_item_append(toolbar, ICON_DIR"/Clock_tabs_icon_world_clock.png", "World Clock", toolbar_it_cb, parent);
+
+	badge_layout = elm_layout_add(toolbar);
+	elm_layout_theme_set(badge_layout, "layout", "badge", "default");
+	elm_object_part_text_set(badge_layout, "elm.text", "999+");
+	elm_layout_signal_emit(badge_layout, "elm,state,badge,toolbar", "elm");
+	evas_object_show(badge_layout);
+
+	elm_object_item_part_content_set(item, "elm.swallow.badge", badge_layout);
 
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
