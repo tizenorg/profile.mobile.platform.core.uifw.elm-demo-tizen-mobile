@@ -17,17 +17,6 @@
 
 #include "main.h"
 
-static char *process_type[] = {
-	"List Process",
-	"List Process with Text",
-	"Pending List",
-	"Pending List with Text",
-	"Process_Large",
-	"Process_Medium",
-	"Process_Small"
-};
-
-
 static Eina_Bool
 progress_timer_cb(void *data)
 {
@@ -49,130 +38,129 @@ progressbar_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	ecore_timer_del(timer);
 }
 
-static Evas_Object
-*create_progressbar(Evas_Object *obj, int index)
+static Evas_Object *
+create_pending_progressbar(Evas_Object *parent)
 {
 	Evas_Object *progressbar;
 	Ecore_Timer *progress_timer;
 
-	if (index == 0) {
-		progressbar = elm_progressbar_add(obj);
-		elm_object_style_set(progressbar, "custom");
-		elm_progressbar_horizontal_set(progressbar, EINA_TRUE);
-		evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, EVAS_HINT_FILL);
-		evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_progressbar_value_set(progressbar, 0.0);
-		progress_timer = ecore_timer_add(0.1, progress_timer_cb, progressbar);
-		evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
-	} else if (index == 1) {
-		progressbar = elm_progressbar_add(obj);
-		elm_progressbar_horizontal_set(progressbar, EINA_TRUE);
-		evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, EVAS_HINT_FILL);
-		evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_progressbar_value_set(progressbar, 0.0);
-		elm_object_text_set(progressbar, "Right Top");
-		elm_object_signal_emit(progressbar, "elm,units,show", "elm");
-		elm_object_part_text_set(progressbar,"elm.bottom.text", "Left Bottom");
-		progress_timer = ecore_timer_add(0.1, progress_timer_cb, progressbar);
-		evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
-	} else if (index == 2) {
-		progressbar = elm_progressbar_add(obj);
-		elm_object_style_set(progressbar, "pending_custom");
-		elm_progressbar_horizontal_set(progressbar, EINA_TRUE);
-		evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, EVAS_HINT_FILL);
-		evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_progressbar_pulse(progressbar, EINA_TRUE);
-	} else if (index == 3) {
-		progressbar = elm_progressbar_add(obj);
-		elm_object_style_set(progressbar, "pending");
-		elm_progressbar_horizontal_set(progressbar, EINA_TRUE);
-		evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, EVAS_HINT_FILL);
-		evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_progressbar_pulse(progressbar, EINA_TRUE);
-		elm_object_text_set(progressbar, "Right Top");
-		elm_object_signal_emit(progressbar, "elm,units,show", "elm");
-		elm_object_part_text_set(progressbar,"elm.bottom.text", "Left Bottom");
-		progress_timer = ecore_timer_add(0.1, progress_timer_cb, progressbar);
-		evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
-	} else if (index == 4) {
-		progressbar = elm_progressbar_add(obj);
-		elm_object_style_set(progressbar, "process_large");
-		evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
-		evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_progressbar_pulse(progressbar, EINA_TRUE);
-	} else if (index == 5) {
-		progressbar = elm_progressbar_add(obj);
-		elm_object_style_set(progressbar, "process_medium");
-		evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
-		evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_progressbar_pulse(progressbar, EINA_TRUE);
-	} else {
-		progressbar = elm_progressbar_add(obj);
-		elm_object_style_set(progressbar, "process_small");
-		evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, EVAS_HINT_FILL);
-		evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_progressbar_pulse(progressbar, EINA_TRUE);
-	}
+	progressbar = elm_progressbar_add(parent);
+	elm_object_style_set(progressbar, "pending");
+	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
+	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_progressbar_pulse(progressbar, EINA_TRUE);
+	evas_object_show(progressbar);
+
+	elm_object_part_text_set(progressbar, "elm.top.left.text", "top left");
+	elm_object_part_text_set(progressbar, "elm.top.right.text", "top right");
+	elm_object_part_text_set(progressbar, "elm.bottom.left.text", "bottom left");
+	elm_object_part_text_set(progressbar, "elm.bottom.right.text", "bottom right");
+
 	return progressbar;
 }
 
-static Evas_Object
-*create_scroller(Evas_Object* parent)
+static Evas_Object *
+create_process_progressbar(Evas_Object *parent, const char *style)
 {
-	Evas_Object* scroller = elm_scroller_add(parent);
-	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
-	elm_scroller_policy_set(scroller,ELM_SCROLLER_POLICY_OFF,ELM_SCROLLER_POLICY_AUTO);
-	evas_object_show(scroller);
+	Evas_Object *progressbar;
 
-	return scroller;
+	progressbar = elm_progressbar_add(parent);
+
+	elm_object_style_set(progressbar, style);
+	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
+	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_progressbar_pulse(progressbar, EINA_TRUE);
+	evas_object_show(progressbar);
+
+	return progressbar;
 }
 
-static Evas_Object
-*create_box(Evas_Object *parent, Eina_Bool hor, double align_x, double align_y, double weight_x, double weight_y)
+static Evas_Object *
+create_default_progressbar(Evas_Object *parent)
 {
-	Evas_Object *box;
-	box = elm_box_add(parent);
-	elm_box_horizontal_set(box, hor);
-	evas_object_size_hint_weight_set(box, weight_x, weight_y);
-	evas_object_size_hint_align_set(box, align_x, align_y);
-	evas_object_show(box);
-	return box;
+	Evas_Object *progressbar;
+	Ecore_Timer *progress_timer;
+
+	progressbar = elm_progressbar_add(parent);
+	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
+	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_progressbar_value_set(progressbar, 0.0);
+	progress_timer = ecore_timer_add(0.1, progress_timer_cb, progressbar);
+	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
+	evas_object_show(progressbar);
+
+	elm_object_part_text_set(progressbar, "elm.top.left.text", "top left");
+	elm_object_part_text_set(progressbar, "elm.top.right.text", "top right");
+	elm_object_part_text_set(progressbar, "elm.bottom.left.text", "bottom left");
+	elm_object_part_text_set(progressbar, "elm.bottom.right.text", "bottom right");
+
+	return progressbar;
+}
+
+static Evas_Object *
+create_label(Evas_Object *parent, const char *text)
+{
+   Evas_Object *label;
+
+	label = elm_label_add(parent);
+	elm_object_text_set(label, text);
+	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, 0);
+	evas_object_show(label);
+
+	return label;
 }
 
 static Evas_Object
 *create_content(Evas_Object* parent)
 {
-	Evas_Object *progressbar;
-	Evas_Object *main_box, *progress_box, *label;
 	Evas_Object *scroller;
-	int idx = 0;
+	Evas_Object *box;
+	Evas_Object *label;
+	Evas_Object *progressbar;
 
-	scroller = create_scroller(parent);
+	/* Scroller */
+	scroller = elm_scroller_add(parent);
+	evas_object_show(scroller);
 
-	main_box = create_box(scroller, EINA_TRUE, EVAS_HINT_FILL, EVAS_HINT_FILL, EVAS_HINT_EXPAND, 0.0);
-	elm_box_homogeneous_set(main_box, EINA_FALSE);
-	elm_object_content_set(scroller, main_box);
-	elm_box_padding_set(main_box, 15 * elm_config_scale_get(), 15 * elm_config_scale_get());
+	/* Box */
+	box = elm_box_add(scroller);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box);
 
-	elm_box_pack_end(main_box, create_box(main_box, EINA_FALSE, 0.0, 0.0, 0.0, 0.0));
+	elm_object_content_set(scroller, box);
 
-	progress_box = create_box(main_box, EINA_FALSE, EVAS_HINT_FILL, 0.0, EVAS_HINT_EXPAND, 0.0);
-	elm_box_homogeneous_set(progress_box, EINA_FALSE);
-	elm_box_padding_set(progress_box, 50 * elm_config_scale_get(), 50 * elm_config_scale_get());
-	elm_box_pack_end(main_box, progress_box);
+	/* Default Progressbar */
+	label = create_label(box, "default:");
+	elm_box_pack_end(box, label);
+	progressbar = create_default_progressbar(box);
+	elm_box_pack_end(box, progressbar);
 
-	elm_box_pack_end(main_box, create_box(main_box, EINA_FALSE, 0.0, 0.0, 0.0, 0.0));
+	/* Pending Progressbar */
+	label = create_label(box, "pending:");
+	elm_box_pack_end(box, label);
+	progressbar = create_pending_progressbar(box);
+	elm_box_pack_end(box, progressbar);
 
-	for (idx = 0; idx < 7; idx++) {
-		label = elm_label_add(progress_box);
-		evas_object_size_hint_align_set(label, 0.0, 0.5);
-		elm_object_text_set(label, process_type[idx]);
-		elm_box_pack_end(progress_box, label);
-		evas_object_show(label);
-		progressbar = create_progressbar(progress_box, idx);
-		evas_object_show(progressbar);
-		elm_box_pack_end(progress_box, progressbar);
-	}
+	/* Process Large */
+	label = create_label(box, "process_large:");
+	elm_box_pack_end(box, label);
+	progressbar = create_process_progressbar(box, "process_large");
+	elm_box_pack_end(box, progressbar);
+
+	/* Process Medium */
+	label = create_label(box, "process_medium:");
+	elm_box_pack_end(box, label);
+	progressbar = create_process_progressbar(box, "process_medium");
+	elm_box_pack_end(box, progressbar);
+
+	/* Process Small */
+	label = create_label(box, "process_small:");
+	elm_box_pack_end(box, label);
+	progressbar = create_process_progressbar(box, "process_small");
+	elm_box_pack_end(box, progressbar);
+
 	return scroller;
 }
 
