@@ -17,105 +17,188 @@
 
 #include "main.h"
 
-static char *slider_type[] = {
-	"   Icon-Slider",
-	"   Slider Normal Style",
-	"   Icon-Center Slider",
-	"   Center Slider",
-	NULL
-};
-
-static Evas_Object
-*create_slider(Evas_Object *parent, Eina_Bool is_center_point)
+static Evas_Object *
+create_slider(Evas_Object *parent, const char *style, Eina_Bool indicator, Eina_Bool horizontal)
 {
 	Evas_Object *slider;
 
 	slider = elm_slider_add(parent);
-	elm_slider_indicator_show_set(slider, EINA_TRUE);
+	if (style) elm_object_style_set(slider, style);
+
+	elm_slider_horizontal_set(slider, horizontal);
+
+	if (indicator) {
+		elm_slider_indicator_show_set(slider, EINA_TRUE);
+		elm_slider_indicator_format_set(slider, "%1.0f");
+	}
+
+	elm_slider_min_max_set(slider, 0, 9);
+
 	evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(slider, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	elm_slider_indicator_format_set(slider, "%1.0f");
-	elm_slider_min_max_set(slider, 0, 9);
-	if (is_center_point)
-		elm_object_style_set(slider, "center_point");
+	evas_object_show(slider);
 
 	return slider;
 }
 
 static Evas_Object
-*create_scroller(Evas_Object* parent)
+*create_vertical_content(Evas_Object* parent)
 {
-	Evas_Object* scroller = elm_scroller_add(parent);
-	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
-	elm_scroller_policy_set(scroller,ELM_SCROLLER_POLICY_OFF,ELM_SCROLLER_POLICY_AUTO);
+	Evas_Object *scroller;
+	Evas_Object *box;
+	Evas_Object *slider;
+	Evas_Object *label;
+	int idx = 0;
+
+	//Scroller
+	scroller = elm_scroller_add(parent);
 	evas_object_show(scroller);
+
+	//Box
+	box = elm_box_add(scroller);
+	elm_box_horizontal_set(box, EINA_TRUE);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box);
+	elm_object_content_set(scroller, box);
+
+	//1. Default Slider
+	slider = create_slider(box, NULL, EINA_TRUE, EINA_FALSE);
+	elm_slider_value_set(slider, 0);
+	elm_box_pack_end(box, slider);
+
+	//Default Slider, Disabled
+	slider = create_slider(box, NULL, EINA_TRUE, EINA_FALSE);
+	elm_object_disabled_set(slider, EINA_TRUE);
+	elm_slider_value_set(slider, 0);
+	elm_box_pack_end(box, slider);
+
+
+	//2. Center Point Slider
+	slider = create_slider(box, "center_point", EINA_TRUE, EINA_FALSE);
+	elm_slider_value_set(slider, 3);
+	elm_box_pack_end(box, slider);
+
+	//Center Point Slider, Disabled
+	slider = create_slider(box, "center_point", EINA_TRUE, EINA_FALSE);
+	elm_object_disabled_set(slider, EINA_TRUE);
+	elm_slider_value_set(slider, 3);
+	elm_box_pack_end(box, slider);
+
+
+	//3. No Indicator Slider
+	slider = create_slider(box, NULL, EINA_FALSE, EINA_FALSE);
+	elm_slider_value_set(slider, 4);
+	elm_box_pack_end(box, slider);
+
+	//No Indicator Slider, Center Point
+	slider = create_slider(box, "center_point", EINA_FALSE, EINA_FALSE);
+	elm_slider_value_set(slider, 4);
+	elm_box_pack_end(box, slider);
 
 	return scroller;
 }
 
-static Evas_Object
-*create_box(Evas_Object *parent, Eina_Bool hor)
+static Evas_Object *
+create_horizontal_content(Evas_Object* parent)
 {
-	Evas_Object *box;
-	box = elm_box_add(parent);
-	elm_box_horizontal_set(box, hor);
-	if (hor) {
-		evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	} else {
-		evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, 0.0);
-		evas_object_size_hint_align_set(box, EVAS_HINT_FILL, 0.0);
-	}
-	evas_object_show(box);
-
-	return box;
-}
-
-static Evas_Object
-*create_content(Evas_Object* parent, Eina_Bool is_horizontal)
-{
-	Evas_Object *slider;
 	Evas_Object *scroller;
-	Evas_Object *main_box, *label;
+	Evas_Object *box;
+	Evas_Object *slider;
+	Evas_Object *label;
 	int idx = 0;
-	int no_slider = 0;
 
-	scroller = create_scroller(parent);
+	//Scroller
+	scroller = elm_scroller_add(parent);
+	evas_object_show(scroller);
 
-	main_box = create_box(scroller, !is_horizontal);
-	elm_box_homogeneous_set(main_box, EINA_FALSE);
-	elm_box_padding_set(main_box, 30 * elm_config_scale_get(), 30 * elm_config_scale_get());
-	elm_object_content_set(scroller, main_box);
-	if (is_horizontal) {
-		no_slider = 4;
-		for (idx = 0; idx < no_slider; idx++) {
-			label = elm_label_add(main_box);
-			evas_object_size_hint_align_set(label, 0.0, 0.5);
-			elm_object_text_set(label, slider_type[idx]);
-			elm_box_pack_end(main_box, label);
-			evas_object_show(label);
-			if (idx == 2 || idx == 3)
-				slider = create_slider(main_box, EINA_TRUE);
-			else
-				slider = create_slider(main_box, EINA_FALSE);
-			elm_slider_horizontal_set(slider, is_horizontal);
-			elm_slider_value_set(slider, (idx + 1));
-			evas_object_show(slider);
-			elm_box_pack_end(main_box, slider);
-		}
-	} else {
-		no_slider = 2;
-		for (idx = 0; idx < no_slider; idx++) {
-			if (idx % 2 == 0)
-				slider = create_slider(main_box, EINA_FALSE);
-			else
-				slider = create_slider(main_box, EINA_TRUE);
-			elm_slider_horizontal_set(slider, is_horizontal);
-			elm_slider_value_set(slider, 1);
-			evas_object_show(slider);
-			elm_box_pack_end(main_box, slider);
-		}
-	}
+	//Box
+	box = elm_box_add(scroller);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box);
+	elm_object_content_set(scroller, box);
+
+
+	//1. Default Slider
+	label = elm_label_add(box);
+	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	elm_object_text_set(label, "default:");
+	evas_object_show(label);
+	elm_box_pack_end(box, label);
+
+	slider = create_slider(box, NULL, EINA_TRUE, EINA_TRUE);
+	elm_slider_value_set(slider, 0);
+	elm_box_pack_end(box, slider);
+
+	//Default Slider, Disabled
+	slider = create_slider(box, NULL, EINA_TRUE, EINA_TRUE);
+	elm_object_disabled_set(slider, EINA_TRUE);
+	elm_slider_value_set(slider, 0);
+	elm_box_pack_end(box, slider);
+
+
+	//2. Center Point Slider
+	label = elm_label_add(box);
+	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	elm_object_text_set(label, "center_point:");
+	evas_object_show(label);
+	elm_box_pack_end(box, label);
+
+	slider = create_slider(box, "center_point", EINA_TRUE, EINA_TRUE);
+	elm_slider_value_set(slider, 3);
+	elm_box_pack_end(box, slider);
+
+	//Center Point Slider, Disabled
+	slider = create_slider(box, "center_point", EINA_TRUE, EINA_TRUE);
+	elm_object_disabled_set(slider, EINA_TRUE);
+	elm_slider_value_set(slider, 3);
+	elm_box_pack_end(box, slider);
+
+	//No Indicator Slider
+	label = elm_label_add(box);
+	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	elm_object_text_set(label, "no indicator:");
+	evas_object_show(label);
+	elm_box_pack_end(box, label);
+
+	//No Indicator Slider, Default
+	slider = create_slider(box, NULL, EINA_FALSE, EINA_TRUE);
+	elm_slider_value_set(slider, 4);
+	elm_box_pack_end(box, slider);
+
+	//No Indicator Slider, Center Point
+	slider = create_slider(box, "center_point", EINA_FALSE, EINA_TRUE);
+	elm_slider_value_set(slider, 4);
+	elm_box_pack_end(box, slider);
+
+
+	//3. Warning Slider
+	label = elm_label_add(box);
+	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	elm_object_text_set(label, "warning:");
+	evas_object_show(label);
+	elm_box_pack_end(box, label);
+
+	//Warning Slider, Default
+	slider = create_slider(box, "warning", EINA_TRUE, EINA_TRUE);
+	elm_slider_value_set(slider, 2);
+	elm_box_pack_end(box, slider);
+
+	//Warning Slider, No Indicator
+	slider = create_slider(box, "warning", EINA_FALSE, EINA_TRUE);
+	elm_slider_value_set(slider, 2);
+	elm_box_pack_end(box, slider);
+
+	//Warning Slider, Disabled
+	slider = create_slider(box, "warning", EINA_TRUE, EINA_TRUE);
+	elm_object_disabled_set(slider, EINA_TRUE);
+	elm_slider_value_set(slider, 2);
+	elm_box_pack_end(box, slider);
 
 	return scroller;
 }
@@ -125,7 +208,7 @@ slider_vertical_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EI
 {
 	Evas_Object *content;
 	Evas_Object *nf = data;
-	content = create_content(nf, EINA_FALSE);
+	content = create_vertical_content(nf);
 	elm_naviframe_item_push(nf, "Vertical Style", NULL, NULL, content, NULL);
 }
 
@@ -134,7 +217,7 @@ slider_horizontal_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info 
 {
 	Evas_Object *content;
 	Evas_Object *nf = data;
-	content = create_content(nf, EINA_TRUE);
+	content = create_horizontal_content(nf);
 	elm_naviframe_item_push(nf, "Horizontal Style", NULL, NULL, content, NULL);
 }
 
@@ -151,7 +234,6 @@ create_list(Evas_Object *nf)
 	Evas_Object *list;
 
 	list = elm_list_add(nf);
-	elm_list_mode_set(list, ELM_LIST_COMPRESS);
 	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
 	elm_list_item_append(list, "Horizontal Style", NULL, NULL, slider_horizontal_cb, nf);
 	elm_list_item_append(list, "Vertical Style", NULL, NULL, slider_vertical_cb, nf);
