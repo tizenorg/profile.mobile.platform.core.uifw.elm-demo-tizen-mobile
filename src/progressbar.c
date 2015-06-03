@@ -42,7 +42,6 @@ static Evas_Object *
 create_pending_progressbar(Evas_Object *parent)
 {
 	Evas_Object *progressbar;
-	Ecore_Timer *progress_timer;
 
 	progressbar = elm_progressbar_add(parent);
 	elm_object_style_set(progressbar, "pending");
