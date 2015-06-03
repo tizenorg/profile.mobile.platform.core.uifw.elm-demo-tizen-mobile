@@ -181,6 +181,10 @@ app_create(void *data)
 	appdata_s *ad = data;
 
 	elm_app_base_scale_set(1.7);
+
+	/* Enable HW acceleration */
+	elm_config_accel_preference_set("3d");
+
 	create_base_gui(ad);
 
 	return true;
