@@ -23,6 +23,7 @@ typedef struct item_data
 {
 	int index;
 	Elm_Object_Item *item;
+	Eina_Bool expanded;
 } item_data_s;
 
 static void gl_del_cb(void *data, Evas_Object *obj);
@@ -39,7 +40,7 @@ create_image(Evas_Object *parent)
 
 	img = elm_image_add(parent);
 	elm_image_file_set(img, ICON_DIR"/iu.png", NULL);
-	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(36), ELM_SCALE_SIZE(36));
+	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(26), ELM_SCALE_SIZE(26));
 
 	return img;
 }
@@ -445,9 +446,12 @@ group_index_content_get_cb(void *data, Evas_Object *obj, const char *part)
 		Evas_Object *image;
 
 		image = elm_image_add(obj);
-		elm_image_file_set(image, ICON_DIR"/core_icon_expand_close.png", NULL);
+		if (id->expanded)
+			elm_image_file_set(image, ICON_DIR"/core_icon_expand_open.png", NULL);
+		else
+			elm_image_file_set(image, ICON_DIR"/core_icon_expand_close.png", NULL);
 		evas_object_color_set(image, 61, 185, 204, 255);
-		evas_object_size_hint_min_set(image, 60, 60);
+		evas_object_size_hint_min_set(image, ELM_SCALE_SIZE(43), ELM_SCALE_SIZE(43));
 
 		return image;
 	}
@@ -542,16 +546,13 @@ gl_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-gl_expanded_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
+gl_expanded_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info)
 {
 	Elm_Object_Item *it = event_info;
-	Evas_Object *image, *genlist = elm_object_item_widget_get(it);
+	Evas_Object *genlist = elm_object_item_widget_get(it);
 	Elm_Genlist_Item_Class *itc;
 	item_data_s *id;
 	int i;
-
-	image = elm_object_item_part_content_get(it, "elm.swallow.end");
-	elm_image_file_set(image, ICON_DIR"/core_icon_expand_open.png", NULL);
 
 	itc = elm_genlist_item_class_new();
 	itc->item_style = "type1";
@@ -567,18 +568,23 @@ gl_expanded_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	}
 
 	elm_genlist_item_class_free(itc);
+
+	id = elm_object_item_data_get(it);
+	id->expanded = EINA_TRUE;
+	elm_genlist_item_fields_update(it, "elm.swallow.end", ELM_GENLIST_ITEM_FIELD_CONTENT);
 }
 
 static void
 gl_contracted_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info)
 {
-	Evas_Object *image;
 	Elm_Object_Item *it = event_info;
+	item_data_s *id;
 
 	elm_genlist_item_subitems_clear(it);
 
-	image = elm_object_item_part_content_get(it, "elm.swallow.end");
-	elm_image_file_set(image, ICON_DIR"/core_icon_expand_close.png", NULL);
+	id = elm_object_item_data_get(it);
+	id->expanded = EINA_FALSE;
+	elm_genlist_item_fields_update(it, "elm.swallow.end", ELM_GENLIST_ITEM_FIELD_CONTENT);
 }
 
 static void
