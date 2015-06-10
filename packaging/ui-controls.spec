@@ -9,7 +9,6 @@ BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-system-system-settings)
 BuildRequires:  app-core-efl-devel
-BuildRequires:  vconf-devel
 BuildRequires:  efl-extension-devel
 BuildRequires:  cmake
 BuildRequires:  edje-bin
