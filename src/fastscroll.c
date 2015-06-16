@@ -106,7 +106,6 @@ create_fastscroll(Evas_Object *scroller)
 	}
 
 	elm_index_level_go(index, 0);
-	elm_index_item_level_set(index,1);
 
 	evas_object_smart_callback_add(index, "selected", index_selected_cb, NULL);
 	evas_object_smart_callback_add(index, "changed", index_changed_cb, NULL);
