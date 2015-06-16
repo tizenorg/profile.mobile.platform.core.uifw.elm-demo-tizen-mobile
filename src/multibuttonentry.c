@@ -178,9 +178,9 @@ mbe_item_filter_cb(Evas_Object *obj, const char* item_label, void *item_data, vo
 }
 
 static Evas_Object*
-create_multibuttonentry(Evas_Object* parent)
+create_scroller(Evas_Object* parent)
 {
-	Evas_Object *scroller, *mbe;
+	Evas_Object *scroller;
 
 	/* scroller */
 	scroller = elm_scroller_add(parent);
@@ -189,6 +189,14 @@ create_multibuttonentry(Evas_Object* parent)
 	evas_object_size_hint_weight_set(scroller, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(scroller, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	evas_object_show(scroller);
+
+	return scroller;
+}
+
+static Evas_Object*
+create_multibuttonentry(Evas_Object* parent, Evas_Object *scroller)
+{
+	Evas_Object *mbe;
 
 	/* add a multibuttonentry object */
 	mbe = elm_multibuttonentry_add(parent);
@@ -222,7 +230,7 @@ create_multibuttonentry(Evas_Object* parent)
 
 	elm_object_content_set(scroller, mbe);
 
-	return scroller;
+	return mbe;
 }
 
 static Evas_Object*
@@ -291,13 +299,14 @@ create_buttons(Evas_Object *parent, Evas_Object *mbe)
 void
 multibuttonentry_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *mbe, *box, *box2, *box3;
+	Evas_Object *scroller, *mbe, *box, *box2, *box3;
 	Evas_Object *nf = data;
 
 	box = elm_box_add(nf);
 	elm_box_padding_set(box, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(20));
-	mbe = create_multibuttonentry(box);
-	elm_box_pack_end(box, mbe);
+	scroller = create_scroller(box);
+	mbe = create_multibuttonentry(box, scroller);
+	elm_box_pack_end(box, scroller);
 	box2 = create_checks(box, mbe);
 	elm_box_pack_end(box, box2);
 	box3 = create_buttons(box, mbe);
