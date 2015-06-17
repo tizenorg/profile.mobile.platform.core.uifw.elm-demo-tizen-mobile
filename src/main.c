@@ -180,7 +180,7 @@ app_create(void *data)
 	   If this function returns false, the application is terminated */
 	appdata_s *ad = data;
 
-	elm_app_base_scale_set(1.7);
+	elm_app_base_scale_set(2.6);
 
 	/* Enable HW acceleration */
 	elm_config_accel_preference_set("3d");
