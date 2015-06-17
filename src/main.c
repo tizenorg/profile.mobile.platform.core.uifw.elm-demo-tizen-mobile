@@ -54,6 +54,7 @@ create_list_view(appdata_s *ad)
 	Evas_Object *btn;
 	Evas_Object *nf = ad->nf;
 	Elm_Object_Item *nf_it;
+	char buf[100] = { 0, };
 
 	/* List */
 	list = elm_list_add(nf);
@@ -95,7 +96,9 @@ create_list_view(appdata_s *ad)
 	btn = elm_button_add(nf);
 	elm_object_style_set(btn, "naviframe/end_btn/default");
 	evas_object_smart_callback_add(btn, "clicked", end_btn_cb, NULL);
-	nf_it = elm_naviframe_item_push(nf, "Tizen UI", btn, NULL, list, NULL);
+
+	snprintf(buf, 100, "Tizen UI :: scale[%1.1f]", elm_config_scale_get());
+	nf_it = elm_naviframe_item_push(nf, buf, btn, NULL, list, NULL);
 	elm_naviframe_item_pop_cb_set(nf_it, naviframe_pop_cb, ad->win);
 }
 
