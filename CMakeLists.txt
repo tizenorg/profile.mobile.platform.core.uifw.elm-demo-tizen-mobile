@@ -4,6 +4,11 @@ SET(PACKAGE org.tizen.ui-controls)
 
 SET(SRCS
 	src/main.c
+	src/accessibility.c
+	src/accessibility/screen_reader.c
+	src/accessibility/screen_reader/description.c
+	src/accessibility/screen_reader/embeded_ui.c
+	src/accessibility/screen_reader/reading_order.c
 	src/bg.c
 	src/button.c
 	src/calendar.c

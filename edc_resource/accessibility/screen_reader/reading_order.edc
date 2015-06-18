@@ -1,0 +1,381 @@
+/*
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+group {
+                images.image: "data/arrow-right.png" COMP;
+                images.image: "data/arrow-left.png" COMP;
+                images.image: "data/arrow-left1.png" COMP;
+                images.image: "data/arrow-up.png" COMP;
+		name: "reading_order_layout";
+		parts{
+			part {
+				name: "bg";
+				type: RECT;
+				scale: 1;
+				description { state: "default" 0.0;
+					visible: 1;
+					color: 200 200 200 255;
+                                        rel1 {
+                                                relative: 0.0 0.0;
+                                        }
+                                        rel2 {
+                                                relative: 1.0 1.0;
+                                        }
+				}
+			}
+                        part {
+                                name: "bg_custom";
+                                type: RECT;
+                                scale: 1;
+                                description { state: "default" 0.0;
+                                        visible: 1;
+                                        color: 89 205 255 255;
+                                        rel1 {
+                                                relative: 0.0 0.0;
+                                        }
+                                        rel2 {
+                                                relative: 1.0 0.5;
+                                        }
+                                }
+                        }
+                        part {
+                                name: "bg_default";
+                                type: RECT;
+                                scale: 1;
+                                description { state: "default" 0.0;
+                                        visible: 1;
+                                        color: 89 255 142 255;
+                                        rel1 {
+                                                relative: 0.0 0.5;
+                                        }
+                                        rel2 {
+                                                relative: 1.0 1.0;
+                                        }
+                                }
+                        }
+                        part {
+                                name: "custom_lbl";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.05 0.05;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 1.0 0.15;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "default_lbl";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.05 0.55;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 1.0 0.65;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_a";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.1 0.15;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.3 0.25;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_b";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.4 0.15;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.6 0.25;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_c";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.7 0.15;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.9 0.25;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_d";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.1 0.3;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.3 0.4;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_e";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.4 0.3;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.6 0.4;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+
+
+
+                        part {
+                                name: "button_default_a";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.1 0.65;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.3 0.75;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_default_b";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.4 0.65;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.6 0.75;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_default_c";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.7 0.65;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.9 0.75;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_default_d";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.1 0.8;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.3 0.9;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part {
+                                name: "button_default_e";
+                                type: SWALLOW;
+                                scale: 1;
+                                description {
+                                        state: "default" 0.0;
+                                        fixed: 1 1;
+                                        rel1 {
+                                                relative: 0.4 0.8;
+                                                to: "bg";
+                                        }
+                                        rel2 {
+                                                relative: 0.6 0.9;
+                                                to: "bg";
+                                        }
+                                }
+                        }
+                        part { name: "arrow_custom_b_c";
+                            description {
+                                    state: "default" 0.0;
+                                    image.normal: "data/arrow-right.png";
+                                    rel1 {
+                                            relative: 1.05 0.3;
+                                            to: "button_b";
+                                    }
+                                    rel2 {
+                                            relative: -0.05 0.7;
+                                          to: "button_c";
+                                    }
+                            }
+                        }
+                        part { name: "arrow_custom_d_e";
+                            description {
+                                    state: "default" 0.0;
+                                    image.normal: "data/arrow-right.png";
+                                    rel1 {
+                                            relative: 1.05 0.3;
+                                            to: "button_d";
+                                    }
+                                    rel2 {
+                                            relative: -0.05 0.7;
+                                          to: "button_e";
+                                    }
+                            }
+                        }
+                        part { name: "arrow_custom_e_b";
+                            description {
+                                    state: "default" 0.0;
+                                    image.normal: "data/arrow-up.png";
+                                    rel1 {
+                                            relative: 0.35 1.05;
+                                            to: "button_b";
+                                    }
+                                    rel2 {
+                                            relative: 0.65 -0.05;
+                                          to: "button_e";
+                                    }
+                            }
+                        }
+
+
+                        part { name: "arrow_default_a_b";
+                            description {
+                                    state: "default" 0.0;
+                                    image.normal: "data/arrow-right.png";
+                                    rel1 {
+                                            relative: 1.05 0.3;
+                                            to: "button_default_a";
+                                    }
+                                    rel2 {
+                                            relative: -0.05 0.7;
+                                          to: "button_default_b";
+                                    }
+                            }
+                        }
+                        part { name: "arrow_default_b_c";
+                            description {
+                                    state: "default" 0.0;
+                                    image.normal: "data/arrow-right.png";
+                                    rel1 {
+                                            relative: 1.05 0.3;
+                                            to: "button_default_b";
+                                    }
+                                    rel2 {
+                                            relative: -0.05 0.7;
+                                          to: "button_default_c";
+                                    }
+                            }
+                        }
+
+                        part { name: "arrow_default_d_e";
+                            description {
+                                    state: "default" 0.0;
+                                    image.normal: "data/arrow-right.png";
+                                    rel1 {
+                                            relative: 1.05 0.3;
+                                            to: "button_default_d";
+                                    }
+                                    rel2 {
+                                            relative: -0.05 0.7;
+                                          to: "button_default_e";
+                                    }
+                            }
+                        }
+
+                        part { name: "arrow_default_c_d";
+                            description {
+                                    state: "default" 0.0;
+                                    image.normal: "data/arrow-left1.png";
+                                    rel1 {
+                                            relative: 0.5 -0.5;
+                                            to: "button_default_d";
+                                    }
+                                    rel2 {
+                                            relative: 0.5 1.5;
+                                          to: "button_default_c";
+                                    }
+                            }
+                        }
+
+		}//end parts
+} //end group
