@@ -82,3 +82,4 @@ void accessibility_cb(void *data, Evas_Object *obj, void *event_info);
 void description_cb(void *data, Evas_Object *obj, void *event_info);
 void reading_order_cb(void *data, Evas_Object *obj, void *event_info);
 void embeded_ui_cb(void *data, Evas_Object *obj, void *event_info);
+void primitives_ui_cb(void *data, Evas_Object *obj, void *event_info);

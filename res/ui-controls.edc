@@ -30,5 +30,6 @@ collections {
    #include "../edc_resource/accessibility/screen_reader/description.edc"
    #include "../edc_resource/accessibility/screen_reader/embeded_ui.edc"
    #include "../edc_resource/accessibility/screen_reader/reading_order.edc"
+   #include "../edc_resource/accessibility/screen_reader/primitives_layout.edc"
 }
 
