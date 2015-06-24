@@ -33,7 +33,6 @@ group {
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					fixed: 1 1;
 					rel1 {
 						relative: 0.0 0.05;
 						to: "bg";
@@ -50,7 +49,6 @@ group {
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					fixed: 1 1;
 					rel1 {
 						relative: 0.3 0.1;
 						to: "bg";

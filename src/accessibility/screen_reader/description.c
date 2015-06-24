@@ -27,9 +27,7 @@ create_description(Evas_Object *parent)
 
 	layout = elm_layout_add(parent);
 	elm_layout_file_set(layout, ELM_DEMO_EDJ, "description_layout");
-	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, 0.0);
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, 0.0);
-
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	label = elm_label_add(layout);
 	elm_object_text_set(label, _("<font_size=33><align=center>Button with name</align></font_size>"));
 	elm_object_part_content_set(layout, "button_name_lbl", label);
@@ -63,8 +61,6 @@ create_description(Evas_Object *parent)
 
 	label = elm_label_add(layout);
 	elm_object_text_set(label, _("<font_size=33><align=center>Button without name and description</align></font_size>"));
-	elm_label_line_wrap_set(label, ELM_WRAP_WORD);
-	elm_label_wrap_width_set(label, 700);
 	elm_object_part_content_set(layout, "button_empty_lbl", label);
 
 	img = elm_image_add(layout);
