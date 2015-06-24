@@ -55,7 +55,7 @@ index_language_changed_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_index_item_append(obj, "#", NULL, NULL);
 
 	/* 2. Local language */
-	str = dgettext("efl-assist", "IDS_EA_BODY_ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	str = dgettext("efl-extension", "IDS_EA_BODY_ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	len = strlen(str);
 
 	while (i < len)
@@ -93,7 +93,7 @@ create_fastscroll(Evas_Object *scroller)
 	elm_index_item_append(index, "#", NULL, NULL);
 
 	/* 2. Local language */
-	str = dgettext("efl-assist", "IDS_EA_BODY_ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	str = dgettext("efl-extension", "IDS_EA_BODY_ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	len = strlen(str);
 
 	while (i < len) {
