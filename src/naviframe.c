@@ -164,11 +164,12 @@ second_page_cb(void *data, Evas_Object *obj, void *event_info)
 	btn = elm_button_add(nf);
 	elm_object_style_set(btn, "naviframe/title_left");
 	elm_object_item_part_content_set(nf_it, "title_left_btn", btn);
-
+	elm_object_text_set(btn, "CANCEL");
 	/* Title Done Button */
 	btn = elm_button_add(nf);
 	elm_object_style_set(btn, "naviframe/title_right");
 	elm_object_item_part_content_set(nf_it, "title_right_btn", btn);
+	elm_object_text_set(btn, "DONE");
 
 	/* HW More Button */
 	btn = create_toolbar_more_btn(nf, third_page_cb, nf);
