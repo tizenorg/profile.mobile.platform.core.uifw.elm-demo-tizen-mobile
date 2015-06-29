@@ -39,7 +39,7 @@ create_image(Evas_Object *parent)
 	Evas_Object *img;
 
 	img = elm_image_add(parent);
-	elm_image_file_set(img, ICON_DIR"/iu.png", NULL);
+	elm_image_file_set(img, ICON_DIR"/tizen.png", NULL);
 	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(26), ELM_SCALE_SIZE(26));
 
 	return img;

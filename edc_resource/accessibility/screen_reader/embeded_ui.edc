@@ -15,23 +15,21 @@
  *
  */
 
-group {
-		name: "embeded_ui_layout";
-		parts{
-			part {
-				name: "bg";
-				type: RECT;
-				scale: 1;
-				description { state: "default" 0.0;
-					visible: 1;
-					color: 200 200 200 255;
-					rel1 {
-						relative: 0.0 0.0;
-					}
-					rel2 {
-						relative: 1.0 1.0;
-					}
-				}
-			}
-		}//end parts
+group { name: "embeded_ui_layout";
+   parts {
+      part { name: "bg";
+         type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            visible: 1;
+            color: 200 200 200 255;
+            rel1 {
+               relative: 0.0 0.0;
+            }
+            rel2 {
+               relative: 1.0 1.0;
+            }
+         }
+      }
+   }//end parts
 } //end group

@@ -203,9 +203,9 @@ list_it_image_text_cb(void *data, Evas_Object *obj, void *event_info)
 
 	/* image */
 	img = elm_image_add(layout);
-	elm_image_file_set(img, ICON_DIR"/grid_image/3_raw.png", NULL);
+	elm_image_file_set(img, ICON_DIR"/tizen.png", NULL);
 	elm_image_aspect_fixed_set(img, EINA_TRUE);
-	elm_image_resizable_set(img, EINA_FALSE, EINA_FALSE);
+	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(120), ELM_SCALE_SIZE(120));
 	elm_object_part_content_set(layout, "elm.swallow.content", img);
 
 	/* ok button */

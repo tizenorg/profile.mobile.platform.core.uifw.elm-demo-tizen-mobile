@@ -135,6 +135,7 @@ create_base_gui(appdata_s *ad)
 
 	/* Indicator */
 	elm_win_indicator_mode_set(ad->win, ELM_WIN_INDICATOR_SHOW);
+	elm_win_indicator_opacity_set(ad->win, ELM_WIN_INDICATOR_TRANSPARENT);
 
 	/* Base Layout */
 	ad->layout = elm_layout_add(ad->conform);

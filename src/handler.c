@@ -77,7 +77,7 @@ create_horz_handler_scroller(Evas_Object *parent)
 	evas_object_show(scroller);
 
 	img = elm_image_add(scroller);
-	elm_image_file_set(img, ICON_DIR"/horz_scrollbar.jpg", NULL);
+	elm_image_file_set(img, ICON_DIR"/horz_scrollbar.png", NULL);
 	elm_image_resizable_set(img, EINA_TRUE, EINA_FALSE);
 	evas_object_size_hint_align_set(img, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	evas_object_size_hint_weight_set(img, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
