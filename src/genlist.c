@@ -415,13 +415,16 @@ full_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
 	Evas_Object *layout, *slider;
 
+	// Set custom layout style
 	layout = elm_layout_add(obj);
 	elm_layout_file_set(layout, ELM_DEMO_EDJ, "gl_custom_item");
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
+	// Set text into layout
 	elm_object_part_text_set(layout, "elm.text", "Description Text");
 
+	// Set slider into layout
 	slider = elm_slider_add(obj);
 	elm_slider_indicator_show_set(slider, EINA_FALSE);
 	evas_object_size_hint_align_set(slider, EVAS_HINT_FILL, EVAS_HINT_FILL);

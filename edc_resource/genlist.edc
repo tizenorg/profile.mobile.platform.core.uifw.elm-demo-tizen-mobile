@@ -73,6 +73,7 @@ group { name: "gl_custom_item";
             rel1 { to: "top_padding"; relative: 0.0 1.0; }
             rel2 { to: "top_padding"; relative: 1.0 1.0; }
             text.style: "text_style";
+            text.min: 0 1;
          }
       }
       part { name: "text_content_padding";
@@ -91,7 +92,17 @@ group { name: "gl_custom_item";
          description { state: "default" 0.0;
             align: 0.5 0.0;
             rel1 { to: "text_content_padding"; relative: 0.0 1.0; }
-            rel2 { to: "text_content_padding"; relative: 1.0 1.0; }
+            rel2 { to: "bottom_padding"; relative: 1.0 0.0; }
+         }
+      }
+      part { name: "bottom_padding";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 0 24;
+            align: 0.5 1.0;
+            rel1 { to: "base"; relative: 0.0 1.0; }
+            rel2 { to: "base"; relative: 1.0 1.0; }
          }
       }
    }
