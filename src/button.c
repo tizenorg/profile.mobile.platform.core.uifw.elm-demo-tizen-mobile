@@ -117,7 +117,7 @@ create_button_view(Evas_Object *parent)
 
 	/* button 1 */
 	btn = elm_button_add(box2);
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)7);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)3);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
 	evas_object_show(btn);
@@ -130,7 +130,7 @@ create_button_view(Evas_Object *parent)
 
 	/* button 2 */
 	btn = elm_button_add(box2);
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)8);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
 	evas_object_show(btn);
@@ -144,7 +144,7 @@ create_button_view(Evas_Object *parent)
 	/* button 3 */
 	btn = elm_button_add(box2);
 	elm_object_disabled_set(btn, EINA_TRUE);
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)9);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)5);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
 	evas_object_show(btn);
@@ -172,7 +172,7 @@ create_button_view(Evas_Object *parent)
 	btn = elm_button_add(box2);
 	elm_object_style_set(btn, "circle");
 	elm_object_text_set(btn, "Phone");
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)7);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)6);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
@@ -186,7 +186,7 @@ create_button_view(Evas_Object *parent)
 	/* button 2 */
 	btn = elm_button_add(box2);
 	elm_object_style_set(btn, "circle");
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)8);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)7);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
@@ -202,7 +202,7 @@ create_button_view(Evas_Object *parent)
 	elm_object_style_set(btn, "circle");
 	elm_object_text_set(btn, "Note");
 	elm_object_disabled_set(btn, EINA_TRUE);
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)9);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)8);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
@@ -229,7 +229,7 @@ create_button_view(Evas_Object *parent)
 	/* button 1 */
 	btn = elm_button_add(box2);
 	elm_object_text_set(btn, "Button");
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)10);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)9);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
@@ -244,7 +244,7 @@ create_button_view(Evas_Object *parent)
 	btn = elm_button_add(box2);
 	elm_object_disabled_set(btn, EINA_TRUE);
 	elm_object_text_set(btn, "Disabled");
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)11);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)10);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
@@ -271,7 +271,7 @@ create_button_view(Evas_Object *parent)
 	btn = elm_button_add(box2);
 	elm_object_style_set(btn, "bottom");
 	elm_object_text_set(btn, "Bottom");
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)3);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)11);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
 	evas_object_show(btn);
@@ -280,7 +280,7 @@ create_button_view(Evas_Object *parent)
 	/* button 2 */
 	btn = elm_button_add(box2);
 	elm_object_style_set(btn, "bottom");
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)12);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
@@ -296,7 +296,7 @@ create_button_view(Evas_Object *parent)
 	elm_object_style_set(btn, "bottom");
 	elm_object_disabled_set(btn, EINA_TRUE);
 	elm_object_text_set(btn, "Disabled");
-	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)4);
+	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)13);
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
 	evas_object_show(btn);
