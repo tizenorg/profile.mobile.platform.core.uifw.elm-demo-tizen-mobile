@@ -69,7 +69,7 @@
 group { name: "popup_image_list_layout";
    styles {
       style { name: "popup_content_style";
-         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 color_class=T023 wrap=mixed ellipsis=1.0 text_class=T023";
+         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 wrap=mixed ellipsis=1.0 text_class=tizen";
          tag: "br" "\n";
          tag: "tab" "\t";
       }
@@ -290,7 +290,7 @@ group { name: "popup_checkview_layout";
 group { name: "processing_view_layout";
    styles {
       style { name: "popup_processing_style";
-         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 color_class=T123 wrap=mixed ellipsis=1.0 text_class=T123";
+         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 wrap=mixed ellipsis=1.0 text_class=tizen";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
@@ -385,7 +385,7 @@ group { name: "processing_view_layout";
 group { name: "popup_text_progressbar_view_layout";
    styles {
       style { name: "popup_progress_style";
-         base: "font=Tizen:style=Regular align=right font_size="14" color=#FFFFFF color_class=T056 wrap=mixed ellipsis=1.0 text_class=T056";
+         base: "font=Tizen:style=Regular align=right font_size="14" color=#000000 wrap=mixed ellipsis=1.0 text_class=tizen";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
@@ -477,7 +477,7 @@ group { name: "popup_text_progressbar_view_layout";
 group { name: "popup_2text_progressbar_view_layout";
    styles {
       style { name: "popup_subtext_style";
-         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE2" color=#000000 color_class=T024 wrap=mixed ellipsis=1.0 text_class=T024";
+         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE2" color=#000000 wrap=mixed ellipsis=1.0 text_class=tizen";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
@@ -592,7 +592,7 @@ group { name: "popup_2text_progressbar_view_layout";
 group { name: "popup_groupindex_view_layout";
    styles {
       style { name: "popup_groupindex_style";
-         base: "font=Tizen:style=Regular align=right font_size="POPUP_TEXT_FONT_SIZE3" color=#000000 color_class=T028 wrap=mixed ellipsis=1.0 text_class=T028";
+         base: "font=Tizen:style=Regular align=right font_size="POPUP_TEXT_FONT_SIZE3" color=#000000 wrap=mixed ellipsis=1.0 text_class=tizen";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
@@ -960,7 +960,7 @@ group { name: "popup_input_text";
 group { name: "popup_text_input_text";
    styles {
       style { name: "popup_input_style";
-         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 color_class=T123 wrap=mixed text_class=T123";
+         base: "font=Tizen:style=Regular align=left font_size="POPUP_TEXT_FONT_SIZE1" color=#000000 wrap=mixed text_class=tizen";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
