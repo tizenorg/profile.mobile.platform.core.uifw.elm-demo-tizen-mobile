@@ -15,6 +15,7 @@
  *
  */
 
+#define EFL_BETA_API_SUPPORT
 #include "main.h"
 
 static Evas_Object*
@@ -101,12 +102,18 @@ create_reading_order(Evas_Object *parent)
 	elm_object_text_set(btnDefaultE, "E");
 	elm_object_part_content_set(layout, "button_default_e", btnDefaultE);
 
-	elm_atspi_component_highlight_index_set(btnA, -1);
-	elm_atspi_component_highlight_index_set(btnD, 1);
-	elm_atspi_component_highlight_index_set(btnE, 2);
-	elm_atspi_component_highlight_index_set(btnB, 3);
-	elm_atspi_component_highlight_index_set(btnC, 4);
+	// inform Assisitve Technology that UI information should be prosented in
+	// following order:
+	elm_atspi_accessible_relationship_append(labelCustom, ELM_ATSPI_RELATION_FLOWS_TO, btnD);
 
+	elm_atspi_accessible_relationship_append(btnD, ELM_ATSPI_RELATION_FLOWS_TO, btnE);
+	elm_atspi_accessible_relationship_append(btnE, ELM_ATSPI_RELATION_FLOWS_TO, btnB);
+	elm_atspi_accessible_relationship_append(btnB, ELM_ATSPI_RELATION_FLOWS_TO, btnC);
+
+	elm_atspi_accessible_relationship_append(btnC, ELM_ATSPI_RELATION_FLOWS_FROM, btnB);
+	elm_atspi_accessible_relationship_append(btnB, ELM_ATSPI_RELATION_FLOWS_FROM, btnE);
+	elm_atspi_accessible_relationship_append(btnE, ELM_ATSPI_RELATION_FLOWS_FROM, btnD);
+	elm_atspi_accessible_relationship_append(btnD, ELM_ATSPI_RELATION_FLOWS_FROM, labelCustom);
 	return layout;
 }
 
