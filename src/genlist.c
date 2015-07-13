@@ -656,6 +656,8 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	   is used, use compress mode for compressing width to fit the viewport width. */
 
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+
+	elm_genlist_homogeneous_set(genlist, EINA_TRUE);
 	printf("Compress mode enabled\n");
 
 	evas_object_event_callback_add(genlist, EVAS_CALLBACK_MOUSE_DOWN, gl_mouse_down_cb, NULL);
