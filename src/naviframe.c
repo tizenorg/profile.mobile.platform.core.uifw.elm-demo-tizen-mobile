@@ -82,7 +82,6 @@ create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb next_btn_cli
 
 	/* Previous Page Button */
 	btn = elm_button_add(box);
-	elm_object_style_set(btn, "gradient_bg");
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 1, 1);
 	elm_object_text_set(btn, "Prev");
@@ -92,7 +91,6 @@ create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb next_btn_cli
 
 	/* Next Page Button */
 	btn = elm_button_add(box);
-	elm_object_style_set(btn, "gradient_bg");
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, 0, 1);
 	elm_object_text_set(btn, "Next");
