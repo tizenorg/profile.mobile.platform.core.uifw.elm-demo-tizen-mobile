@@ -25,7 +25,21 @@ progress_timer_cb(void *data)
 
 	value = elm_progressbar_value_get(progressbar);
 	if (value == 1.0) value = 0.0;
-	value = value + 0.01;
+	value = value + 0.3;
+	elm_progressbar_value_set(progressbar, value);
+
+	return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+progress_timer1_cb(void *data)
+{
+	double value = 0.0;
+	Evas_Object *progressbar = data;
+
+	value = elm_progressbar_value_get(progressbar);
+	if (value == 1.0) value = 0.0;
+	else value = 1.0;
 	elm_progressbar_value_set(progressbar, value);
 
 	return ECORE_CALLBACK_RENEW;
@@ -78,14 +92,11 @@ static Evas_Object *
 create_default_progressbar(Evas_Object *parent)
 {
 	Evas_Object *progressbar;
-	Ecore_Timer *progress_timer;
 
 	progressbar = elm_progressbar_add(parent);
 	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
 	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_progressbar_value_set(progressbar, 0.0);
-	progress_timer = ecore_timer_add(0.1, progress_timer_cb, progressbar);
-	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
 	evas_object_show(progressbar);
 
 	elm_object_part_text_set(progressbar, "elm.text.top.left", "Lorem");
@@ -117,6 +128,8 @@ static Evas_Object
 	Evas_Object *box;
 	Evas_Object *label;
 	Evas_Object *progressbar;
+   Ecore_Timer *progress_timer;
+
 
 	/* Scroller */
 	scroller = elm_scroller_add(parent);
@@ -135,6 +148,13 @@ static Evas_Object
 	elm_box_pack_end(box, label);
 	progressbar = create_default_progressbar(box);
 	elm_box_pack_end(box, progressbar);
+	progress_timer = ecore_timer_add(2, progress_timer_cb, progressbar);
+	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
+
+	progressbar = create_default_progressbar(box);
+	elm_box_pack_end(box, progressbar);
+	progress_timer = ecore_timer_add(2, progress_timer1_cb, progressbar);
+	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
 
 	/* Pending Progressbar */
 	label = create_label(box, "pending:");
