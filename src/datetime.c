@@ -87,7 +87,7 @@ create_datetime_popup(datetimedata_s *dd)
 	dd->popup = elm_popup_add(dd->nf);
 	eext_object_event_callback_add(dd->popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
 	evas_object_size_hint_weight_set(dd->popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(dd->popup, EVAS_HINT_FILL, 0.5);
+	elm_popup_align_set(dd->popup, ELM_NOTIFY_ALIGN_FILL, 0.5);
 
 	cancel_btn = elm_button_add(dd->popup);
 	elm_object_text_set(cancel_btn, "Cancel");
