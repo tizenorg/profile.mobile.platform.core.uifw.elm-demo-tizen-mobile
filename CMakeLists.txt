@@ -52,8 +52,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/inc)
 
 FIND_LIBRARY(LIB_M m)
 #FIXME: pthread is added for preventing build error
-SET(PKG_LDFLAGS "-pthread ${LIB_M}")
-SET(PKG_CFLAGS "-g -Wall")
+SET(PKG_LDFLAGS "-pthread ${LIB_M} -pie")
+SET(PKG_CFLAGS "-g -Wall -fPIE")
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(BASE_PKG REQUIRED elementary efl-extension)
