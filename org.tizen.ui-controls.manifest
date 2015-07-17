@@ -1,6 +1,16 @@
 <manifest>
 	<define>
 		<domain name="org.tizen.ui-controls"/>
+		<request>
+			<smack request="device::app_logging" type="rw"/>
+			<smack request="device::sys_logging" type="rw"/>
+			<smack request="pkgmgr::db" type="rl"/>
+			<smack request="sdbd" type="rl"/>
+			<smack request="tizen::vconf::setting::admin" type="rl"/>
+			<smack request="system::homedir" type="rwx"/>
+			<smack request="xorg" type="rw"/>
+			<smack request="isf" type="rwx"/>
+		</request>
 	</define>
 	<request>
 		<domain name="org.tizen.ui-controls"/>
