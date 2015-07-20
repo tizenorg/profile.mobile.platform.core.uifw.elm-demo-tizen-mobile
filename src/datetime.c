@@ -128,7 +128,7 @@ launch_popup_cb(void *data , Evas_Object *obj , void *event_info)
 	}
 
 	elm_datetime_value_set(dd->datetime, &dd->saved_time);
-	evas_object_size_hint_align_set(dd->datetime, 0.5 , 0.5);
+	evas_object_size_hint_align_set(dd->datetime, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
 	evas_object_show(dd->datetime);
 	elm_box_pack_end(box, dd->datetime);
