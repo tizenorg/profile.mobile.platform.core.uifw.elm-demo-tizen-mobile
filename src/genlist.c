@@ -34,29 +34,37 @@ static void gl_selected_cb(void *data, Evas_Object *obj, void *event_info);
 static void gl_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static Evas_Object*
-create_image(Evas_Object *parent)
+create_image(Evas_Object *parent, Evas_Coord w, Evas_Coord h)
 {
 	Evas_Object *img;
-
 	img = elm_image_add(parent);
 	elm_image_file_set(img, ICON_DIR"/tizen.png", NULL);
-	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(26), ELM_SCALE_SIZE(26));
-
+	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
 	return img;
 }
 
+static Evas_Object*
+create_check(Evas_Object *parent)
+{
+	Evas_Object *check;
+	check = elm_check_add(parent);
+	return check;
+}
+
 // type1
-// --------------------------------------------------------------------
-// | elm.swallow.icon |   elm.text   | elm.swallow.end (elm.text.end) |
-// --------------------------------------------------------------------
-// |          elm.text.sub           |         elm.text.sub.end       |
-// --------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+// |                  | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |                 |
+// | elm.swallow.icon |----------------------------------------------------| elm.swallow.end |
+// |                  |         elm.text.sub          | elm.text.sub.end   |                 |
+// -------------------------------------------------------------------------------------------
+// (*) "elm.text.end" can be used instead of "elm.swallow.icon.1".
 
 /*
 "type1" style is designed to cover various types of item style at a time.
 
-It has two swallow parts (elm.swallow.icon, elm.swallow.end) and
+It has four swallow parts (elm.swallow.icon, elm.swallow.icon.0, elm.swallow.icon.1, elm.swallow.end) and
 four text parts (elm.text, elm.text.end, elm.text.sub, elm.text.sub.end).
+"elm.swallow.icon.1" will extend to sub line, if there is no text in "elm.text.sub.end".
 
 In content_get_cb and text_get_cb,
 you must return NULL for parts where no content is desired,
@@ -65,7 +73,7 @@ or a valid object handle, otherwise.
 For example,
 -----------------------------------
 | elm.text     |                  |
----------------|  elm.swallow.end |
+---------------| elm.swallow.end  |
 | elm.text.sub |                  |
 -----------------------------------
 
@@ -88,14 +96,29 @@ gl_text_get_cb(void *data, Evas_Object *obj, const char *part)
 	else
 		return NULL;
 }
+
+You can make one genlist include 1line or 2line items at the same time with "type1" style,
+but it doesn't work well if you turn on elm_genlist_homogeneous_set API. (it makes all items height same)
 */
 
 static Evas_Object*
-type1_content_get_cb(void *data, Evas_Object *obj, const char *part)
+type1_1line_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
 	item_data_s *id = data;
 
-	switch (id->index % 11)
+	if ((id->index / 3) % 4 == 1 && !strcmp("elm.swallow.icon", part))
+		return create_image(obj, 98, 98);
+	else if ((id->index / 3) % 4 == 2 && !strcmp("elm.swallow.end", part))
+		return create_check(obj);
+	else if ((id->index / 3) % 4 == 3)
+	{
+		if (!strcmp("elm.swallow.icon", part))
+			return create_image(obj, 98, 98);
+		else if (!strcmp("elm.swallow.end", part))
+			return create_check(obj);
+	}
+
+	switch (id->index % 3)
 	{
 	case 0:
 	// -------------------------------
@@ -104,105 +127,33 @@ type1_content_get_cb(void *data, Evas_Object *obj, const char *part)
 		return NULL;
 
 	case 1:
-	// -------------------------------
-	// | elm.swallow.icon | elm.text |
-	// -------------------------------
-		if (!strcmp("elm.swallow.icon", part))
-			return create_image(obj);
+	// ----------------------------------
+	// | elm.text  | elm.swallow.icon.1 |
+	// ----------------------------------
+		if (!strcmp("elm.swallow.icon.1", part))
+			return create_image(obj, 50, 50);
 		else return NULL;
 
 	case 2:
 	// -------------------------------
-	// | elm.text  | elm.swallow.end |
-	// -------------------------------
-		if (!strcmp("elm.swallow.end", part))
-			return create_image(obj);
-		else return NULL;
-
-	case 3:
-	// -------------------------------
 	// | elm.text  | elm.text.end    |
 	// -------------------------------
 		return NULL;
-
-	case 4:
-	// -------------------------------
-	// | elm.text                    |
-	// -------------------------------
-	// | elm.text.sub                |
-	// -------------------------------
-		return NULL;
-
-	case 5:
-	// -------------------------------
-	// | elm.text  | elm.text.end    |
-	// -------------------------------
-	// | elm.text.sub                |
-	// -------------------------------
-		return NULL;
-
-	case 6:
-	// -----------------------------------
-	// | elm.text                        |
-	// -----------------------------------
-	// | elm.text.sub | elm.text.sub.end |
-	// -----------------------------------
-		return NULL;
-
-	case 7:
-	// -----------------------------------
-	// | elm.text     | elm.text.end     |
-	// -----------------------------------
-	// | elm.text.sub | elm.text.sub.end |
-	// -----------------------------------
-		return NULL;
-
-	case 8:
-	// -----------------------------------
-	// | elm.text     |                  |
-	// ---------------|  elm.swallow.end |
-	// | elm.text.sub |                  |
-	// -----------------------------------
-		if (!strcmp("elm.swallow.end", part))
-			return create_image(obj);
-		else return NULL;
-
-	case 9:
-	// -----------------------------------
-	// | elm.text     | elm.swallow.end  |
-	// -----------------------------------
-	// | elm.text.sub | elm.text.sub.end |
-	// -----------------------------------
-		if (!strcmp("elm.swallow.end", part))
-			return create_image(obj);
-		else return NULL;
-
-	case 10:
-	// --------------------------------------------------
-	// | elm.swallow.icon | elm.text | elm.swallow.end  |
-	// --------------------------------------------------
-	// | elm.text.sub                | elm.text.sub.end |
-	// --------------------------------------------------
-		if (!strcmp("elm.swallow.icon", part))
-			return create_image(obj);
-		else if (!strcmp("elm.swallow.end", part))
-			return create_image(obj);
-		else return NULL;
 	}
 
 	return NULL; // You must not reach here.
 }
 
 static char*
-type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
+type1_1line_text_get_cb(void *data, Evas_Object *obj, const char *part)
 {
 	item_data_s *id = data;
 	char *long_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 	char buf[1024];
 
-	snprintf(buf, sizeof(buf), "case %d: %s", id->index % 11, long_text);
+	snprintf(buf, sizeof(buf), "case %d: %s", id->index % 3, long_text);
 
-	switch (id->index % 11)
+	switch (id->index % 3)
 	{
 	case 0:
 	// -------------------------------
@@ -213,22 +164,14 @@ type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
 		else return NULL;
 
 	case 1:
-	// -------------------------------
-	// | elm.swallow.icon | elm.text |
-	// -------------------------------
+	// ----------------------------------
+	// | elm.text  | elm.swallow.icon.1 |
+	// ----------------------------------
 		if (!strcmp("elm.text", part))
 			return strdup(buf);
 		else return NULL;
 
 	case 2:
-	// -------------------------------
-	// | elm.text  | elm.swallow.end |
-	// -------------------------------
-		if (!strcmp("elm.text", part))
-			return strdup(buf);
-		else return NULL;
-
-	case 3:
 	// -------------------------------
 	// | elm.text  | elm.text.end    |
 	// -------------------------------
@@ -237,8 +180,110 @@ type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
 		else if (!strcmp("elm.text.end", part))
 			return strdup("Sub text");
 		else return NULL;
+	}
+
+	return NULL; // You must not reach here.
+}
+
+static Evas_Object*
+type1_2line_content_get_cb(void *data, Evas_Object *obj, const char *part)
+{
+	item_data_s *id = data;
+
+	if ((id->index / 7) % 4 == 1 && !strcmp("elm.swallow.icon", part))
+		return create_image(obj, 98, 98);
+	else if ((id->index / 7) % 4 == 2 && !strcmp("elm.swallow.end", part))
+		return create_check(obj);
+	else if ((id->index / 7) % 4 == 3)
+	{
+		if (!strcmp("elm.swallow.icon", part))
+			return create_image(obj, 98, 98);
+		else if (!strcmp("elm.swallow.end", part))
+			return create_check(obj);
+	}
+
+	switch (id->index % 7)
+	{
+	case 0:
+	// -------------------------------
+	// | elm.text                    |
+	// -------------------------------
+	// | elm.text.sub                |
+	// -------------------------------
+		return NULL;
+
+	case 1:
+	// -------------------------------
+	// | elm.text  | elm.text.end    |
+	// -------------------------------
+	// | elm.text.sub                |
+	// -------------------------------
+		return NULL;
+
+	case 2:
+	// -----------------------------------
+	// | elm.text                        |
+	// -----------------------------------
+	// | elm.text.sub | elm.text.sub.end |
+	// -----------------------------------
+		return NULL;
+
+	case 3:
+	// -----------------------------------
+	// | elm.text     | elm.text.end     |
+	// -----------------------------------
+	// | elm.text.sub | elm.text.sub.end |
+	// -----------------------------------
+		return NULL;
 
 	case 4:
+	// -------------------------------------
+	// | elm.text     |                    |
+	// ---------------| elm.swallow.icon.1 |
+	// | elm.text.sub |                    |
+	// -------------------------------------
+		if (!strcmp("elm.swallow.icon.1", part))
+			return create_image(obj, 50, 50);
+		else return NULL;
+
+	case 5:
+	// ---------------------------------------------
+	// | elm.text             | elm.swallow.icon.1 |
+	// ---------------------------------------------
+	// | elm.text.sub         | elm.text.sub.end   |
+	// ---------------------------------------------
+		if (!strcmp("elm.swallow.icon.1", part))
+			return create_image(obj, 50, 50);
+		else return NULL;
+
+	case 6:
+	// ------------------------------------------------------
+	// | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |
+	// ------------------------------------------------------
+	// | elm.text.sub                  | elm.text.sub.end   |
+	// ------------------------------------------------------
+		if (!strcmp("elm.swallow.icon.0", part))
+			return create_image(obj, 50, 50);
+		else if (!strcmp("elm.swallow.icon.1", part))
+			return create_image(obj, 50, 50);
+		else return NULL;
+	}
+
+	return NULL; // You must not reach here.
+}
+
+static Evas_Object*
+type1_2line_text_get_cb(void *data, Evas_Object *obj, const char *part)
+{
+	item_data_s *id = data;
+	char *long_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+	char buf[1024];
+
+	snprintf(buf, sizeof(buf), "case %d: %s", id->index % 7, long_text);
+
+	switch (id->index % 7)
+	{
+	case 0:
 	// -------------------------------
 	// | elm.text                    |
 	// -------------------------------
@@ -250,7 +295,7 @@ type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
 			return strdup(buf);
 		else return NULL;
 
-	case 5:
+	case 1:
 	// -------------------------------
 	// | elm.text  | elm.text.end    |
 	// -------------------------------
@@ -264,7 +309,7 @@ type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
 			return strdup(buf);
 		else return NULL;
 
-	case 6:
+	case 2:
 	// -----------------------------------
 	// | elm.text                        |
 	// -----------------------------------
@@ -278,7 +323,7 @@ type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
 			return strdup("Sub text");
 		else return NULL;
 
-	case 7:
+	case 3:
 	// -----------------------------------
 	// | elm.text     | elm.text.end     |
 	// -----------------------------------
@@ -294,24 +339,24 @@ type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
 			return strdup("Sub text");
 		else return NULL;
 
-	case 8:
-	// -----------------------------------
-	// | elm.text     |                  |
-	// ---------------|  elm.swallw.end  |
-	// | elm.text.sub |                  |
-	// -----------------------------------
+	case 4:
+	// -------------------------------------
+	// | elm.text     |                    |
+	// ---------------| elm.swallow.icon.1 |
+	// | elm.text.sub |                    |
+	// -------------------------------------
 		if (!strcmp("elm.text", part))
 			return strdup(buf);
 		else if (!strcmp("elm.text.sub", part))
 			return strdup(buf);
 		else return NULL;
 
-	case 9:
-	// -----------------------------------
-	// | elm.text     | elm.swallow.end  |
-	// -----------------------------------
-	// | elm.text.sub | elm.text.sub.end |
-	// -----------------------------------
+	case 5:
+	// ---------------------------------------------
+	// | elm.text             | elm.swallow.icon.1 |
+	// ---------------------------------------------
+	// | elm.text.sub         | elm.text.sub.end   |
+	// ---------------------------------------------
 		if (!strcmp("elm.text", part))
 			return strdup(buf);
 		else if (!strcmp("elm.text.sub", part))
@@ -320,12 +365,12 @@ type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
 			return strdup("Sub text");
 		else return NULL;
 
-	case 10:
-	// --------------------------------------------------
-	// | elm.swallow.icon | elm.text | elm.swallow.end  |
-	// --------------------------------------------------
-	// | elm.text.sub                | elm.text.sub.end |
-	// --------------------------------------------------
+	case 6:
+	// ------------------------------------------------------
+	// | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |
+	// ------------------------------------------------------
+	// | elm.text.sub                  | elm.text.sub.end   |
+	// ------------------------------------------------------
 		if (!strcmp("elm.text", part))
 			return strdup(buf);
 		else if (!strcmp("elm.text.sub", part))
@@ -339,20 +384,20 @@ type1_text_get_cb(void *data, Evas_Object *obj, const char *part)
 }
 
 // type2
-// --------------------------------------------------------------------
-// |          elm.text.sub           |         elm.text.sub.end       |
-// --------------------------------------------------------------------
-// | elm.swallow.icon |   elm.text   | elm.swallow.end (elm.text.end) |
-// --------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+// |                  |         elm.text.sub          | elm.text.sub.end   |                 |
+// | elm.swallow.icon |----------------------------------------------------| elm.swallow.end |
+// |                  | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |                 |
+// -------------------------------------------------------------------------------------------
 // "type2" style is almost same with "type1" except for the position of sub line.
 
 
 // multiline
-// -----------------------------------
-// |        elm.text                 |
-// -----------------------------------
-// |        elm.text.multiline       |
-// -----------------------------------
+// -----------------------------------------------------------------------------------------------------
+// |                  |                    | elm.text           |                    |                 |
+// | elm.swallow.icon | elm.swallow.icon.0 |--------------------| elm.swallow.icon.1 | elm.swallow.end |
+// |                  |                    | elm.text.multiline |                    |                 |
+// -----------------------------------------------------------------------------------------------------
 
 static char*
 multiline_text_get_cb(void *data, Evas_Object *obj, const char *part)
@@ -445,28 +490,9 @@ group_index_content_get_cb(void *data, Evas_Object *obj, const char *part)
 	item_data_s *id = data;
 
 	if ((id->index / 7) % 3 == 0)
-	{
-		Evas_Object *image;
-
-		image = elm_image_add(obj);
-		if (id->expanded)
-			elm_image_file_set(image, ICON_DIR"/core_icon_expand_open.png", NULL);
-		else
-			elm_image_file_set(image, ICON_DIR"/core_icon_expand_close.png", NULL);
-		evas_object_color_set(image, 61, 185, 204, 255);
-		evas_object_size_hint_min_set(image, ELM_SCALE_SIZE(43), ELM_SCALE_SIZE(43));
-
-		return image;
-	}
+		return create_image(obj, 50, 50);
 	else if ((id->index / 7) % 3 == 1)
-	{
-		Evas_Object *check;
-
-		check = elm_check_add(obj);
-		elm_check_state_set(check, EINA_TRUE);
-
-		return check;
-	}
+		return create_check(obj);
 
 	return NULL;
 }
@@ -484,7 +510,7 @@ group_index_text_get_cb(void *data, Evas_Object *obj, const char *part)
 	}
 	else if(!strcmp("elm.text.end", part) && ((id->index / 7) % 3 == 2))
 	{
-		snprintf(buf, sizeof(buf), "Text");
+		snprintf(buf, sizeof(buf), "Sub text");
 		return strdup(buf);
 	}
 
@@ -559,7 +585,7 @@ gl_expanded_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event
 
 	itc = elm_genlist_item_class_new();
 	itc->item_style = "type1";
-	itc->func.text_get = type1_text_get_cb;
+	itc->func.text_get = type1_1line_text_get_cb;
 	itc->func.del = gl_del_cb;
 
 	for (i = 0; i < 6; i++)
@@ -606,19 +632,35 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	elm_list_item_selected_set(it, EINA_FALSE);
 
 	/* Create item class */
-	if (!strcmp("type1", style) || !strcmp("type2", style))
+	if (!strcmp("type1 - 1line", style))
+	{
+		itc = elm_genlist_item_class_new();
+		itc->item_style = "type1";
+		itc->func.content_get = type1_1line_content_get_cb;
+		itc->func.text_get = type1_1line_text_get_cb;
+		itc->func.del = gl_del_cb;
+	}
+	else if (!strcmp("type1 - 2line", style))
+	{
+		itc = elm_genlist_item_class_new();
+		itc->item_style = "type1";
+		itc->func.content_get = type1_2line_content_get_cb;
+		itc->func.text_get = type1_2line_text_get_cb;
+		itc->func.del = gl_del_cb;
+	}
+	else if (!strcmp("type2", style))
 	{
 		itc = elm_genlist_item_class_new();
 		itc->item_style = style;
-		itc->func.content_get = type1_content_get_cb;
-		itc->func.text_get = type1_text_get_cb;
+		itc->func.content_get = type1_2line_content_get_cb;
+		itc->func.text_get = type1_2line_text_get_cb;
 		itc->func.del = gl_del_cb;
 	}
 	else if (!strcmp("multiline", style))
 	{
 		itc = elm_genlist_item_class_new();
 		itc->item_style = style;
-		itc->func.content_get = NULL;
+		itc->func.content_get = type1_2line_content_get_cb;
 		itc->func.text_get = multiline_text_get_cb;
 		itc->func.del = gl_del_cb;
 	}
@@ -626,20 +668,33 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	{
 		itc = elm_genlist_item_class_new();
 		itc->item_style = style;
+		//itc->func.content_get = full_content_get_cb;
 		itc->func.content_get = full_content_get_cb;
 		itc->func.text_get = NULL;
 		itc->func.del = gl_del_cb;
 	}
-	else
+	else if (!strcmp("group_index", style))
 	{
 		itc = elm_genlist_item_class_new();
 		itc->item_style = "default";
-		itc->func.text_get = type1_text_get_cb;
+		itc->func.text_get = type1_1line_text_get_cb;
 		itc->func.del = gl_del_cb;
 
 		itc2 = elm_genlist_item_class_new();
 		itc2->item_style = style;
 		itc2->func.content_get = group_index_content_get_cb;
+		itc2->func.text_get = group_index_text_get_cb;
+		itc2->func.del = gl_del_cb;
+	}
+	else if (!strcmp("group_index/expandable", style))
+	{
+		itc = elm_genlist_item_class_new();
+		itc->item_style = "default";
+		itc->func.text_get = type1_1line_text_get_cb;
+		itc->func.del = gl_del_cb;
+
+		itc2 = elm_genlist_item_class_new();
+		itc2->item_style = style;
 		itc2->func.text_get = group_index_text_get_cb;
 		itc2->func.del = gl_del_cb;
 	}
@@ -656,9 +711,13 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	   is used, use compress mode for compressing width to fit the viewport width. */
 
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
-
-	elm_genlist_homogeneous_set(genlist, EINA_TRUE);
 	printf("Compress mode enabled\n");
+
+	/* elm_genlist_homogeneous_set()
+	   The next line makes all items height same. (but have benefit in speed due to omitting calculation)
+	   If genlist items need to have different height per each, do not set this as EINA_TRUE. */
+	if (strcmp("multiline", style))
+		elm_genlist_homogeneous_set(genlist, EINA_TRUE);
 
 	evas_object_event_callback_add(genlist, EVAS_CALLBACK_MOUSE_DOWN, gl_mouse_down_cb, NULL);
 	evas_object_smart_callback_add(genlist, "realized", gl_realized_cb, NULL);
@@ -672,7 +731,7 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	{
 		item_data_s *id = calloc(sizeof(item_data_s), 1);
 		id->index = index;
-		if (!strcmp("group_index", style))
+		if (!strcmp("group_index", style) || !strcmp("group_index/expandable", style))
 		{
 			if ((index % 7) == 0)
 			{
@@ -708,11 +767,13 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 void genlist_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	const char *list_items[] = {
-		"type1",
+		"type1 - 1line",
+		"type1 - 2line",
 		"type2",
 		"multiline",
 		"full",
 		"group_index",
+		"group_index/expandable",
 		NULL
 	};
 
