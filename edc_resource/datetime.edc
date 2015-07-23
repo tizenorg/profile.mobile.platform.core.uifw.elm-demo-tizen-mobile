@@ -1,0 +1,130 @@
+/*
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+#define DATETIME_PADDING_HEIGHT 50
+#define DATETIME_TOP_PADDING_HEIGHT 30
+#define DATETIME_PICKER_PADDING_HEIGHT 100
+#define DATETIME_BUTTON_WIDTH 550
+#define DATETIME_TEXT_HEIGHT 60
+#define DATETIME_TEXT_COLOR 173 170 165 255
+#define DATETIME_TEXT_SIZE 24
+
+#define DATETIME_PICKER(_pos, _after, str)\
+   part { name: "picker"#_pos;\
+      type: SWALLOW;\
+      scale: 1;\
+      description { state: "default" 0.0;\
+         align: 0.5 0.0;\
+         fixed: 1 1;\
+         rel1 {\
+            relative: 0 1;\
+            to: "text"#_pos;\
+         }\
+         rel2 {\
+            relative: 1 1;\
+            to: "text"#_pos;\
+         }\
+      }\
+   }\
+   part { name: "text"#_pos;\
+      type: TEXT;\
+      scale: 1;\
+      description { state: "default" 0.0;\
+         align: 0.5 0.0;\
+         fixed: 0 1;\
+         min: 0 DATETIME_PADDING_HEIGHT;\
+         rel1 {\
+            relative: 0 1;\
+            to: "padding"#_after;\
+         }\
+         rel2 {\
+            relative: 1 1;\
+            to: "padding"#_after;\
+         }\
+         color: DATETIME_TEXT_COLOR;\
+         text {\
+            font: "Tizen:style=Regular";\
+            size: DATETIME_TEXT_SIZE;\
+            min:  1 0;\
+            align: 0.0 0.0;\
+            text: str;\
+            ellipsis: -1; \
+         }\
+      }\
+   }\
+   part { name: "padding"#_pos;\
+      type: SPACER;\
+      scale: 1;\
+      description { state: "default" 0.0;\
+         min: 0 DATETIME_PADDING_HEIGHT;\
+         fixed: 0 1;\
+         align: 0.5 0.0;\
+         rel1 {\
+            relative: 0.0 1.0;\
+            to_x: "padding"#_after;\
+            to_y: "picker"#_pos;\
+         }\
+         rel2 {\
+            relative: 1.0 1.0;\
+            to_x: "padding"#_after;\
+            to_y: "picker"#_pos;\
+         }\
+      }\
+   }
+
+group { name: "datetime_layout";
+   parts {
+      part { name: "padding0";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 0 DATETIME_TOP_PADDING_HEIGHT;
+            fixed: 0 1;
+            align: 0.5 0.0;
+            rel1.relative: 0 0;
+            rel2.relative: 1 0;
+         }
+      }
+      DATETIME_PICKER(1, 0, " Date Time (12hr) :")
+      DATETIME_PICKER(2, 1, " Date Time (24hr) :")
+      DATETIME_PICKER(3, 2, " Time Date (12hr) :")
+      DATETIME_PICKER(4, 3, " Time Date (24hr) :")
+      DATETIME_PICKER(5, 4, " User format changed as per System's Region format :")
+      DATETIME_PICKER(6, 5, " Datetime widget with field limits :")
+      part { name: "bottom.padding";
+         type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 0 DATETIME_TOP_PADDING_HEIGHT;
+            align: 0.5 1.0;
+            rel1 {
+               to: "padding6";
+               relative: 0 1;
+            }
+         }
+      }
+   }
+}
+
+#undef DATETIME_PICKER
+#undef DATETIME_PADDING_HEIGHT
+#undef DATETIME_PICKER_PADDING_HEIGHT
+#undef DATETIME_BUTTON_WIDTH
+#undef DATETIME_TOP_PADDING_HEIGHT
+#undef DATETIME_TEXT_HEIGHT
+#undef DATETIME_TEXT_COLOR
+#undef DATETIME_TEXT_SIZE
