@@ -1,269 +1,159 @@
+/*
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 #include "main.h"
-#include "util.h"
 
-
-static Evas_Object *entry, *table, *check, *icon = NULL;
-static Eina_Bool ck1;
-static Eina_Bool is_pin_style;
-
-char *_en_styles[] =
+static void
+entry_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    "default",
-    "vcenter_align",
-    "editfield",
-    NULL
-};
-
-static void _preedit_cb(void *data, Evas_Object *obj, void *event_info)
-{
-    int x;
-    Ecore_IMF_Context *imf_context = data;
-    char im_data[30] = "entrylimit=20&entrycharlen=0";
-
-    x = eina_unicode_utf8_get_len(elm_object_text_get(obj));
-    sprintf(im_data, "entrylimit=20&entrycharlen=%d",x);
-    ecore_imf_context_input_panel_imdata_set(imf_context, im_data, eina_unicode_utf8_get_len(im_data)+1);
-}
-
-static void _preedit_pin_cb(void *data, Evas_Object *obj, void *event_info)
-{
-    int x;
-    Ecore_IMF_Context *imf_context = data;
-    char im_data[30] = "entrylimit=1&entrycharlen=0";
-
-    x = eina_unicode_utf8_get_len(elm_object_text_get(obj));
-    sprintf(im_data, "entrylimit=1&entrycharlen=%d",x);
-    ecore_imf_context_input_panel_imdata_set(imf_context, im_data, eina_unicode_utf8_get_len(im_data)+1);
+	printf("entry changed!\n");
 }
 
 static void
-pin_style()
+list_it_password_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    Evas_Object *en, *rect;
-    static Elm_Entry_Filter_Limit_Size limit_filter_data;
-    Ecore_IMF_Context *imf_context;
+	Evas_Object *entry;
+	Evas_Object *box;
+	Evas_Object *scroller;
+	Evas_Object *layout;
+	Evas_Object *nf = data;
 
-    elm_table_clear(table, EINA_TRUE);
-    elm_table_padding_set(table, 50, 0);
-    elm_table_homogeneous_set(table, EINA_TRUE);
+	scroller = elm_scroller_add(nf);
 
-    rect = evas_object_rectangle_add(evas_object_evas_get(table));
-    evas_object_size_hint_min_set(rect, 240, 0);
-    evas_object_size_hint_weight_set(rect, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(rect, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_table_pack(table, rect, 0, 0, 4, 1);
+	box = elm_box_add(scroller);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, 0.0);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, 0.0);
+	elm_object_content_set(scroller, box);
 
-    en = elm_entry_add(table);
-    evas_object_size_hint_weight_set(en, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(en, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_object_style_set(en, "input.field.pin");
-    elm_object_text_set(en, "");
-    elm_entry_password_set(en, EINA_TRUE);
-    elm_entry_single_line_set(en, EINA_TRUE);
-    elm_table_pack(table, en, 0, 0, 1, 1);
-    evas_object_show(en);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "entry_layout");
+	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, 0.0);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, 0.0);
 
-    imf_context = elm_entry_imf_context_get(en);
-    limit_filter_data.max_char_count = 1;
-    limit_filter_data.max_byte_count = 0;
-    elm_entry_markup_filter_append(en, elm_entry_filter_limit_size, &limit_filter_data);
-    evas_object_smart_callback_add(en, "preedit,changed", _preedit_pin_cb, imf_context);
-    evas_object_smart_callback_add(en, "changed", _preedit_pin_cb, imf_context);
+	entry = elm_entry_add(box);
+	elm_entry_password_set(entry, EINA_TRUE);
+	elm_entry_scrollable_set(entry, EINA_TRUE);
+	eext_entry_selection_back_event_allow_set(entry, EINA_TRUE);
+	evas_object_size_hint_weight_set(entry, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(entry, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_smart_callback_add(entry, "changed", entry_changed_cb, NULL);
+	elm_object_part_content_set(layout, "entry_part", entry);
 
-    en = elm_entry_add(table);
-    evas_object_size_hint_weight_set(en, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(en, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_object_style_set(en, "input.field.pin");
-    elm_object_text_set(en, "");
-    elm_entry_password_set(en, EINA_TRUE);
-    elm_entry_single_line_set(en, EINA_TRUE);
-    elm_table_pack(table, en, 1, 0, 1, 1);
-    evas_object_show(en);
+	elm_box_pack_end(box, layout);
+	evas_object_show(layout);
 
-    imf_context = elm_entry_imf_context_get(en);
-    limit_filter_data.max_char_count = 1;
-    limit_filter_data.max_byte_count = 0;
-    elm_entry_markup_filter_append(en, elm_entry_filter_limit_size, &limit_filter_data);
-    evas_object_smart_callback_add(en, "preedit,changed", _preedit_pin_cb, imf_context);
-    evas_object_smart_callback_add(en, "changed", _preedit_pin_cb, imf_context);
-
-    en = elm_entry_add(table);
-    evas_object_size_hint_weight_set(en, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(en, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_object_style_set(en, "input.field.pin");
-    elm_object_text_set(en, "");
-    elm_entry_password_set(en, EINA_TRUE);
-    elm_entry_single_line_set(en, EINA_TRUE);
-    elm_table_pack(table, en, 2, 0, 1, 1);
-    evas_object_show(en);
-
-    imf_context = elm_entry_imf_context_get(en);
-    limit_filter_data.max_char_count = 1;
-    limit_filter_data.max_byte_count = 0;
-    elm_entry_markup_filter_append(en, elm_entry_filter_limit_size, &limit_filter_data);
-    evas_object_smart_callback_add(en, "preedit,changed", _preedit_pin_cb, imf_context);
-    evas_object_smart_callback_add(en, "changed", _preedit_pin_cb, imf_context);
-
-    en = elm_entry_add(table);
-    evas_object_size_hint_weight_set(en, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(en, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_object_style_set(en, "input.field.pin");
-    elm_object_text_set(en, "");
-    elm_entry_password_set(en, EINA_TRUE);
-    elm_entry_single_line_set(en, EINA_TRUE);
-    elm_table_pack(table, en, 3, 0, 1, 1);
-    evas_object_show(en);
-
-    imf_context = elm_entry_imf_context_get(en);
-    limit_filter_data.max_char_count = 1;
-    limit_filter_data.max_byte_count = 0;
-    elm_entry_markup_filter_append(en, elm_entry_filter_limit_size, &limit_filter_data);
-    evas_object_smart_callback_add(en, "preedit,changed", _preedit_pin_cb, imf_context);
-    evas_object_smart_callback_add(en, "changed", _preedit_pin_cb, imf_context);
+	elm_naviframe_item_push(nf, "Password Entry", NULL, NULL, scroller, NULL);
 }
 
 static void
-_en_selected(void *data, Evas_Object *obj, void *event_info)
+list_it_multiline_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    Evas_Object *en, *rect;
-    const char *txt = elm_object_item_text_get(event_info);
+	Evas_Object *entry;
+	Evas_Object *layout;
+	Evas_Object *scroller;
+	Evas_Object *box;
+	Evas_Object *nf = data;
 
-    if (!strcmp(txt, elm_object_text_get(obj))) return;
+	scroller = elm_scroller_add(nf);
 
-    // 1. pin style -> normal style
-    if (is_pin_style)
-    {
-        elm_table_clear(table, EINA_TRUE);
-        is_pin_style = EINA_FALSE;
+	box = elm_box_add(scroller);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, 0.0);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, 0.0);
+	elm_object_content_set(scroller, box);
 
-        entry = en = elm_entry_add(table);
-        elm_object_text_set(en, "Input Field");
-        elm_entry_scrollable_set(en, EINA_TRUE);
-        elm_entry_single_line_set(en, EINA_TRUE);
-        elm_table_pack(table, en, 0, 0, 1, 1);
-        evas_object_show(en);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "entry_layout");
+	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, 0.0);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, 0.0);
 
-        rect = evas_object_rectangle_add(evas_object_evas_get(table));
-        evas_object_size_hint_weight_set(en, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-        evas_object_size_hint_align_set(en, EVAS_HINT_FILL, EVAS_HINT_FILL);
-        evas_object_size_hint_min_set(rect, 400, 0);
-        elm_table_pack(table, rect, 0, 0, 1, 1);
+	entry = elm_entry_add(layout);
+	eext_entry_selection_back_event_allow_set(entry, EINA_TRUE);
+	elm_object_part_content_set(layout, "entry_part", entry);
 
-        elm_object_style_set(en, txt);
-        elm_object_disabled_set(check, EINA_FALSE);
-    }
-    // 2. normal style -> pin style
-    else if (!is_pin_style && !strcmp(txt, "input.field.pin"))
-    {
-        elm_table_clear(table, EINA_TRUE);
-        if (icon)
-        {
-            evas_object_del(icon);
-            icon = NULL;
-        }
-        pin_style();
-        is_pin_style = EINA_TRUE;
-        elm_object_disabled_set(check, EINA_TRUE);
-    }
-    // 3. normal style -> normal style
-    else
-    {
-        elm_object_style_set(entry, txt);
-    }
+	elm_box_pack_end(box, layout);
+	evas_object_show(layout);
 
-    // icon set
-    if (!strcmp(txt, "input.field.icon") || !strcmp(txt, "input.field.small.icon"))
-    {
-        if (!icon)
-        {
-            icon = elm_icon_add(entry);
-            elm_image_file_set(icon, IMAGE_DIR"ico_lock_nor.png", NULL);
-            evas_object_color_set(icon, 0, 0, 0, 255);
-        }
-        elm_object_part_content_set(entry, "icon", icon);
-    }
-    else
-    {
-        if (icon)
-        {
-            evas_object_del(icon);
-            icon = NULL;
-        }
-    }
+	elm_naviframe_item_push(nf, "Multiline Entry", NULL, NULL, scroller, NULL);
 }
 
-static void _ck_changed(void *data, Evas_Object *obj, void *event_info)
+static void
+entry_activated_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    int val = (int) data;
-    static Elm_Entry_Filter_Limit_Size limit_filter_data;
-    Ecore_IMF_Context *imf_context;
-
-    if (val == 1)
-    {
-        if (ck1)
-        {
-            imf_context = elm_entry_imf_context_get(entry);
-
-            limit_filter_data.max_char_count = 20;
-            limit_filter_data.max_byte_count = 0;
-            elm_entry_markup_filter_append(entry, elm_entry_filter_limit_size, &limit_filter_data);
-            evas_object_smart_callback_add(entry, "preedit,changed", _preedit_cb, imf_context);
-            evas_object_smart_callback_add(entry, "changed", _preedit_cb, imf_context);
-        }
-        else
-        {
-            imf_context = elm_entry_imf_context_get(entry);
-            elm_entry_markup_filter_remove(entry, elm_entry_filter_limit_size, &limit_filter_data);
-            evas_object_smart_callback_del_full(entry, "preedit,changed", _preedit_cb, imf_context);
-            evas_object_smart_callback_del_full(entry, "changed", _preedit_cb, imf_context);
-        }
-    }
+	printf("enter key clicked!!\n");
 }
 
-void entry_del_cb(void *data)
+static void
+list_it_singleline_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    appdata *ad = data;
-    evas_object_smart_callback_del(ad->style_hov, "selected", _en_selected);
-    if (icon)
-    {
-        evas_object_del(icon);
-        icon = NULL;
-    }
+	Evas_Object *entry;
+	Evas_Object *layout;
+	Evas_Object *scroller;
+	Evas_Object *box;
+	Evas_Object *nf = data;
+
+	scroller = elm_scroller_add(nf);
+
+	box = elm_box_add(scroller);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, 0.0);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, 0.0);
+	elm_object_content_set(scroller, box);
+
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "entry_layout");
+	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, 0.0);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, 0.0);
+
+	entry = elm_entry_add(layout);
+	elm_entry_single_line_set(entry, EINA_TRUE);
+	elm_entry_scrollable_set(entry, EINA_TRUE);
+	eext_entry_selection_back_event_allow_set(entry, EINA_TRUE);
+	evas_object_size_hint_weight_set(entry, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(entry, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_smart_callback_add(entry, "activated", entry_activated_cb, NULL);
+	elm_object_part_content_set(layout, "entry_part", entry);
+
+	elm_box_pack_end(box, layout);
+	evas_object_show(layout);
+
+	elm_naviframe_item_push(nf, "Singleline Entry", NULL, NULL, scroller, NULL);
 }
 
-Evas_Object *entry_cb(void *data)
+static void
+list_selected_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    Evas_Object *wbox, *obox, *en, *tb, *ck;
-    appdata *ad = data;
+	Elm_Object_Item *it = event_info;
+	elm_list_item_selected_set(it, EINA_FALSE);
+}
 
-    wbox = ad->widget_box;
-    obox = ad->option_box;
+void
+entry_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *list;
+	Evas_Object *nf = data;
 
-    // widget box
-    en = elm_entry_add(wbox);
-    tb = widget_min_set(en, wbox, ELM_SCALE_SIZE(400), 0);
-    evas_object_event_callback_add(tb, EVAS_CALLBACK_DEL, table_del_cb, NULL);
-    elm_object_text_set(en, "Input Field");
-    elm_entry_scrollable_set(en, EINA_TRUE);
-    elm_entry_single_line_set(en, EINA_TRUE);
-    elm_box_pack_end(wbox, tb);
-    evas_object_show(tb);
-    evas_object_show(en);
+	/* List */
+	list = elm_list_add(nf);
+	elm_list_mode_set(list, ELM_LIST_COMPRESS);
+	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
 
-    table = tb;
-    entry = en;
-    is_pin_style = EINA_FALSE;
-    evas_object_smart_callback_add(ad->style_hov, "selected", _en_selected, NULL);
+	elm_list_item_append(list, "Multiline Entry", NULL, NULL, list_it_multiline_cb, nf);
+	elm_list_item_append(list, "Password Entry", NULL, NULL, list_it_password_cb, nf);
+	elm_list_item_append(list, "Singleline Entry", NULL, NULL, list_it_singleline_cb, nf);
+	elm_list_go(list);
 
-    // option box
-    ck = elm_check_add(obox);
-    elm_object_text_set(ck, " Limit # of Characters to 20");
-    elm_check_state_pointer_set(ck, &ck1);
-    evas_object_smart_callback_add(ck, "changed", _ck_changed, (void *)1);
-    evas_object_show(ck);
-    evas_object_size_hint_weight_set(ck, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    elm_box_pack_end(obox, ck);
-    check = ck;
-
-    return table;
+	elm_naviframe_item_push(nf, "Entry", NULL, NULL, list, NULL);
 }
