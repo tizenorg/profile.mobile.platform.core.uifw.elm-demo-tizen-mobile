@@ -21,6 +21,7 @@ group { name: "reading_order_layout";
    images.image: "arrow-left.png" COMP;
    images.image: "arrow-left1.png" COMP;
    images.image: "arrow-up.png" COMP;
+   images.image: "arrow-down.png" COMP;
 
    parts {
       part { name: "bg";
@@ -259,6 +260,20 @@ group { name: "reading_order_layout";
                to: "bg";
             }
          }
+      }
+      part { name: "arrow_custom_label_d";
+          description {
+             state: "default" 0.0;
+             image.normal: "arrow-down.png";
+             rel1 {
+		relative: 0.0 0.4;
+		to: "custom_lbl";
+             }
+             rel2 {
+                relative: 0.0 0.0;
+		to: "button_d";
+             }
+          }
       }
       part { name: "arrow_custom_b_c";
           description {
