@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.elm-demo-tizen-mobile" version="0.1" install-location="internal-only">
-    <label>ElmTv</label>
-    <description>Tizen Tv Theme Demo Code</description>
-    <ui-application appid="org.tizen.elm-demo-tizen-mobile" exec="/usr/apps/org.tizen.elm-demo-tizen-mobile/bin/elm_demo_tizen_mobile" nodisplay="false" multiple="false" type="capp" taskmanage="true">
-        <label>ElmTv</label>
-        <label xml:lang="en-us">ElmTv</label>
+    <label>mobile-demo</label>
+    <description>Tizen Mobile Theme Demo Code</description>
+    <ui-application appid="org.tizen.elm-demo-tizen-mobile" exec="/usr/apps/org.tizen.elm-demo-tizen-mobile/bin/elm-demo-tizen-mobile" nodisplay="false" multiple="false" type="capp" taskmanage="true">
+        <label>mobile-demo</label>
+        <label xml:lang="en-us">mobile-demo</label>
     </ui-application>
 </manifest>

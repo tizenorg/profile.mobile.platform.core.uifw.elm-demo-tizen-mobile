@@ -1,282 +1,286 @@
-#include <Elementary.h>
-#include "config.h"
+/*
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *		  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 #include "main.h"
 
-#if DESKTOP == 0
-#include <appcore-efl.h>
-#endif
-
-
-extern char *_btn_styles[];
-extern char *_ck_styles[];
-extern char *_en_styles[];
-extern char *_sc_styles[];
-extern char *_sl_styles[];
-extern char *_gg_item_styles[];
-extern char *_gl_item_styles[];
-
-static widget_item widget_its[] =
+static void
+win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    { "Bg",  bg_cb, NULL, NULL, NULL },
-    { "Button",  button_cb, button_del_cb, _btn_styles, NULL },
-    { "Check", checkbox_cb, checkbox_del_cb, _ck_styles, NULL },
-    { "Colorselector", colorselector_cb, NULL, NULL, NULL },
-    { "Ctxpopup", ctxpopup_cb, ctxpopup_del_cb, NULL, NULL },
-    { "Datetime", datetime_cb, datetime_del_cb, NULL, NULL },
-    { "Entry", entry_cb, entry_del_cb, _en_styles, NULL },
-    { "Gengrid", gengrid_cb, gengrid_del_cb, NULL, _gg_item_styles },
-    { "Genlist", genlist_cb, genlist_del_cb, NULL, _gl_item_styles },
-    { "Index", index_cb, NULL, NULL, NULL },
-    { "Label", label_cb, NULL, NULL, NULL },
-    { "Hoversel", hoversel_cb, hoversel_del_cb, NULL, NULL },
-    { "Layout", layout_cb, layout_del_cb, NULL, NULL },
-    { "Multibuttonentry", multibuttonentry_cb, NULL, NULL, NULL },
-    { "Panel", panel_cb, NULL, NULL, NULL },
-    { "Popup", popup_cb, popup_del_cb, NULL, NULL },
-    { "Progressbar", progressbar_cb, progressbar_del_cb, NULL, NULL },
-    { "Radio", radio_cb, radio_del_cb, NULL, NULL },
-    { "Scroller", scroller_cb, scroller_del_cb, _sc_styles, NULL },
-    { "Slider", slider_cb, slider_del_cb, _sl_styles, NULL },
-    { "Spinner", spinner_cb, NULL, NULL, NULL },
-    { "Toolbar", toolbar_cb, NULL, NULL, NULL },
-    { "Tooltip", tooltip_cb, tooltip_del_cb, NULL, NULL },
-    { NULL, NULL, NULL, NULL, NULL }
-};
-
-static appdata *app_data = NULL;
-
-void table_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-    elm_table_clear(obj, EINA_TRUE);
-}
-
-static void _back_btn_clicked_cb(void *data, Evas_Object *obj, void *event)
-{
-    elm_naviframe_item_pop(obj);
-}
-
-static char *_text_get(void *data, Evas_Object *obj, const char *part)
-{
-    int i = (int) data;
-    char buf[32];
-    sprintf(buf, "%d %s", (i+1), widget_its[i].name);
-
-    return strdup(buf);
+	/* To make your application go to background,
+		Call the elm_win_lower() instead
+		Evas_Object *win = (Evas_Object *) data;
+		elm_win_lower(win); */
+	ui_app_exit();
 }
 
 static void
-_selected(void *data, Evas_Object *obj, void *event_info)
+list_selected_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    const char *txt = elm_object_item_text_get(event_info);
-    elm_object_text_set(obj, txt);
+	Elm_Object_Item *it = event_info;
+	elm_list_item_selected_set(it, EINA_FALSE);
+}
+
+static Eina_Bool
+naviframe_pop_cb(void *data, Elm_Object_Item *it)
+{
+	ui_app_exit();
+	return EINA_FALSE;
 }
 
 static void
-_item_sel(void *data, Evas_Object *obj, void *event_info)
+end_btn_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    int i = (int) data, j;
-    Evas_Object *layout, *box, *hov;
-
-    layout = elm_layout_add(app_data->naviframe);
-    elm_layout_file_set(layout, DATA_DIR"layout.edj", "elm_demo/main");
-    evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_show(layout);
-
-    // box 1
-    box = elm_box_add(layout);
-    evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_object_part_content_set(layout, "widget", box);
-    evas_object_show(box);
-    app_data->widget_box = box;
-
-    // box 2
-    box = elm_box_add(layout);
-    evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_object_part_content_set(layout, "option", box);
-    evas_object_show(box);
-    app_data->option_box = box;
-    elm_box_horizontal_set(box, EINA_TRUE);
-
-    // hoversel 1
-    hov = elm_hoversel_add(layout);
-    elm_hoversel_hover_parent_set(hov, layout);
-    evas_object_show(hov);
-    evas_object_smart_callback_add(hov, "selected", _selected, NULL);
-    elm_object_part_content_set(layout, "widget.style", hov);
-    elm_object_disabled_set(hov, EINA_TRUE);
-    app_data->style_hov = hov;
-
-    if (widget_its[i].styles) {
-        j = 0;
-        elm_object_disabled_set(app_data->style_hov, EINA_FALSE);
-        elm_object_text_set(app_data->style_hov, widget_its[i].styles[0]);
-        while(widget_its[i].styles[j]) {
-            elm_hoversel_item_add(app_data->style_hov,
-                                  widget_its[i].styles[j], NULL, ELM_ICON_NONE, NULL, NULL);
-            j++;
-        }
-    }
-    else {
-        elm_object_text_set(app_data->style_hov, "default");
-        elm_object_disabled_set(app_data->style_hov, EINA_TRUE);
-    }
-
-    // hoversel 2
-    if (widget_its[i].it_styles) {
-        elm_layout_signal_emit(layout, "item,style,show", "elm");
-        edje_object_signal_emit(elm_layout_edje_get(layout), "item,style,show", "elm");
-
-        hov = elm_hoversel_add(layout);
-        elm_hoversel_hover_parent_set(hov, layout);
-        evas_object_show(hov);
-        evas_object_smart_callback_add(hov, "selected", _selected, NULL);
-        elm_object_part_content_set(layout, "item.style", hov);
-        elm_object_disabled_set(hov, EINA_TRUE);
-        app_data->item_hov = hov;
-
-        elm_object_text_set(app_data->item_hov, "default");
-        j = 0;
-        elm_object_disabled_set(app_data->item_hov, EINA_FALSE);
-        elm_object_text_set(app_data->item_hov, widget_its[i].it_styles[0]);
-        while(widget_its[i].it_styles[j]) {
-            elm_hoversel_item_add(app_data->item_hov,
-                                  widget_its[i].it_styles[j], NULL, ELM_ICON_NONE, NULL, NULL);
-            j++;
-        }
-    }
-
-    widget_its[i].func(app_data);
-    elm_naviframe_item_push(app_data->naviframe,
-                            widget_its[i].name, NULL, NULL, layout, NULL);
+	ui_app_exit();
 }
 
-static Evas_Object *_widget_list_create(Evas_Object *parent)
+static void
+create_list_view(appdata_s *ad)
 {
-    Evas_Object *list;
-    int i = 0;
+	Evas_Object *list;
+	Evas_Object *btn;
+	Evas_Object *nf = ad->nf;
+	Elm_Object_Item *nf_it;
+	char buf[100] = { 0, };
 
-    list = elm_genlist_add(parent);
-    elm_genlist_select_mode_set(list, ELM_OBJECT_SELECT_MODE_ALWAYS);
-    evas_object_size_hint_weight_set(list, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(list, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	/* List */
+	list = elm_list_add(nf);
+	elm_list_mode_set(list, ELM_LIST_COMPRESS);
+	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
 
-    Elm_Genlist_Item_Class *itc;
-    itc = elm_genlist_item_class_new();
-    itc->item_style = "default";
-    itc->func.text_get = _text_get;
-    itc->func.content_get = NULL;
-    itc->func.state_get = NULL;
-    itc->func.del = NULL;
+	/* Main Menu Items Here */
+	elm_list_item_append(list, "Accessibility", NULL, NULL, accessibility_cb, nf);
+	elm_list_item_append(list, "Bg", NULL, NULL, bg_cb, nf);
+	elm_list_item_append(list, "Button", NULL, NULL, button_cb, nf);
+	elm_list_item_append(list, "Calendar", NULL, NULL, calendar_cb, nf);
+	elm_list_item_append(list, "Check", NULL, NULL, check_cb, nf);
+	elm_list_item_append(list, "Colorselector", NULL, NULL, colorselector_cb, nf);
+	elm_list_item_append(list, "Ctxpopup", NULL, NULL, ctxpopup_cb, nf);
+	elm_list_item_append(list, "Datetime", NULL, NULL, datetime_cb, ad);
+	elm_list_item_append(list, "Entry", NULL, NULL, entry_cb, nf);
+	elm_list_item_append(list, "Fastscroll", NULL, NULL, fastscroll_cb, nf);
+	elm_list_item_append(list, "Flipselector", NULL, NULL, flipselector_cb, nf);
+	elm_list_item_append(list, "Gengrid", NULL, NULL, gengrid_cb, nf);
+	elm_list_item_append(list, "Genlist", NULL, NULL, genlist_cb, nf);
+	elm_list_item_append(list, "Handler", NULL, NULL, handler_cb, nf);
+	elm_list_item_append(list, "Hoversel", NULL, NULL, hoversel_cb, nf);
+	elm_list_item_append(list, "Indicator", NULL, NULL, indicator_cb, ad);
+	elm_list_item_append(list, "Label", NULL, NULL, label_cb, nf);
+	elm_list_item_append(list, "Multibuttonentry", NULL, NULL, multibuttonentry_cb, nf);
+	elm_list_item_append(list, "Naviframe", NULL, NULL, naviframe_cb, nf);
+	elm_list_item_append(list, "Nocontents", NULL, NULL, nocontents_cb, nf);
+	elm_list_item_append(list, "Pagecontrol", NULL, NULL, pagecontrol_cb, nf);
+	elm_list_item_append(list, "Popup", NULL, NULL, popup_cb, ad);
+	elm_list_item_append(list, "Progressbar", NULL, NULL, progressbar_cb, nf);
+	elm_list_item_append(list, "Radio", NULL, NULL, radio_cb, nf);
+	elm_list_item_append(list, "Slider", NULL, NULL, slider_cb, nf);
+	elm_list_item_append(list, "Spinner", NULL, NULL, spinner_cb, nf);
+	elm_list_item_append(list, "Toolbar", NULL, NULL, toolbar_cb, nf);
+	//elm_list_item_append(list, "Vector", NULL, NULL, vector_cb, nf);
 
-    while(widget_its[i].name)
-    {
-        elm_genlist_item_append(list, itc, (void *)i, NULL, ELM_GENLIST_ITEM_NONE, _item_sel, (void *)i);
-        i++;
-    }
+	elm_list_go(list);
 
-    elm_genlist_item_class_free(itc);
+	/* This button is set for devices which doesn't have H/W back key. */
+	btn = elm_button_add(nf);
+	elm_object_style_set(btn, "naviframe/end_btn/default");
+	evas_object_smart_callback_add(btn, "clicked", end_btn_cb, NULL);
 
-    return list;
+	snprintf(buf, 100, "Tizen UI :: scale[%1.1f]", elm_config_scale_get());
+	nf_it = elm_naviframe_item_push(nf, buf, btn, NULL, list, NULL);
+	elm_naviframe_item_pop_cb_set(nf_it, naviframe_pop_cb, ad->win);
 }
 
-void app_init(appdata *ad)
+static void
+create_base_gui(appdata_s *ad)
 {
-    Evas_Object *win, *conform, *naviframe, *list;
+	/*
+	 * Widget Tree
+	 * Window
+	 *  - conform
+	 *   - layout main
+	 *    - naviframe */
 
-    elm_config_focus_highlight_enabled_set(EINA_TRUE);
-    elm_config_focus_highlight_animate_set(EINA_TRUE);
-    elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
-    elm_theme_extension_add(NULL, DATA_DIR"button.edj"); // for customized button
+	Evas_Object *btn, *image;
 
-    // window
-    win = elm_win_util_standard_add("elm-demo-tizen-mobile", "elm-demo-tizen-mobile");
-    elm_win_autodel_set(win, EINA_TRUE);
-    elm_win_fullscreen_set(win, EINA_TRUE);
-    elm_win_focus_highlight_style_set(win, "elmtv");
-    evas_object_show(win);
-    ad->win = win;
+	/* Window */
+	ad->win = elm_win_util_standard_add(PACKAGE, PACKAGE);
+	elm_win_conformant_set(ad->win, EINA_TRUE);
+	elm_win_autodel_set(ad->win, EINA_TRUE);
 
-    // conform
-    conform = elm_conformant_add(win);
-    evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    elm_win_resize_object_add(win, conform);
-    evas_object_show(conform);
-    ad->conform = conform;
+	if (elm_win_wm_rotation_supported_get(ad->win)) {
+		int rots[4] = { 0, 90, 180, 270 };
+		elm_win_wm_rotation_available_rotations_set(ad->win, (const int *)(&rots), 4);
+	}
 
-    // naviframe
-    naviframe = elm_naviframe_add(conform);
-    elm_object_content_set(conform, naviframe);
-    evas_object_show(naviframe);
-    ad->naviframe = naviframe;
+	evas_object_smart_callback_add(ad->win, "delete,request", win_delete_request_cb, NULL);
 
-    // widget list
-    list = _widget_list_create(naviframe);
-    elm_naviframe_item_push(naviframe, "Tizen 3.0 Mobile", NULL, NULL, list, NULL);
-    eext_object_event_callback_add(naviframe, EEXT_CALLBACK_BACK, _back_btn_clicked_cb, NULL);
+	/* Conformant */
+	ad->conform = elm_conformant_add(ad->win);
+	evas_object_size_hint_weight_set(ad->conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_win_resize_object_add(ad->win, ad->conform);
+	evas_object_show(ad->conform);
+
+	/* Indicator */
+	elm_win_indicator_mode_set(ad->win, ELM_WIN_INDICATOR_SHOW);
+	elm_win_indicator_opacity_set(ad->win, ELM_WIN_INDICATOR_TRANSPARENT);
+
+	/* Base Layout */
+	ad->layout = elm_layout_add(ad->conform);
+	evas_object_size_hint_weight_set(ad->layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_theme_set(ad->layout, "layout", "application", "default");
+	evas_object_show(ad->layout);
+
+	elm_object_content_set(ad->conform, ad->layout);
+
+	/* Floating Button */
+	//ad->fb = eext_floatingbutton_add(ad->layout);
+	//elm_object_part_content_set(ad->layout, "elm.swallow.floatingbutton", ad->fb);
+
+	/* Floating Button 1 */
+	//btn = elm_button_add(ad->fb);
+	//elm_object_part_content_set(ad->fb, "button1", btn);
+
+	//image = elm_image_add(ad->fb);
+	//elm_image_file_set(image, ICON_DIR"/core_floating_icon_01.png", NULL);
+	//elm_object_part_content_set(btn, "icon", image);
+
+	/* Floating Button 2 */
+	//btn = elm_button_add(ad->fb);
+	//elm_object_part_content_set(ad->fb, "button2", btn);
+
+	//image = elm_image_add(ad->fb);
+	//elm_image_file_set(image, ICON_DIR"/core_floating_icon_02.png", NULL);
+	//elm_object_part_content_set(btn, "icon", image);
+
+	/* Naviframe */
+	ad->nf = elm_naviframe_add(ad->layout);
+	create_list_view(ad);
+	elm_object_part_content_set(ad->layout, "elm.swallow.content", ad->nf);
+	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
+	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
+
+	/* Show window after base gui is set up */
+	evas_object_show(ad->win);
 }
 
-#if DESKTOP == 1
-EAPI_MAIN
-int elm_main(int argc, char **argv)
+static bool
+app_create(void *data)
 {
-    char *edj_path = NULL;
+	/* Hook to take necessary actions before main event loop starts
+	   Initialize UI resources and application's data
+	   If this function returns true, the main loop of application starts
+	   If this function returns false, the application is terminated */
+	appdata_s *ad = data;
 
-    appdata *ad = calloc(1, sizeof(appdata));
-    app_data = ad;
+	elm_app_base_scale_set(2.6);
 
-    if(argc == 2)
-    {
-        int len = strlen(argv[1]) + 1;
-        edj_path = (char *)malloc(len);
-        strncpy(edj_path, argv[1], len - 1);
-        edj_path[len-1] = '\0';
+	/* Enable HW acceleration */
+	elm_config_accel_preference_set("3d");
 
-        // Theme overlay when there is a command line parameter
-        // otherwise, use environment variable.
-        elm_theme_overlay_add(NULL, edj_path);
+	create_base_gui(ad);
 
-        free(edj_path);
-    }
-
-    app_init(ad);
-
-    elm_run();
-
-    elm_shutdown();
-
-    free(ad);
-
-    return 0;
-}
-ELM_MAIN()
-#else
-bool app_create(void *userdata)
-{
-    appdata *ad = userdata;
-
-    app_init(ad);
-
-    return true;
+	return true;
 }
 
-void app_terminate(void *user_data)
+static void
+app_control(app_control_h app_control, void *data)
 {
+	/* Handle the launch request. */
 }
 
-int main(int argc, char **argv)
+static void
+app_pause(void *data)
 {
-    appdata app;
-    memset(&app, 0, sizeof(app));
-    struct appcore_ops ops = {
-        .data = &app,
-        .create = app_create,
-        .terminate = app_terminate,
-        .pause = NULL,
-        .resume = NULL,
-        .reset = NULL,
-    };
-    return appcore_efl_main("org.tizen.elm-demo-tizen-mobile", &argc, &argv, &ops);
+	/* Take necessary actions when application becomes invisible. */
 }
-#endif
+
+static void
+app_resume(void *data)
+{
+	/* Take necessary actions when application becomes visible. */
+}
+
+static void
+app_terminate(void *data)
+{
+	/* Release all resources. */
+}
+
+static void
+ui_app_lang_changed(app_event_info_h event_info, void *user_data)
+{
+	/*APP_EVENT_LANGUAGE_CHANGED*/
+	char *locale = NULL;
+	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &locale);
+	elm_language_set(locale);
+	free(locale);
+	return;
+}
+
+static void
+ui_app_orient_changed(app_event_info_h event_info, void *user_data)
+{
+	/*APP_EVENT_DEVICE_ORIENTATION_CHANGED*/
+	return;
+}
+
+static void
+ui_app_region_changed(app_event_info_h event_info, void *user_data)
+{
+	/*APP_EVENT_REGION_FORMAT_CHANGED*/
+}
+
+static void
+ui_app_low_battery(app_event_info_h event_info, void *user_data)
+{
+	/*APP_EVENT_LOW_BATTERY*/
+}
+
+static void
+ui_app_low_memory(app_event_info_h event_info, void *user_data)
+{
+	/*APP_EVENT_LOW_MEMORY*/
+}
+
+int
+main(int argc, char *argv[])
+{
+	appdata_s ad = {0,};
+	int ret = 0;
+
+	ui_app_lifecycle_callback_s event_callback = {0,};
+	app_event_handler_h handlers[5] = {NULL, };
+
+	event_callback.create = app_create;
+	event_callback.terminate = app_terminate;
+	event_callback.pause = app_pause;
+	event_callback.resume = app_resume;
+	event_callback.app_control = app_control;
+
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, ui_app_low_battery, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, ui_app_low_memory, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, ui_app_orient_changed, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, ui_app_lang_changed, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, ui_app_region_changed, &ad);
+	ui_app_remove_event_handler(handlers[APP_EVENT_LOW_MEMORY]);
+
+	ret = ui_app_main(argc, argv, &event_callback, &ad);
+	if (ret != APP_ERROR_NONE) {
+		//dlog_print(DLOG_ERROR, LOG_TAG, "app_main() is failed. err = %d", ret);
+	}
+
+	return ret;
+}

@@ -1,120 +1,297 @@
+/*
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
 #include "main.h"
-#include "util.h"
 
+static Evas_Object *ctxpopup = NULL;
 
-static int dir = 0;
-
-static void
-_ctxpopup_item_cb(void *data, Evas_Object *obj, void *event_info)
+static Eina_Bool
+naviframe_pop_cb(void *data, Elm_Object_Item *it)
 {
-    printf("ctxpopup item selected: %s\n", elm_object_item_text_get(event_info));
-}
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+		ctxpopup = NULL;
+	}
 
-Elm_Object_Item *item_new(Evas_Object *ctxpopup, const char * label, const char *icon)
-{
-    Evas_Object *ic = elm_icon_add(ctxpopup);
-    elm_icon_standard_set(ic, icon);
-    elm_image_resizable_set(ic, EINA_FALSE, EINA_FALSE);
-
-    return elm_ctxpopup_item_append(ctxpopup, label, ic, _ctxpopup_item_cb, NULL);
+	return EINA_TRUE;
 }
 
 static void
-_ctxpopup_back_key_cb(void *data, Evas_Object *obj, void *event)
+move_ctxpopup(Evas_Object *ctxpopup, Evas_Object *btn)
 {
-    evas_object_del(obj);
+	Evas_Coord x, y, w , h;
+	evas_object_geometry_get(btn, &x, &y, &w, &h);
+	evas_object_move(ctxpopup, x + (w / 2), y + (h / 2));
 }
 
 static void
-_btn_clicked(void *data, Evas_Object *obj, void *event_info)
+move_more_ctxpopup(Evas_Object *ctxpopup)
 {
-    Evas_Object *win = data;
-    Evas_Object *ctxpopup;
-    Evas_Coord x,y;
+	Evas_Object *win;
+	Evas_Coord w, h;
+	int pos = -1;
 
-    ctxpopup = elm_ctxpopup_add(win);
+	/* We convince the top widget is a window */
+	win = elm_object_top_widget_get(ctxpopup);
+	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+	pos = elm_win_rotation_get(win);
 
-    elm_object_style_set(ctxpopup, "1text.1icon");
-    elm_object_signal_emit(ctxpopup, "elm,action,focus", "elm");
-    item_new(ctxpopup, "Text List1", "home");
-    item_new(ctxpopup, "Text List2", "file");
-    item_new(ctxpopup, "Text List3", "delete");
-
-    switch (dir) {
-        case 0:
-            elm_ctxpopup_direction_priority_set(ctxpopup,
-                                                ELM_CTXPOPUP_DIRECTION_UP, 0, 0, 0);
-            break;
-        case 1:
-            elm_ctxpopup_direction_priority_set(ctxpopup,
-                                                ELM_CTXPOPUP_DIRECTION_DOWN, 0, 0, 0);
-            break;
-        case 2:
-            elm_ctxpopup_direction_priority_set(ctxpopup,
-                                                ELM_CTXPOPUP_DIRECTION_LEFT, 0, 0, 0);
-            break;
-        case 3:
-            elm_ctxpopup_direction_priority_set(ctxpopup,
-                                                ELM_CTXPOPUP_DIRECTION_RIGHT, 0, 0, 0);
-            break;
-    }
-
-    evas_pointer_canvas_xy_get(evas_object_evas_get(obj), &x, &y);
-    evas_object_move(ctxpopup, x, y);
-    evas_object_show(ctxpopup);
-    eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, _ctxpopup_back_key_cb, NULL);
+	switch (pos) {
+		case 0:
+		case 180:
+			evas_object_move(ctxpopup, (w / 2), h);
+			break;
+		case 90:
+			evas_object_move(ctxpopup,  (h / 2), w);
+			break;
+		case 270:
+			evas_object_move(ctxpopup, (h / 2), w);
+			break;
+	}
 }
 
 static void
-_selected(void *data, Evas_Object *obj, void *event_info)
+ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    const char *txt = elm_object_item_text_get(event_info);
-    elm_object_text_set(obj, txt);
-
-    if (strcmp(txt, "Up") == 0) dir = 0;
-    else if (strcmp(txt, "Down") == 0) dir = 1;
-    else if (strcmp(txt, "Left") == 0) dir = 2;
-    else if (strcmp(txt, "Right") == 0) dir = 3;
-    else dir = 0;
+	evas_object_del(ctxpopup);
+	ctxpopup = NULL;
 }
 
-void ctxpopup_del_cb(void *data)
+static void
+naviframe_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-    //If you need to do anyting when
-    //ctxpopup is deleted and another widget is selected on the menu,
-    //please do in this function.
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
 }
 
-Evas_Object *ctxpopup_cb(void *data)
+static void
+win_rotation_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    Evas_Object *wbox, *obox, *btn, *table, *hov;
-    appdata *ad = data;
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
+}
 
-    wbox = ad->widget_box;
-    obox = ad->option_box;
+static void
+more_ctxpopup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *nf = data;
+	evas_object_event_callback_del_full(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
+}
 
-    // widget box
-    btn = elm_button_add(wbox);
-    elm_object_text_set(btn, "Click here to show ctxpopup");
-    evas_object_show(btn);
-    elm_box_pack_end(wbox, btn);
-    evas_object_smart_callback_add(btn, "clicked", _btn_clicked, (void *)ad->win);
+static void
+item_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	Evas_Coord x, y, w, h;
+	evas_object_geometry_get(obj, &x, &y, &w, &h);
+	printf("[%s : %d] obj=%p x=%d y=%d w=%d h=%d\n", __func__, __LINE__, obj, x, y, w,h);
+}
 
-    // option box
-    hov = elm_hoversel_add(obox);
-    elm_hoversel_hover_parent_set(hov, ad->win);
-    elm_object_text_set(hov, "Up");
-    evas_object_show(hov);
-    elm_hoversel_item_add(hov, "Up", NULL, ELM_ICON_NONE, NULL, NULL);
-    elm_hoversel_item_add(hov, "Down", NULL, ELM_ICON_NONE, NULL, NULL);
-    elm_hoversel_item_add(hov, "Left", NULL, ELM_ICON_NONE, NULL, NULL);
-    elm_hoversel_item_add(hov, "Right", NULL, ELM_ICON_NONE, NULL, NULL);
-    evas_object_smart_callback_add(hov, "selected", _selected, NULL);
-    table = widget_min_set(hov, obox, ELM_SCALE_SIZE(200), ELM_SCALE_SIZE(50));
-    evas_object_event_callback_add(table, EVAS_CALLBACK_DEL, table_del_cb, NULL);
-    evas_object_show(table);
-    elm_box_pack_end(obox, table);
-    evas_object_size_hint_weight_set(table, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+static void
+ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	const char *label = elm_object_item_text_get((Elm_Object_Item *) event_info);
+	if (label) fprintf(stderr, "text(%s) is clicked\n", label);
 
-    return btn;
+	Evas_Object *icon = elm_object_item_content_get((Elm_Object_Item *) event_info);
+	if (icon) fprintf(stderr, "icon is clicked\n");
+}
+
+/* Text Only */
+static void
+btn_text_only_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *nf = data;
+
+	evas_object_del(ctxpopup);
+
+	ctxpopup = elm_ctxpopup_add(nf);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, NULL);
+
+	elm_ctxpopup_item_append(ctxpopup, "Message", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Email", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Facebook", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Flickr", NULL, ctxpopup_item_select_cb, NULL);
+
+	move_ctxpopup(ctxpopup, obj);
+	evas_object_show(ctxpopup);
+}
+
+/* Icon Only */
+static void
+btn_icon_only_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *nf = data;
+	Evas_Object *img;
+
+	evas_object_del(ctxpopup);
+
+	ctxpopup = elm_ctxpopup_add(nf);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, NULL);
+
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_call.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_email.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_note.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+
+	move_ctxpopup(ctxpopup, obj);
+	evas_object_show(ctxpopup);
+}
+
+/* Icon + Text */
+static void
+btn_icon_text_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *nf = data;
+	Evas_Object *img;
+
+	evas_object_del(ctxpopup);
+
+	ctxpopup = elm_ctxpopup_add(nf);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, NULL);
+
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_call.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Call", img, ctxpopup_item_select_cb, NULL);
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_email.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Email", img, ctxpopup_item_select_cb, NULL);
+	img = elm_image_add(ctxpopup);
+	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_note.png", NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Note", img, ctxpopup_item_select_cb, NULL);
+
+	move_ctxpopup(ctxpopup, obj);
+	evas_object_show(ctxpopup);
+}
+
+/* Icon + Text (More button style : Naviframe Toolbar) */
+static void
+create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *it_obj;
+	Evas_Object *nf = data;
+	Evas_Object *win;
+	Elm_Object_Item *it;
+
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+	}
+
+	ctxpopup = elm_ctxpopup_add(nf);
+	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
+	elm_object_style_set(ctxpopup, "more/default");
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_MORE, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup, "dismissed", ctxpopup_dismissed_cb, NULL);
+	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, more_ctxpopup_del_cb, nf);
+	evas_object_event_callback_add(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
+
+	/* We convince the top widget is a window */
+	win = elm_object_top_widget_get(nf);
+	evas_object_smart_callback_add(win, "rotation,changed", win_rotation_changed_cb, ctxpopup);
+
+	it = elm_ctxpopup_item_append(ctxpopup, "Add contact", NULL, ctxpopup_item_select_cb, NULL);
+
+	/* This is example to track an object item position */
+	it_obj = elm_object_item_track(it);
+	evas_object_event_callback_add(it_obj, EVAS_CALLBACK_MOVE, item_move_cb, NULL);
+
+	elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Add contact", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Add contact", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, NULL);
+
+	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
+
+	move_more_ctxpopup(ctxpopup);
+	evas_object_show(ctxpopup);
+}
+
+void
+ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *box;
+	Evas_Object *btn;
+	Evas_Object *scroller;
+	Evas_Object *nf = data;
+	Elm_Object_Item *nf_it;
+
+	/* scroller */
+	scroller = elm_scroller_add(nf);
+	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
+	elm_scroller_policy_set(scroller,ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
+
+	/* box */
+	box = elm_box_add(scroller);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(box);
+	elm_object_content_set(scroller, box);
+
+	/* Text Only */
+	btn = elm_button_add(box);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	elm_object_text_set(btn, "Text Only");
+	evas_object_smart_callback_add(btn, "clicked", btn_text_only_cb, nf);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	nf_it = elm_naviframe_item_push(nf, "CtxPopup", NULL, NULL, scroller, NULL);
+	elm_naviframe_item_pop_cb_set(nf_it, naviframe_pop_cb, NULL);
+
+	/* Icon Only */
+	btn = elm_button_add(box);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	elm_object_text_set(btn, "Icon Only");
+	evas_object_smart_callback_add(btn, "clicked", btn_icon_only_cb, nf);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	/* Icon + Text */
+	btn = elm_button_add(box);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	elm_object_text_set(btn, "Icon + Text");
+	evas_object_smart_callback_add(btn, "clicked", btn_icon_text_cb, nf);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	/* This button is set for devices which doesn't have H/W more key. */
+	btn = elm_button_add(nf);
+	elm_object_style_set(btn, "naviframe/more/default");
+	evas_object_smart_callback_add(btn, "clicked", create_ctxpopup_more_button_cb, nf);
+	elm_object_item_part_content_set(nf_it, "toolbar_more_btn", btn);
 }
