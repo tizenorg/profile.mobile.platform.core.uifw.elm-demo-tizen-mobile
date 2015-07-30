@@ -1,0 +1,6 @@
+msgid "IDS_BUTTON_DESCRIPTION"
+msgstr "Un dito doppio tap per attivare"
+
+msgid "IDS_BUTTON_NAME"
+msgstr "Button nome di accessibilità"
+

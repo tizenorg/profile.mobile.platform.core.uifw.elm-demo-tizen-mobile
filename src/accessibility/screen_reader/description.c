@@ -15,6 +15,7 @@
  *
  */
 
+#define EFL_BETA_API_SUPPORT
 #include "main.h"
 
 static Evas_Object*
@@ -45,8 +46,8 @@ create_description(Evas_Object *parent)
 	elm_object_text_set(btn, "Test Name");
 	elm_object_style_set(btn, "default");
 	elm_object_part_content_set(layout, "button_a11y_name", btn);
-	const char *a11y_name = "Button accessiblity name";
-	elm_atspi_accessible_name_set(btn, a11y_name);
+	elm_atspi_accessible_name_set(btn, "IDS_BUTTON_NAME");
+	elm_atspi_accessible_translation_domain_set(btn, PACKAGE);
 
 	label = elm_label_add(layout);
 	elm_object_text_set(label, _("<font_size=33><align=center>Button with description</align></font_size>"));
@@ -56,8 +57,8 @@ create_description(Evas_Object *parent)
 	elm_object_text_set(btn, "Test Name");
 	elm_object_style_set(btn, "elm/button/base/default");
 	elm_object_part_content_set(layout, "button_description", btn);
-	const char *desc = "One finger double tap to activate";
-	elm_atspi_accessible_description_set(btn, desc);
+	elm_atspi_accessible_description_set(btn, "IDS_BUTTON_DESCRIPTION");
+	elm_atspi_accessible_translation_domain_set(btn, PACKAGE);
 
 	label = elm_label_add(layout);
 	elm_object_text_set(label, _("<font_size=33><align=center>Button without name and description</align></font_size>"));

@@ -12,6 +12,7 @@ BuildRequires:  app-core-efl-devel
 BuildRequires:  efl-extension-devel
 BuildRequires:  cmake
 BuildRequires:  edje-bin
+BuildRequires:  gettext-tools
 
 %description
 UI Controls (Elementary)
@@ -38,6 +39,7 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/%{_datadir}/license/%{name}
 %defattr(-,root,root,-)
 /opt/usr/apps/org.tizen.ui-controls/bin/*
 /opt/usr/apps/org.tizen.ui-controls/res/*
+/opt/usr/apps/org.tizen.ui-controls/res/locale/*/LC_MESSAGES/*
 %{_datadir}/packages/org.tizen.ui-controls.xml
 %{_datadir}/icons/default/small/org.tizen.ui-controls.png
 %{_datadir}/license/%{name}

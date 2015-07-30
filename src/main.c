@@ -192,6 +192,10 @@ app_create(void *data)
 	/* Enable HW acceleration */
 	elm_config_accel_preference_set("3d");
 
+	/* Bind package locale file */
+	bindtextdomain (PACKAGE, LOCALE_DIR);
+	textdomain (PACKAGE);
+
 	create_base_gui(ad);
 
 	return true;
