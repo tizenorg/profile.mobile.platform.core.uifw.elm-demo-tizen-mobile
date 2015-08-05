@@ -15,65 +15,107 @@
  *
  */
 
-group { name: "screen_reader_layout";
+group { name: "custom_frame_layout";
    parts {
       part { name: "bg";
          type: RECT;
          scale: 1;
          description { state: "default" 0.0;
             visible: 1;
-            color: 200 200 200 255;
-            rel1 {
-               relative: 0.0 0.0;
-            }
-            rel2 {
-               relative: 1.0 1.0;
-            }
+            color: BG_DEFAULT_COLOR_INC;
          }
       }
-      part { name: "button_des";
+      part { name: "button_name_lbl";
          type: SWALLOW;
          scale: 1;
          description {
             state: "default" 0.0;
             fixed: 1 1;
             rel1 {
-               relative: 0.25 0.15;
+               relative: 0.0 0.05;
                to: "bg";
             }
             rel2 {
-               relative: 0.75 0.25;
+               relative: 1.0 0.1;
                to: "bg";
             }
          }
       }
-      part { name: "button_r_order";
+      part { name: "button_name";
+         type: SWALLOW;
+         scale: 1;
+         description {
+            state: "default" 0.0;
+            fixed: 1 1;
+            rel1 {
+               relative: 0.3 0.1;
+               to: "bg";
+            }
+            rel2 {
+               relative: 0.7 0.2;
+               to: "bg";
+            }
+         }
+      }
+      part { name: "button_custom_frame_lbl";
          type: SWALLOW;
          scale: 1;
          description {
             state: "default" 0.0;
             rel1 {
-               relative: 0.25 0.4;
+               relative: 0.0 0.3;
                to: "bg";
             }
             rel2 {
-               relative: 0.75 0.5;
+               relative: 1.0 0.35;
                to: "bg";
             }
             visible: 1;
          }
       }
-      part { name: "button_embeded_ui";
+      part { name: "button_custom_frame";
          type: SWALLOW;
          scale: 1;
          description {
             state: "default" 0.0;
             rel1 {
-               relative: 0.25 0.65;
+               relative: 0.2 0.35;
                to: "bg";
             }
             rel2 {
-               relative: 0.75 0.75;
+               relative: 0.8 0.45;
+               to: "bg";
+            }
+            visible: 1;
+         }
+      }
+      part { name: "button_custom_frame_lbl2";
+         type: SWALLOW;
+         scale: 1;
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.1 0.55;
+               to: "bg";
+            }
+            rel2 {
+               relative: 0.9 0.6;
+               to: "bg";
+            }
+            visible: 1;
+         }
+      }
+      part { name: "button_custom_frame2";
+         type: SWALLOW;
+         scale: 1;
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.2 0.6;
+               to: "bg";
+            }
+            rel2 {
+               relative: 0.8 0.8;
                to: "bg";
             }
             visible: 1;
@@ -81,3 +123,4 @@ group { name: "screen_reader_layout";
       }
    }//end parts
 } //end group
+
