@@ -698,6 +698,14 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 		itc2->func.text_get = group_index_text_get_cb;
 		itc2->func.del = gl_del_cb;
 	}
+	else if (!strcmp("List Off", style))
+	{
+		itc = elm_genlist_item_class_new();
+		itc->item_style = "type1";
+		itc->func.content_get = type1_1line_content_get_cb;
+		itc->func.text_get = type1_1line_text_get_cb;
+		itc->func.del = gl_del_cb;
+	}
 
 	/* Create genlist */
 	genlist = elm_genlist_add(nf);
@@ -718,6 +726,9 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	   If genlist items need to have different height per each, do not set this as EINA_TRUE. */
 	if (strcmp("multiline", style))
 		elm_genlist_homogeneous_set(genlist, EINA_TRUE);
+
+	if (!strcmp("List Off", style))
+		elm_object_style_set(genlist, "solid/default");
 
 	evas_object_event_callback_add(genlist, EVAS_CALLBACK_MOUSE_DOWN, gl_mouse_down_cb, NULL);
 	evas_object_smart_callback_add(genlist, "realized", gl_realized_cb, NULL);
@@ -774,6 +785,7 @@ void genlist_cb(void *data, Evas_Object *obj, void *event_info)
 		"full",
 		"group_index",
 		"group_index/expandable",
+		"List Off",
 		NULL
 	};
 
