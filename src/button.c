@@ -50,7 +50,7 @@ create_scroller(Evas_Object *parent)
 static Evas_Object*
 create_button_view(Evas_Object *parent)
 {
-	Evas_Object *btn, *img, *box, *box2;
+	Evas_Object *layout, *btn, *img, *box, *box2;
 
 	/* outer box */
 	box = elm_box_add(parent);
@@ -61,16 +61,19 @@ create_button_view(Evas_Object *parent)
 
 
 	/* default button */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_1");
+
 	btn = elm_button_add(box);
 	elm_object_text_set(btn, "Default");
 	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)0);
 	evas_object_smart_callback_add(btn, "pressed", btn_pressed_cb, NULL);
 	evas_object_smart_callback_add(btn, "unpressed", btn_unpressed_cb, NULL);
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
 
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* 2 default buttons */
 
@@ -227,13 +230,17 @@ create_button_view(Evas_Object *parent)
 	elm_box_pack_end(box, box2);
 
 	/* button 1 */
+	layout = elm_layout_add(box2);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_1");
+
 	btn = elm_button_add(box2);
 	elm_object_text_set(btn, "Button");
 	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)9);
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
-	elm_box_pack_end(box2, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box2, layout);
 
 	/* button 1 image */
 	img = elm_image_add(btn);
@@ -241,14 +248,18 @@ create_button_view(Evas_Object *parent)
 	elm_object_part_content_set(btn, "icon", img);
 
 	/* button 2 */
-	btn = elm_button_add(box2);
+	layout = elm_layout_add(box2);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_1");
+
+	btn = elm_button_add(layout);
 	elm_object_disabled_set(btn, EINA_TRUE);
 	elm_object_text_set(btn, "Disabled");
 	evas_object_smart_callback_add(btn, "clicked", btn_clicked_cb, (void *)10);
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0.5);
 	evas_object_show(btn);
-	elm_box_pack_end(box2, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box2, layout);
 
 	/* button 2 image */
 	img = elm_image_add(btn);

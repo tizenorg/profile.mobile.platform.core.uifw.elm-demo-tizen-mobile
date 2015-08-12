@@ -54,7 +54,7 @@ prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static Evas_Object*
 create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb next_btn_clicked_cb)
 {
-	Evas_Object *grid, *box, *layout, *scroller, *btn;
+	Evas_Object *grid, *box, *layout, *scroller, *btn, *button_layout;
 
 	/* Scroller */
 	scroller = elm_scroller_add(parent);
@@ -81,22 +81,34 @@ create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb next_btn_cli
 	elm_grid_pack(grid, box, 0, 0, 100, 100);
 
 	/* Previous Page Button */
-	btn = elm_button_add(box);
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 1, 1);
+	button_layout = elm_layout_add(box);
+	elm_layout_file_set(button_layout, ELM_DEMO_EDJ, "button_layout_1");
+	evas_object_size_hint_weight_set(button_layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(button_layout, 0.5, 1);
+
+	btn = elm_button_add(button_layout);
 	elm_object_text_set(btn, "Prev");
 	evas_object_smart_callback_add(btn, "clicked", prev_btn_clicked_cb, parent);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(button_layout, "elm.swallow.content", btn);
+	evas_object_show(button_layout);
+	elm_box_pack_end(box, button_layout);
 
 	/* Next Page Button */
-	btn = elm_button_add(box);
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0, 1);
+	button_layout = elm_layout_add(box);
+	elm_layout_file_set(button_layout, ELM_DEMO_EDJ, "button_layout_1");
+	evas_object_size_hint_weight_set(button_layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(button_layout, 0.5, 1);
+
+	btn = elm_button_add(button_layout);
 	elm_object_text_set(btn, "Next");
 	evas_object_smart_callback_add(btn, "clicked", next_btn_clicked_cb, parent);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(button_layout, "elm.swallow.content", btn);
+	evas_object_show(button_layout);
+	elm_box_pack_end(box, button_layout);
 
 	elm_object_content_set(scroller, grid);
 

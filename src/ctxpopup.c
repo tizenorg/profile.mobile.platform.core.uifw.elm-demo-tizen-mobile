@@ -241,6 +241,7 @@ create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
 void
 ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 {
+	Evas_Object *layout;
 	Evas_Object *box;
 	Evas_Object *btn;
 	Evas_Object *scroller;
@@ -260,34 +261,49 @@ ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_object_content_set(scroller, box);
 
 	/* Text Only */
-	btn = elm_button_add(box);
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_1");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+	btn = elm_button_add(layout);
 	elm_object_text_set(btn, "Text Only");
 	evas_object_smart_callback_add(btn, "clicked", btn_text_only_cb, nf);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	nf_it = elm_naviframe_item_push(nf, "CtxPopup", NULL, NULL, scroller, NULL);
 	elm_naviframe_item_pop_cb_set(nf_it, naviframe_pop_cb, NULL);
 
 	/* Icon Only */
-	btn = elm_button_add(box);
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_1");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	
+	btn = elm_button_add(layout);
 	elm_object_text_set(btn, "Icon Only");
 	evas_object_smart_callback_add(btn, "clicked", btn_icon_only_cb, nf);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* Icon + Text */
-	btn = elm_button_add(box);
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0.5);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_1");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	
+	btn = elm_button_add(layout);
 	elm_object_text_set(btn, "Icon + Text");
 	evas_object_smart_callback_add(btn, "clicked", btn_icon_text_cb, nf);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* This button is set for devices which doesn't have H/W more key. */
 	btn = elm_button_add(nf);

@@ -140,13 +140,20 @@ launch_popup_cb(void *data , Evas_Object *obj , void *event_info)
 static Evas_Object *
 create_button(datetimedata_s *dd, Evas_Object *parent, char *text, char *format)
 {
-	Evas_Object *button;
-	button = elm_button_add(parent);
+	Evas_Object *layout, *button;
+
+	layout = elm_layout_add(parent);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_1");
+
+	button = elm_button_add(layout);
 	elm_object_text_set(button, text);
 	evas_object_show(button);
-	elm_box_pack_end(parent, button);
 	evas_object_data_set(button, "format", format);
 	evas_object_smart_callback_add(button, "clicked", launch_popup_cb, dd);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", button);
+	evas_object_show(layout);
+	elm_box_pack_end(parent, layout);
 
 	return button;
 }
