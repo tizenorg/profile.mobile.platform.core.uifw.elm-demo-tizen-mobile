@@ -167,6 +167,8 @@ create_base_gui(appdata_s *ad)
 
 	/* Naviframe */
 	ad->nf = elm_naviframe_add(ad->layout);
+	/* Push a previous button to naviframe item automatically */
+	elm_naviframe_prev_btn_auto_pushed_set(ad->nf, EINA_TRUE);
 	create_list_view(ad);
 	elm_object_part_content_set(ad->layout, "elm.swallow.content", ad->nf);
 	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
