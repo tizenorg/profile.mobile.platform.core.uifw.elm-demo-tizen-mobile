@@ -179,28 +179,40 @@ create_gengrid(view_data_s *vd)
 static void
 gengrid_type1_cb(void *data, Evas_Object *obj, void *event_info)
 {
+	Evas_Object *layout;
 	view_data_s *vd = data;
 	vd->item_width = 134;
 	vd->item_height= 134;
 	vd->style = "default";  //type1 = default
 							//You can both use of them for dafault gengrid style.
 
-	vd->gengrid = create_gengrid(vd);
+	layout = elm_layout_add(vd->nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
 
-	elm_naviframe_item_push(vd->nf, "Gengrid Type1", NULL, NULL, vd->gengrid, NULL);
+	vd->gengrid = create_gengrid(vd);
+	elm_object_part_content_set(layout, "elm.swallow.content", vd->gengrid);
+
+	elm_naviframe_item_push(vd->nf, "Gengrid Type1", NULL, NULL, layout, NULL);
 }
 
 static void
 gengrid_type2_cb(void *data, Evas_Object *obj, void *event_info)
 {
+	Evas_Object *layout;
 	view_data_s *vd = data;
 	vd->item_width = 134;
 	vd->item_height= 164;
 	vd->style = "type2";
 
-	vd->gengrid = create_gengrid(vd);
+	layout = elm_layout_add(vd->nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
 
-	elm_naviframe_item_push(vd->nf, "Gengrid Type2", NULL, NULL, vd->gengrid, NULL);
+	vd->gengrid = create_gengrid(vd);
+	elm_object_part_content_set(layout, "elm.swallow.content", vd->gengrid);
+
+	elm_naviframe_item_push(vd->nf, "Gengrid Type2", NULL, NULL, layout, NULL);
 }
 
 static void

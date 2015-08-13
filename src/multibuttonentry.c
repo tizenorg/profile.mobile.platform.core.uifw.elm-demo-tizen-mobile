@@ -322,11 +322,16 @@ create_buttons(Evas_Object *parent, Evas_Object *mbe)
 void
 multibuttonentry_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *scroller, *mbe, *box, *box2, *box3;
+	Evas_Object *scroller, *mbe, *box, *box2, *box3, *layout;
 	Evas_Object *nf = data;
 
-	box = elm_box_add(nf);
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	box = elm_box_add(layout);
 	elm_box_padding_set(box, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(20));
+	elm_object_part_content_set(layout, "elm.swallow.content", box);
 	scroller = create_scroller(box);
 	mbe = create_multibuttonentry(box, scroller);
 	elm_box_pack_end(box, scroller);
@@ -335,5 +340,5 @@ multibuttonentry_cb(void *data, Evas_Object *obj, void *event_info)
 	box3 = create_buttons(box, mbe);
 	elm_box_pack_end(box, box3);
 
-	elm_naviframe_item_push(nf, "Multibuttonentry", NULL, NULL, box, NULL);
+	elm_naviframe_item_push(nf, "Multibuttonentry", NULL, NULL, layout, NULL);
 }

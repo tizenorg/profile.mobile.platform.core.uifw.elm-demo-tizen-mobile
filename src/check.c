@@ -210,12 +210,17 @@ create_checks(Evas_Object *parent)
 void
 check_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *scroller, *box;
+	Evas_Object *scroller, *layout, *box;
 	Evas_Object *nf = data;
 
 	scroller = create_scroller(nf);
-	box = create_checks(scroller);
-	elm_object_content_set(scroller, box);
+	layout = elm_layout_add(scroller);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	box = create_checks(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", box);
+	elm_object_content_set(scroller, layout);
 
 	elm_naviframe_item_push(nf, "Check", NULL, NULL, scroller, NULL);
 }

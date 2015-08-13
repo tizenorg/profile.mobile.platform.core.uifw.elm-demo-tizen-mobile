@@ -54,12 +54,17 @@ create_scroller(Evas_Object *parent)
 void
 colorselector_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *colorselector, *scroller;
+	Evas_Object *colorselector, *scroller, *layout;
 	Evas_Object *nf = data;
 
 	scroller = create_scroller(nf);
-	colorselector = create_colorselector(scroller);
-	elm_object_content_set(scroller, colorselector);
+	layout = elm_layout_add(scroller);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	colorselector = create_colorselector(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", colorselector);
+	elm_object_content_set(scroller, layout);
 
 	elm_naviframe_item_push(nf, "Colorselector", NULL, NULL, scroller, NULL);
 }

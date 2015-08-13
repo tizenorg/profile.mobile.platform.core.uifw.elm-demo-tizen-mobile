@@ -52,9 +52,15 @@ create_calendar(Evas_Object *nf)
 void
 calendar_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *calendar;
+	Evas_Object *layout, *calendar;
 	Evas_Object *nf = data;
 
-	calendar = create_calendar(nf);
-	elm_naviframe_item_push(nf, "Calendar", NULL, NULL, calendar, NULL);
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	calendar = create_calendar(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", calendar);
+
+	elm_naviframe_item_push(nf, "Calendar", NULL, NULL, layout, NULL);
 }

@@ -61,9 +61,15 @@ create_flipselector(Evas_Object *nf)
 void
 flipselector_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *flipselector;
+	Evas_Object *flipselector, *layout;
 	Evas_Object *nf = data;
 
-	flipselector = create_flipselector(nf);
-	elm_naviframe_item_push(nf, "Flipselector", NULL, NULL, flipselector, NULL);
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	flipselector = create_flipselector(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", flipselector);
+
+	elm_naviframe_item_push(nf, "Flipselector", NULL, NULL, layout, NULL);
 }

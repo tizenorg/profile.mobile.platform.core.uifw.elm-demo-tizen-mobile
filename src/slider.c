@@ -206,19 +206,31 @@ create_horizontal_content(Evas_Object* parent)
 void
 slider_vertical_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
-	Evas_Object *content;
+	Evas_Object *content, *layout;
 	Evas_Object *nf = data;
-	content = create_vertical_content(nf);
-	elm_naviframe_item_push(nf, "Vertical Style", NULL, NULL, content, NULL);
+
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	content = create_vertical_content(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", content);
+	elm_naviframe_item_push(nf, "Vertical Style", NULL, NULL, layout, NULL);
 }
 
 void
 slider_horizontal_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
-	Evas_Object *content;
+	Evas_Object *content, *layout;
 	Evas_Object *nf = data;
-	content = create_horizontal_content(nf);
-	elm_naviframe_item_push(nf, "Horizontal Style", NULL, NULL, content, NULL);
+
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	content = create_horizontal_content(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", content);
+	elm_naviframe_item_push(nf, "Horizontal Style", NULL, NULL, layout, NULL);
 }
 
 static void

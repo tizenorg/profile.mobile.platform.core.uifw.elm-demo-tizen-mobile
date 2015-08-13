@@ -186,10 +186,15 @@ static Evas_Object
 void
 progressbar_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
-	Evas_Object *content;
+	Evas_Object *content, *layout;
 	Evas_Object *nf = data;
 
-	content = create_content(nf);
-	elm_naviframe_item_push(nf, "Progressbar", NULL, NULL, content, NULL);
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	content = create_content(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", content);
+	elm_naviframe_item_push(nf, "Progressbar", NULL, NULL, layout, NULL);
 }
 

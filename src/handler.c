@@ -91,11 +91,17 @@ create_horz_handler_scroller(Evas_Object *parent)
 static void
 list_it_handler_h_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *scroller;
+	Evas_Object *scroller, *layout;
 	Evas_Object *nf = data;
 
-	scroller = create_horz_handler_scroller(nf);
-	elm_naviframe_item_push(nf, "Horizontal Handler", NULL, NULL, scroller, NULL);
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	scroller = create_horz_handler_scroller(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", scroller);
+
+	elm_naviframe_item_push(nf, "Horizontal Handler", NULL, NULL, layout, NULL);
 }
 
 static void

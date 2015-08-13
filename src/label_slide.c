@@ -143,12 +143,17 @@ create_scroller(Evas_Object *parent)
 
 void label_slide_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *scroller, *layout_inner;
+	Evas_Object *scroller, *layout_inner, *layout;
 	Evas_Object *nf = data;
 
 	scroller = create_scroller(nf);
-	elm_naviframe_item_push(nf, "Slide Text", NULL, NULL, scroller, NULL);
+	layout = elm_layout_add(scroller);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
 
 	layout_inner = create_labels(nf);
-	elm_object_content_set(scroller, layout_inner);
+	elm_object_part_content_set(layout, "elm.swallow.content", layout_inner);
+	elm_object_content_set(scroller, layout);
+
+	elm_naviframe_item_push(nf, "Slide Text", NULL, NULL, scroller, NULL);
 }
