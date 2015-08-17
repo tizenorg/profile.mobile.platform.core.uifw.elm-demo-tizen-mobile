@@ -21,7 +21,7 @@ group { name: "white_bg_layout";
          type: RECT;
          scale: 1;
          description { state: "default" 0.0;
-            color: 255 255 255 255;
+            color: 250 250 250 255;
          }
       }
       part { name: "elm.swallow.content";
