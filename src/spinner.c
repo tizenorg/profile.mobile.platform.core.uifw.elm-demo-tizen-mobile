@@ -38,6 +38,7 @@ create_spinner_view(Evas_Object *parent)
 	evas_object_show(bx);
 
 	sp = elm_spinner_add(bx);
+	elm_spinner_editable_set(sp, EINA_TRUE);
 	evas_object_size_hint_align_set(sp, EVAS_HINT_FILL, -1.0);
 	evas_object_size_hint_weight_set(sp, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_box_pack_end(bx, sp);
@@ -46,7 +47,6 @@ create_spinner_view(Evas_Object *parent)
 	evas_object_smart_callback_add(sp, "delay,changed", delay_changed_cb, NULL);
 
 	sp = elm_spinner_add(bx);
-	elm_spinner_editable_set(sp, EINA_FALSE);
 	elm_spinner_label_format_set(sp, "%1.1f units");
 	elm_spinner_step_set(sp, 1.5);
 	elm_spinner_wrap_set(sp, EINA_TRUE);
@@ -56,6 +56,7 @@ create_spinner_view(Evas_Object *parent)
 	evas_object_show(sp);
 
 	sp = elm_spinner_add(bx);
+	elm_spinner_editable_set(sp, EINA_TRUE);
 	elm_object_style_set(sp, "vertical");
 	elm_spinner_interval_set(sp, 0.2);
 	evas_object_size_hint_align_set(sp, EVAS_HINT_FILL, -1.0);
@@ -64,7 +65,6 @@ create_spinner_view(Evas_Object *parent)
 	evas_object_show(sp);
 
 	sp = elm_spinner_add(bx);
-	elm_spinner_editable_set(sp, EINA_FALSE);
 	elm_spinner_min_max_set(sp, 1, 12);
 	elm_spinner_special_value_add(sp, 1, "January");
 	elm_spinner_special_value_add(sp, 2, "February");
