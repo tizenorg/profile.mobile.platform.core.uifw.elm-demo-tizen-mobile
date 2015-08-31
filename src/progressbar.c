@@ -64,7 +64,6 @@ create_pending_progressbar(Evas_Object *parent)
 	elm_progressbar_pulse(progressbar, EINA_TRUE);
 	evas_object_show(progressbar);
 
-	elm_object_part_text_set(progressbar, "elm.text.top.left", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.top.right", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.bottom.left", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.bottom.right", "Lorem");
@@ -99,7 +98,6 @@ create_default_progressbar(Evas_Object *parent)
 	elm_progressbar_value_set(progressbar, 0.0);
 	evas_object_show(progressbar);
 
-	elm_object_part_text_set(progressbar, "elm.text.top.left", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.top.right", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.bottom.left", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.bottom.right", "Lorem");
