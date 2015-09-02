@@ -10,6 +10,10 @@
 			<smack request="system::homedir" type="rwx"/>
 			<smack request="xorg" type="rw"/>
 			<smack request="isf" type="rwx"/>
+			<smack request="tizen::vconf::public::r" type="rwx" />
+			<smack request="tizen::vconf::public::r::platform::rw" type="rwx" />
+			<smack request="tizen::vconf::setting::admin" type="rwx" />
+			<smack request="tizen::vconf::display" type="rwx" />
 		</request>
 	</define>
 	<request>

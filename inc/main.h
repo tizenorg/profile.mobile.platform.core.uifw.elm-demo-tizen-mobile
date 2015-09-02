@@ -84,3 +84,6 @@ void reading_order_cb(void *data, Evas_Object *obj, void *event_info);
 void embeded_ui_cb(void *data, Evas_Object *obj, void *event_info);
 void primitives_ui_cb(void *data, Evas_Object *obj, void *event_info);
 void custom_frame_cb(void *data, Evas_Object *obj, void *event_info);
+void screen_reader_launch(void);
+void screen_reader_terminate(void);
+int screen_reader_vconf_status(void);

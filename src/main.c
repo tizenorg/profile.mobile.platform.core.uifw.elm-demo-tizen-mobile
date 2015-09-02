@@ -206,19 +206,19 @@ app_control(app_control_h app_control, void *data)
 static void
 app_pause(void *data)
 {
-	/* Take necessary actions when application becomes invisible. */
+	screen_reader_terminate();
 }
 
 static void
 app_resume(void *data)
 {
-	/* Take necessary actions when application becomes visible. */
+	screen_reader_launch();
 }
 
 static void
 app_terminate(void *data)
 {
-	/* Release all resources. */
+	screen_reader_terminate();
 }
 
 static void

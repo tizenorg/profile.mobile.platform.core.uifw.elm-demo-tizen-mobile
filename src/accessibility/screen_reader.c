@@ -14,8 +14,73 @@
  *  limitations under the License.
  *
  */
-
+#include <vconf.h>
 #include "main.h"
+
+static Eina_Bool screen_reader_on = EINA_FALSE;
+
+void
+screen_reader_launch(void)
+{
+
+	if(screen_reader_on == EINA_FALSE)
+	{
+		return;
+	}
+
+	if(!screen_reader_vconf_status())
+	{
+		vconf_set_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, 1);
+	}
+
+}
+
+void
+screen_reader_terminate(void)
+{
+	if(screen_reader_vconf_status() == 1)
+	{
+		vconf_set_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, 0);
+	}
+
+}
+
+int
+screen_reader_vconf_status(void)
+{
+	int status = 0;
+
+	vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &status);
+
+	return status;
+}
+
+static void
+screen_reader_item_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *screen_reader_onoff_check = data;
+	Eina_Bool check_state = elm_check_state_get(screen_reader_onoff_check);
+
+	elm_check_state_set(screen_reader_onoff_check, !check_state);
+	screen_reader_on = !check_state;
+
+	if(screen_reader_on == EINA_TRUE)
+		screen_reader_launch();
+	else
+		screen_reader_terminate();
+}
+
+static void
+check_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	screen_reader_on = elm_check_state_get(obj);
+
+	if(screen_reader_on == EINA_TRUE)
+		screen_reader_launch();
+	else
+		screen_reader_terminate();
+
+}
 
 static void
 list_selected_cb(void *data, Evas_Object *obj, void *event_info)
@@ -29,17 +94,29 @@ screen_reader_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *nf = data;
 	Evas_Object *list;
+	Evas_Object *screen_reader_onoff_check;
 
 	list = elm_list_add(nf);
 	elm_list_mode_set(list, ELM_LIST_COMPRESS);
 	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
+
+	screen_reader_onoff_check = elm_check_add(list);
+	elm_object_style_set(screen_reader_onoff_check, "on&off");
+	elm_check_state_set(screen_reader_onoff_check, screen_reader_on);
+	evas_object_smart_callback_add(screen_reader_onoff_check, "changed", check_changed_cb, NULL);
+	evas_object_propagate_events_set(screen_reader_onoff_check, EINA_FALSE);
 
 	elm_list_item_append(list, "UI Descriptions", NULL, NULL, description_cb, nf);
 	elm_list_item_append(list, "UI Reading order", NULL, NULL, reading_order_cb, nf);
 	elm_list_item_append(list, "Embeded UI", NULL, NULL, embeded_ui_cb, nf);
 	elm_list_item_append(list, "Primitive support", NULL, NULL, primitives_ui_cb, nf);
 	elm_list_item_append(list, "Custom Frame", NULL, NULL, custom_frame_cb, nf);
+
+	elm_list_item_prepend(list, "Screen Reader (TTS)", NULL, screen_reader_onoff_check, screen_reader_item_cb,
+							screen_reader_onoff_check);
+
 	elm_list_go(list);
 
 	elm_naviframe_item_push(nf, "Screen Reader", NULL, NULL, list, NULL);
 }
+
