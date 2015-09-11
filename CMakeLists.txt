@@ -7,7 +7,6 @@ SET(SRCS
 	src/accessibility.c
 	src/accessibility/screen_reader.c
 	src/accessibility/screen_reader/description.c
-	src/accessibility/screen_reader/embeded_ui.c
 	src/accessibility/screen_reader/reading_order.c
 	src/accessibility/screen_reader/primitives_ui.c
 	src/accessibility/screen_reader/custom_frame.c
