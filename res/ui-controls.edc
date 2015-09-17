@@ -30,7 +30,7 @@ collections {
    #include "../edc_resource/default/inc/my_button_header.edc"
    #include "../edc_resource/default/my_button.edc"
    #include "../edc_resource/accessibility/screen_reader/description.edc"
-//    #include "../edc_resource/accessibility/screen_reader/reading_order.edc"
+   #include "../edc_resource/accessibility/screen_reader/reading_order.edc"
    #include "../edc_resource/accessibility/screen_reader/custom_frame.edc"
 }
 
