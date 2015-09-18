@@ -3,3 +3,6 @@ msgstr "One finger double tap to activate"
 
 msgid "IDS_BUTTON_NAME"
 msgstr "Button accessiblity name"
+
+msgid "IDS_GENLIST_GROUP_CHECKBOX_TICK_BOX"
+msgstr "Tick box for the entire group"

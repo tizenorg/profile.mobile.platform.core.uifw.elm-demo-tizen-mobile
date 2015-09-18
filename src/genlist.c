@@ -488,13 +488,23 @@ static Evas_Object*
 group_index_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
 	item_data_s *id = data;
+	Evas_Object *ret = NULL;
 
 	if ((id->index / 7) % 3 == 0)
-		return create_image(obj, 50, 50);
+		ret = create_image(obj, 50, 50);
 	else if ((id->index / 7) % 3 == 1)
-		return create_check(obj);
+	{
+		ret = create_check(obj);
+		elm_atspi_accessible_description_set(ret, "IDS_GENLIST_GROUP_CHECKBOX_TICK_BOX");
+		elm_atspi_accessible_translation_domain_set(ret, PACKAGE);
+	}
+	if (ret)
+	{
+		elm_atspi_accessible_relationship_append(ret, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item);
+		elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_DESCRIBED_BY, ret);
+	}
 
-	return NULL;
+	return ret;
 }
 
 static char*
