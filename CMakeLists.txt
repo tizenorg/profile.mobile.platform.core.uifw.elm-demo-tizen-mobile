@@ -63,7 +63,7 @@ FOREACH(flag ${BASE_PKG_LDFLAGS})
 	SET(PKG_LDFLAGS "${PKG_LDFLAGS} ${flag}")
 ENDFOREACH(flag)
 
-pkg_check_modules(TIZEN_PKG REQUIRED capi-appfw-application capi-system-system-settings appcore-efl)
+pkg_check_modules(TIZEN_PKG REQUIRED capi-appfw-application capi-system-system-settings appcore-efl capi-appfw-app-manager)
 FOREACH(flag ${TIZEN_PKG_CFLAGS})
 	SET(PKG_CFLAGS "${PKG_CFLAGS} ${flag}")
 ENDFOREACH(flag)

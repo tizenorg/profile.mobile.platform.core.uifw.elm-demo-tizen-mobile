@@ -8,6 +8,7 @@ Source0:    %{name}-%{version}.tar.gz
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-system-system-settings)
+BuildRequires:  pkgconfig(capi-appfw-app-manager)
 BuildRequires:  app-core-efl-devel
 BuildRequires:  efl-extension-devel
 BuildRequires:  cmake

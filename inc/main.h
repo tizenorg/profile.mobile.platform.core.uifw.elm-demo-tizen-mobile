@@ -20,6 +20,11 @@
 #include <dlog.h>
 #include <efl_extension.h>
 
+//uncomment if you want debug
+#ifndef TIZEN_ENGINEER_MODE
+#define TIZEN_ENGINEER_MODE
+#endif
+
 #ifdef  LOG_TAG
 #undef  LOG_TAG
 #endif
