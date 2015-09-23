@@ -272,7 +272,7 @@ type1_2line_content_get_cb(void *data, Evas_Object *obj, const char *part)
 	return NULL; // You must not reach here.
 }
 
-static Evas_Object*
+static char*
 type1_2line_text_get_cb(void *data, Evas_Object *obj, const char *part)
 {
 	item_data_s *id = data;
