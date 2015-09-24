@@ -458,7 +458,8 @@ multiline_text_get_cb(void *data, Evas_Object *obj, const char *part)
 static Evas_Object*
 full_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
-	Evas_Object *layout, *slider;
+	item_data_s *id = data;
+	Evas_Object *layout, *slider, *label;
 
 	// Set custom layout style
 	layout = elm_layout_add(obj);
@@ -467,7 +468,14 @@ full_content_get_cb(void *data, Evas_Object *obj, const char *part)
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
 	// Set text into layout
-	elm_object_part_text_set(layout, "elm.text", "Description Text");
+	label = elm_label_add(obj);
+	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
+	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	elm_object_text_set(label, "Description Text");
+	elm_object_part_content_set(layout, "elm.text", label);
+
+	elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_LABELLED_BY, label);
+	elm_atspi_accessible_relationship_append(label, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item);
 
 	// Set slider into layout
 	slider = elm_slider_add(obj);
