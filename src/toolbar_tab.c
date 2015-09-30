@@ -579,11 +579,13 @@ toolbar_it_cb(void *data, Evas_Object *obj, void *event_info)
 void
 toolbar_tab_style_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *tabbar;
+	Evas_Object *tabbar, *sub_view;
 	Evas_Object *nf = data;
 	Elm_Object_Item *nf_it;
 
 	nf_it = elm_naviframe_item_push(nf, NULL, NULL, NULL, NULL, "tabbar/icon/notitle");
 	tabbar = create_2_icon_text_tabbar(nf);
 	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
+	sub_view = create_main_list(nf);
+	elm_object_item_content_set(nf_it, sub_view);
 }
