@@ -90,11 +90,13 @@ create_datetime_popup(datetimedata_s *dd)
 	elm_popup_align_set(dd->popup, ELM_NOTIFY_ALIGN_FILL, 0.5);
 
 	cancel_btn = elm_button_add(dd->popup);
+	elm_object_style_set(cancel_btn, "popup");
 	elm_object_text_set(cancel_btn, "Cancel");
 	elm_object_part_content_set(dd->popup, "button1", cancel_btn);
 	evas_object_smart_callback_add(cancel_btn, "clicked", popup_cancel_btn_clicked_cb, dd);
 
 	set_btn = elm_button_add(dd->popup);
+	elm_object_style_set(set_btn, "popup");
 	elm_object_text_set(set_btn, "Set");
 	elm_object_part_content_set(dd->popup, "button2", set_btn);
 	evas_object_smart_callback_add(set_btn, "clicked", popup_set_btn_clicked_cb, dd);
