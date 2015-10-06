@@ -15,7 +15,6 @@
  *
  */
 
-#define EFL_BETA_API_SUPPORT
 #include "main.h"
 
 static Evas_Object*
