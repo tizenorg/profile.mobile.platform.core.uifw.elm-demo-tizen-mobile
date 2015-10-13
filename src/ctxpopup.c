@@ -145,14 +145,17 @@ btn_icon_only_cb(void *data, Evas_Object *obj, void *event_info)
 	evas_object_smart_callback_add(ctxpopup,"dismissed", ctxpopup_dismissed_cb, NULL);
 
 	img = elm_image_add(ctxpopup);
+	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(46), ELM_SCALE_SIZE(46));
 	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_call.png", NULL);
-	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Call", img, ctxpopup_item_select_cb, NULL);
 	img = elm_image_add(ctxpopup);
+	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(46), ELM_SCALE_SIZE(46));
 	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_email.png", NULL);
-	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Email", img, ctxpopup_item_select_cb, NULL);
 	img = elm_image_add(ctxpopup);
+	evas_object_size_hint_min_set(img, ELM_SCALE_SIZE(46), ELM_SCALE_SIZE(46));
 	elm_image_file_set(img, ICON_DIR"/contacts_ic_circle_btn_note.png", NULL);
-	elm_ctxpopup_item_append(ctxpopup, NULL, img, ctxpopup_item_select_cb, NULL);
+	elm_ctxpopup_item_append(ctxpopup, "Note", img, ctxpopup_item_select_cb, NULL);
 
 	move_ctxpopup(ctxpopup, obj);
 	evas_object_show(ctxpopup);
