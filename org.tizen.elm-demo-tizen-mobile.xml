@@ -6,4 +6,9 @@
         <label>mobile-demo</label>
         <label xml:lang="en-us">mobile-demo</label>
     </ui-application>
+    <privileges>
+        <privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+        <privilege>http://tizen.org/privilege/systemmonitor</privilege>
+        <privilege>http://tizen.org/privilege/appmanager.kill</privilege>
+    </privileges>
 </manifest>

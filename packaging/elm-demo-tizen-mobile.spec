@@ -8,7 +8,9 @@ Group: tizen/Application
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(efl-extension)
 BuildRequires:  pkgconfig(capi-appfw-application)
+BuildRequires:  pkgconfig(capi-appfw-app-manager)
 BuildRequires:  pkgconfig(capi-system-system-settings)
+BuildRequires:  pkgconfig(aul)
 BuildRequires:  app-core-efl-devel
 BuildRequires:  efl-extension-devel
 BuildRequires:  cmake
