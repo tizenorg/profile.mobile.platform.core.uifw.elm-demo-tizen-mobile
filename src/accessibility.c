@@ -36,6 +36,7 @@ accessibility_cb(void *data, Evas_Object *obj, void *event_info)
 	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
 
 	elm_list_item_append(list, "Screen Reader", NULL, NULL, screen_reader_cb, nf);
+	elm_list_item_append(list, "App Toolbox", NULL, NULL, app_toolbox_cb, nf);
 	elm_list_go(list);
 
 	elm_naviframe_item_push(nf, "Accessibility", NULL, NULL, list, NULL);
