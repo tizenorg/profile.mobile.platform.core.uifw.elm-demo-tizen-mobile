@@ -77,6 +77,7 @@ void bg_cb(void *data, Evas_Object *obj, void *event_info);
 void vector_cb(void *data, Evas_Object *obj, void *event_info);
 void hoversel_cb(void *data, Evas_Object *obj, void *event_info);
 void screen_reader_cb(void *data, Evas_Object *obj, void *event_info);
+void app_toolbox_cb(void *data, Evas_Object *obj, void *event_info);
 void accessibility_cb(void *data, Evas_Object *obj, void *event_info);
 void description_cb(void *data, Evas_Object *obj, void *event_info);
 void reading_order_cb(void *data, Evas_Object *obj, void *event_info);
