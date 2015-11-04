@@ -45,6 +45,7 @@ SET(SRCS
 	src/toolbar_navigationbar.c
 	src/toolbar_tab.c
 	src/vector.c
+	src/accessibility/app_toolbox.c
 	)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/inc)
@@ -55,7 +56,7 @@ SET(PKG_LDFLAGS "-pthread ${LIB_M} -pie")
 SET(PKG_CFLAGS "-g -Wall -fPIE")
 
 INCLUDE(FindPkgConfig)
-pkg_check_modules(BASE_PKG REQUIRED elementary efl-extension)
+pkg_check_modules(BASE_PKG REQUIRED elementary efl-extension capi-appfw-application capi-appfw-app-manager capi-system-system-settings aul)
 FOREACH(flag ${BASE_PKG_CFLAGS})
 	SET(PKG_CFLAGS "${PKG_CFLAGS} ${flag}")
 ENDFOREACH(flag)
