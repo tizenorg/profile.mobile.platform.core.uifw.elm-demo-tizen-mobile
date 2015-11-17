@@ -167,6 +167,8 @@ create_base_gui(appdata_s *ad)
 
 	/* Naviframe */
 	ad->nf = elm_naviframe_add(ad->layout);
+	/* Push a previous button to naviframe item automatically */
+	elm_naviframe_prev_btn_auto_pushed_set(ad->nf, EINA_TRUE);
 	create_list_view(ad);
 	elm_object_part_content_set(ad->layout, "elm.swallow.content", ad->nf);
 	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
@@ -190,6 +192,10 @@ app_create(void *data)
 	/* Enable HW acceleration */
 	elm_config_accel_preference_set("3d");
 
+	/* Bind package locale file */
+	bindtextdomain (PACKAGE, LOCALE_DIR);
+	textdomain (PACKAGE);
+
 	create_base_gui(ad);
 
 	return true;
@@ -204,19 +210,19 @@ app_control(app_control_h app_control, void *data)
 static void
 app_pause(void *data)
 {
-	/* Take necessary actions when application becomes invisible. */
+	screen_reader_terminate();
 }
 
 static void
 app_resume(void *data)
 {
-	/* Take necessary actions when application becomes visible. */
+	screen_reader_launch();
 }
 
 static void
 app_terminate(void *data)
 {
-	/* Release all resources. */
+	screen_reader_terminate();
 }
 
 static void

@@ -7,9 +7,8 @@ SET(SRCS
 	src/accessibility.c
 	src/accessibility/screen_reader.c
 	src/accessibility/screen_reader/description.c
-	src/accessibility/screen_reader/embeded_ui.c
 	src/accessibility/screen_reader/reading_order.c
-	src/accessibility/screen_reader/primitives_ui.c
+	src/accessibility/screen_reader/custom_frame.c
 	src/bg.c
 	src/button.c
 	src/calendar.c
@@ -64,7 +63,7 @@ FOREACH(flag ${BASE_PKG_LDFLAGS})
 	SET(PKG_LDFLAGS "${PKG_LDFLAGS} ${flag}")
 ENDFOREACH(flag)
 
-pkg_check_modules(TIZEN_PKG REQUIRED capi-appfw-application capi-system-system-settings appcore-efl)
+pkg_check_modules(TIZEN_PKG REQUIRED capi-appfw-application capi-system-system-settings appcore-efl capi-appfw-app-manager)
 FOREACH(flag ${TIZEN_PKG_CFLAGS})
 	SET(PKG_CFLAGS "${PKG_CFLAGS} ${flag}")
 ENDFOREACH(flag)
@@ -107,4 +106,4 @@ INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/res/images/ DESTINATION ${IMGDIR} 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PACKAGE}.xml DESTINATION /usr/share/packages/)
 
 # i18n
-#ADD_SUBDIRECTORY(po)
+ADD_SUBDIRECTORY(po)

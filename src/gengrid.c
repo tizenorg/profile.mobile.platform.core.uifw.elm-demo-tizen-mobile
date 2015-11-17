@@ -25,6 +25,7 @@ typedef struct view_data {
 	int item_height;
 	Eina_Bool longpressed;
 	char *style;
+	Eina_Bool allow_select;
 } view_data_s;
 
 typedef struct item_data {
@@ -114,7 +115,10 @@ gengrid_it_cb(void *data, Evas_Object *obj, void *event_info)
 	Elm_Object_Item *it = event_info;
 
 	printf("item selected: %p\n", it);
-	elm_gengrid_item_selected_set(it, EINA_FALSE);
+
+	if(!id->vd->allow_select) {
+		elm_gengrid_item_selected_set(it, EINA_FALSE);
+	}
 
 	if (id->vd->longpressed) {
 		id->vd->longpressed = EINA_FALSE;
@@ -179,28 +183,65 @@ create_gengrid(view_data_s *vd)
 static void
 gengrid_type1_cb(void *data, Evas_Object *obj, void *event_info)
 {
+	Evas_Object *layout;
 	view_data_s *vd = data;
 	vd->item_width = 134;
 	vd->item_height= 134;
 	vd->style = "default";  //type1 = default
 							//You can both use of them for dafault gengrid style.
 
-	vd->gengrid = create_gengrid(vd);
+	vd->allow_select = EINA_FALSE;
 
-	elm_naviframe_item_push(vd->nf, "Gengrid Type1", NULL, NULL, vd->gengrid, NULL);
+	layout = elm_layout_add(vd->nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	vd->gengrid = create_gengrid(vd);
+	elm_object_part_content_set(layout, "elm.swallow.content", vd->gengrid);
+
+	elm_naviframe_item_push(vd->nf, "Gengrid Type1", NULL, NULL, layout, NULL);
 }
 
 static void
 gengrid_type2_cb(void *data, Evas_Object *obj, void *event_info)
 {
+	Evas_Object *layout;
 	view_data_s *vd = data;
 	vd->item_width = 134;
 	vd->item_height= 164;
 	vd->style = "type2";
 
-	vd->gengrid = create_gengrid(vd);
+	vd->allow_select = EINA_FALSE;
 
-	elm_naviframe_item_push(vd->nf, "Gengrid Type2", NULL, NULL, vd->gengrid, NULL);
+	layout = elm_layout_add(vd->nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	vd->gengrid = create_gengrid(vd);
+	elm_object_part_content_set(layout, "elm.swallow.content", vd->gengrid);
+
+	elm_naviframe_item_push(vd->nf, "Gengrid Type2", NULL, NULL, layout, NULL);
+}
+
+static void
+gengrid_multiselect_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *layout;
+	view_data_s *vd = data;
+	vd->item_width = 134;
+	vd->item_height= 164;
+	vd->style = "type2";
+
+	vd->allow_select = EINA_TRUE;
+
+	layout = elm_layout_add(vd->nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	vd->gengrid = create_gengrid(vd);
+	elm_object_part_content_set(layout, "elm.swallow.content", vd->gengrid);
+
+	elm_naviframe_item_push(vd->nf, "Gengrid Multiselect", NULL, NULL, layout, NULL);
 }
 
 static void
@@ -230,6 +271,7 @@ gengrid_cb(void *data, Evas_Object *obj, void *event_info)
 
 	elm_list_item_append(list, "Gengrid Type1", NULL, NULL, gengrid_type1_cb, vd);
 	elm_list_item_append(list, "Gengrid Type2", NULL, NULL, gengrid_type2_cb, vd);
+	elm_list_item_append(list, "Gengrid Multiselect", NULL, NULL, gengrid_multiselect_cb, vd);
 	elm_list_go(list);
 
 	elm_naviframe_item_push(nf, "Gengrid", NULL, NULL, list, NULL);

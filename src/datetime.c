@@ -87,14 +87,16 @@ create_datetime_popup(datetimedata_s *dd)
 	dd->popup = elm_popup_add(dd->nf);
 	eext_object_event_callback_add(dd->popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
 	evas_object_size_hint_weight_set(dd->popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(dd->popup, EVAS_HINT_FILL, 0.5);
+	elm_popup_align_set(dd->popup, ELM_NOTIFY_ALIGN_FILL, 0.5);
 
 	cancel_btn = elm_button_add(dd->popup);
+	elm_object_style_set(cancel_btn, "popup");
 	elm_object_text_set(cancel_btn, "Cancel");
 	elm_object_part_content_set(dd->popup, "button1", cancel_btn);
 	evas_object_smart_callback_add(cancel_btn, "clicked", popup_cancel_btn_clicked_cb, dd);
 
 	set_btn = elm_button_add(dd->popup);
+	elm_object_style_set(set_btn, "popup");
 	elm_object_text_set(set_btn, "Set");
 	elm_object_part_content_set(dd->popup, "button2", set_btn);
 	evas_object_smart_callback_add(set_btn, "clicked", popup_set_btn_clicked_cb, dd);
@@ -140,13 +142,20 @@ launch_popup_cb(void *data , Evas_Object *obj , void *event_info)
 static Evas_Object *
 create_button(datetimedata_s *dd, Evas_Object *parent, char *text, char *format)
 {
-	Evas_Object *button;
-	button = elm_button_add(parent);
+	Evas_Object *layout, *button;
+
+	layout = elm_layout_add(parent);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_1");
+
+	button = elm_button_add(layout);
 	elm_object_text_set(button, text);
 	evas_object_show(button);
-	elm_box_pack_end(parent, button);
 	evas_object_data_set(button, "format", format);
 	evas_object_smart_callback_add(button, "clicked", launch_popup_cb, dd);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", button);
+	evas_object_show(layout);
+	elm_box_pack_end(parent, layout);
 
 	return button;
 }
@@ -156,7 +165,7 @@ datetime_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	appdata_s *ad = data;
 	Elm_Object_Item *it;
-	Evas_Object *box;
+	Evas_Object *box, *layout;
 
 	datetimedata_s *dd = calloc(1, sizeof(datetimedata_s));
 	dd->nf = ad->nf;
@@ -166,10 +175,15 @@ datetime_cb(void *data, Evas_Object *obj, void *event_info)
 	struct tm *time_info = localtime(&local_time);
 	dd->saved_time = *time_info;
 
-	box = elm_box_add(ad->nf);
+	layout = elm_layout_add(ad->nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	box = elm_box_add(layout);
 	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	elm_box_padding_set(box, 0, ELM_SCALE_SIZE(70));
+	elm_object_part_content_set(layout, "elm.swallow.content", box);
 
 	strftime(buff, 200, DATE_FORMAT, &dd->saved_time);
 	dd->button1 = create_button(dd, box, buff, DATE_FORMAT);
@@ -180,6 +194,6 @@ datetime_cb(void *data, Evas_Object *obj, void *event_info)
 	strftime(buff, 200, TIME_24_FORMAT, &dd->saved_time);
 	dd->button3 = create_button(dd, box, buff, TIME_24_FORMAT);
 
-	it = elm_naviframe_item_push(ad->nf, "DateTime", NULL, NULL, box, NULL);
+	it = elm_naviframe_item_push(ad->nf, "DateTime", NULL, NULL, layout, NULL);
 	elm_naviframe_item_pop_cb_set(it, naviframe_pop_cb, dd);
 }

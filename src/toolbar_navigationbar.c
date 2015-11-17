@@ -324,5 +324,5 @@ toolbar_navigation_style_cb(void *data, Evas_Object *obj, void *event_info)
 	tabbar = create_text_only_2_items_tabbar(nf);
 	elm_object_item_part_content_set(nf_it, "tabbar", tabbar);
 	sub_view = create_main_list(nf);
-	elm_object_item_part_content_set(nf_it, NULL, sub_view);
+	elm_object_item_content_set(nf_it, sub_view);
 }

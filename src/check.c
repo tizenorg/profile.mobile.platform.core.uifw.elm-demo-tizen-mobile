@@ -41,6 +41,7 @@ create_scroller(Evas_Object *parent)
 static Evas_Object*
 create_checks(Evas_Object *parent)
 {
+	Evas_Object *layout;
 	Evas_Object *check;
 	Evas_Object *box;
 
@@ -51,103 +52,162 @@ create_checks(Evas_Object *parent)
 	evas_object_show(box);
 
 	/* default check */
-	check = elm_check_add(box);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
+	check = elm_check_add(layout);
 	elm_object_text_set(check, "Default");
 	elm_check_state_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)1);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(check, 0.5, 1);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* default check, diabled(on) */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
 	check = elm_check_add(box);
 	elm_object_text_set(check, "Default");
 	elm_check_state_set(check, EINA_TRUE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)1);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
-	evas_object_size_hint_align_set(check, 0.5, 0);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* default check, diabled(off) */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
 	check = elm_check_add(box);
 	elm_check_state_set(check, EINA_FALSE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)1);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(check, 0.5, 0);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* favorite check */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
 	elm_object_text_set(check, "Favorite");
 	elm_check_state_set(check, EINA_FALSE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
-	evas_object_size_hint_align_set(check, 0.5, 0);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* favorite check, disabled(on) */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
 	elm_object_text_set(check, "Favorite");
 	elm_check_state_set(check, EINA_TRUE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
-	evas_object_size_hint_align_set(check, 0.5, 0);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* favorite check, disabled(off) */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
+	//elm_atspi_accessible_name_set(check, "Favorite button");
 	elm_check_state_set(check, EINA_FALSE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(check, 0.5, 0);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* on&off check */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
 	check = elm_check_add(box);
 	elm_object_style_set(check, "on&off");
 	elm_object_text_set(check, "On&amp;Off");
 	elm_check_state_set(check, EINA_TRUE);
+	//elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
-	evas_object_size_hint_align_set(check, 0.5, 0);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* on&off check, disabled(on) */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
 	check = elm_check_add(box);
 	elm_object_style_set(check, "on&off");
+	//elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
 	elm_object_text_set(check, "On&amp;Off");
 	elm_check_state_set(check, EINA_TRUE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, 0);
-	evas_object_size_hint_align_set(check, 0.5, 0);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* on&off check, disabled(off) */
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "check_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 1);
+
 	check = elm_check_add(box);
 	elm_object_style_set(check, "on&off");
+	//elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
+	//elm_atspi_accessible_name_set(check, "On, off");
 	elm_check_state_set(check, EINA_FALSE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
-	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(check, 0.5, 0);
 	evas_object_show(check);
-	elm_box_pack_end(box, check);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", check);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	return box;
 }
@@ -155,12 +215,17 @@ create_checks(Evas_Object *parent)
 void
 check_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *scroller, *box;
+	Evas_Object *scroller, *layout, *box;
 	Evas_Object *nf = data;
 
 	scroller = create_scroller(nf);
-	box = create_checks(scroller);
-	elm_object_content_set(scroller, box);
+	layout = elm_layout_add(scroller);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	box = create_checks(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", box);
+	elm_object_content_set(scroller, layout);
 
 	elm_naviframe_item_push(nf, "Check", NULL, NULL, scroller, NULL);
 }

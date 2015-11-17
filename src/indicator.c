@@ -74,7 +74,7 @@ nooverlap_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static Evas_Object*
 create_conform_view(Evas_Object *parent, appdata_s *ad)
 {
-	Evas_Object *box, *btn, *label;
+	Evas_Object *layout, *box, *btn, *label;
 
 	/* Box */
 	box = elm_box_add(parent);
@@ -91,13 +91,19 @@ create_conform_view(Evas_Object *parent, appdata_s *ad)
 	evas_object_show(label);
 	elm_box_pack_end(box, label);
 
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_2");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 0);
+
 	btn = elm_button_add(box);
 	elm_object_text_set(btn, "Indicator Opaque");
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0);
 	evas_object_smart_callback_add(btn, "clicked", opaque_btn_clicked_cb, ad);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* Indicator Transparent Button */
 	label = elm_label_add(box);
@@ -108,13 +114,19 @@ create_conform_view(Evas_Object *parent, appdata_s *ad)
 	evas_object_show(label);
 	elm_box_pack_end(box, label);
 
-	btn = elm_button_add(box);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_2");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 0);
+
+	btn = elm_button_add(layout);
 	elm_object_text_set(btn, "Indicator Transparent");
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0);
 	evas_object_smart_callback_add(btn, "clicked", transparent_btn_clicked_cb, ad);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* Indicator Custom BG Button */
 	label = elm_label_add(box);
@@ -124,13 +136,19 @@ create_conform_view(Evas_Object *parent, appdata_s *ad)
 	evas_object_show(label);
 	elm_box_pack_end(box, label);
 
-	btn = elm_button_add(box);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_2");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 0);
+
+	btn = elm_button_add(layout);
 	elm_object_text_set(btn, "Indicator Custom BG");
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0);
 	evas_object_smart_callback_add(btn, "clicked", custom_bg_btn_clicked_cb, ad);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* Indicator Hide */
 	label = elm_label_add(box);
@@ -140,13 +158,19 @@ create_conform_view(Evas_Object *parent, appdata_s *ad)
 	evas_object_show(label);
 	elm_box_pack_end(box, label);
 
-	btn = elm_button_add(box);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_2");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 0);
+
+	btn = elm_button_add(layout);
 	elm_object_text_set(btn, "Indicator Hide");
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0);
 	evas_object_smart_callback_add(btn, "clicked", hide_btn_clicked_cb, ad);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* Indicator Overlap */
 	label = elm_label_add(box);
@@ -156,13 +180,19 @@ create_conform_view(Evas_Object *parent, appdata_s *ad)
 	evas_object_show(label);
 	elm_box_pack_end(box, label);
 
-	btn = elm_button_add(box);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_2");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 0);
+
+	btn = elm_button_add(layout);
 	elm_object_text_set(btn, "Indicator Overlap");
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0);
 	evas_object_smart_callback_add(btn, "clicked", overlap_btn_clicked_cb, ad);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	/* Indicator No-Overlap */
 	label = elm_label_add(box);
@@ -172,13 +202,19 @@ create_conform_view(Evas_Object *parent, appdata_s *ad)
 	evas_object_show(label);
 	elm_box_pack_end(box, label);
 
-	btn = elm_button_add(box);
+	layout = elm_layout_add(box);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "button_layout_2");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, 0.5, 0);
+
+	btn = elm_button_add(layout);
 	elm_object_text_set(btn, "Indicator No-Overlap");
-	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(btn, 0.5, 0);
 	evas_object_smart_callback_add(btn, "clicked", nooverlap_btn_clicked_cb, ad);
 	evas_object_show(btn);
-	elm_box_pack_end(box, btn);
+
+	elm_object_part_content_set(layout, "elm.swallow.content", btn);
+	evas_object_show(layout);
+	elm_box_pack_end(box, layout);
 
 	return box;
 }
@@ -196,12 +232,17 @@ create_scroller(Evas_Object *parent)
 void
 indicator_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *scroller, *layout;
+	Evas_Object *scroller, *layout, *bg_layout;
 	appdata_s *ad = data;
 
 	scroller = create_scroller(ad->nf);
+	bg_layout = elm_layout_add(scroller);
+	evas_object_size_hint_weight_set(bg_layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(bg_layout, ELM_DEMO_EDJ, "white_bg_layout");
+
 	layout = create_conform_view(scroller, ad);
-	elm_object_content_set(scroller, layout);
+	elm_object_part_content_set(bg_layout, "elm.swallow.content", layout);
+	elm_object_content_set(scroller, bg_layout);
 
 	elm_naviframe_item_push(ad->nf, "Indicator", NULL, NULL, scroller, NULL);
 }

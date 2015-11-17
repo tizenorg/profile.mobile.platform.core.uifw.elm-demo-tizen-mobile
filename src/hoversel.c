@@ -93,10 +93,15 @@ create_hoversel_view(Evas_Object *parent)
 void
 hoversel_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *content;
+	Evas_Object *content, *layout;
 	Evas_Object *nf = data;
 
-	content = create_hoversel_view(nf);
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
 
-	elm_naviframe_item_push(nf, "Hoversel", NULL, NULL, content, NULL);
+	content = create_hoversel_view(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", content);
+
+	elm_naviframe_item_push(nf, "Hoversel", NULL, NULL, layout, NULL);
 }

@@ -19,6 +19,11 @@
 #include <system_settings.h>
 #include <efl_extension.h>
 
+//uncomment if you want debug
+#ifndef TIZEN_ENGINEER_MODE
+#define TIZEN_ENGINEER_MODE
+#endif
+
 #ifdef  LOG_TAG
 #undef  LOG_TAG
 #endif
@@ -80,5 +85,7 @@ void screen_reader_cb(void *data, Evas_Object *obj, void *event_info);
 void accessibility_cb(void *data, Evas_Object *obj, void *event_info);
 void description_cb(void *data, Evas_Object *obj, void *event_info);
 void reading_order_cb(void *data, Evas_Object *obj, void *event_info);
-void embeded_ui_cb(void *data, Evas_Object *obj, void *event_info);
-void primitives_ui_cb(void *data, Evas_Object *obj, void *event_info);
+void custom_frame_cb(void *data, Evas_Object *obj, void *event_info);
+void screen_reader_launch(void);
+void screen_reader_terminate(void);
+int screen_reader_vconf_status(void);

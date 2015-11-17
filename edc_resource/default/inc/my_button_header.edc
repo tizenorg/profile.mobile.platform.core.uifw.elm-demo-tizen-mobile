@@ -1,0 +1,61 @@
+#define BASE_SCALE_INC 2.6
+#define SMALL "HD/"
+#define MEDIUM "HD/"
+#define DEFAULT_IMAGE "HD/"
+
+#define BG_DEFAULT_COLOR_INC 248 246 239 255
+#define BG_EDIT_MODE_COLOR_INC 248 246 239 255
+#define BG_GROUP_LIST_COLOR_INC 248 246 239 255
+#define BG_TRANSPARENT_COLOR_INC 0 0 0 0
+#define BORDER_BG_COLOR_INC 248 246 239 255
+#define BORDER_FONT_COLOR_INC 59 115 182 255
+#define BORDER_FONT_SIZE_INC 42
+#define BORDER_HEIGHT_INC 80
+#define BORDER_ICON_PADDING_WIDTH 8
+#define BORDER_ICON_SIZE 36 36
+#define BORDER_PADDING_WIDTH 20
+#define BORDER_SHADOW_HEIGHT 20
+#define BORDER_TITLE_FONT_SIZE_INC 12
+#define BORDER_TITLE_HEIGHT_INC 22
+
+#define BUTTON_ANCHOR_BG_BORDER 20 20 22 22
+#define BUTTON_ANCHOR_COLOR_TRANSPARENT 0 0 0 0
+#define BUTTON_ANCHOR_PADDING_DEFAULT_SIZE 10
+#define BUTTON_ICON_DEFAULT_HEIGHT_INC 60
+#define BUTTON_ICON_DEFAULT_WIDTH_INC 60
+#define BUTTON_MIN_HEIGHT_INC 78
+#define BUTTON_MIN_WIDTH_INC 50
+#define BUTTON_PADDING_BOTTOM_HEIGHT_INC 14
+#define BUTTON_PADDING_ICON_RIGHT_INC 14
+#define BUTTON_PADDING_LEFT_ICON_TEXT_INC 56
+#define BUTTON_PADDING_LEFT_RIGHT_INC 32
+#define BUTTON_PADDING_TOP_HEIGHT_INC 10
+#define BUTTON_TEXT_SHADOW_NORMAL_COLOR_INC 255 255 255 255
+#define BUTTON_TEXT_STYLE1_FONT_SIZE_INC 36
+#define BUTTON_TEXT_STYLE1_NORMAL_COLOR_INC 58 58 58 255
+#define BUTTON_TEXT_STYLE1_VISIBLE_BG_MIN_INC 148 74
+
+#define STYLE_TAGS \
+   tag:  "br" "\n";\
+   tag:  "ps" "ps";\
+   tag:  "tab" "\t";\
+   tag:  "b" "+ font_weight=Bold";
+
+#define STYLE_TAG_MATCH \
+   tag:  "match" "+ color=#3db8cc";
+
+styles {
+   // ************* button text ********** //
+   style { name: "button_main";
+      base: "align=center valign=center color=#fafafaff font=Tizen:style=Regular font_size=30 text_class=tizen ellipsis=1.0";
+      STYLE_TAGS
+   }
+   style { name: "button_main_dim";
+      base: "align=center valign=center color=#fafafaa3 font=Tizen:style=Regular font_size=30 text_class=tizen ellipsis=1.0";
+      STYLE_TAGS
+   }
+   style { name: "button_main_press";
+      base: "align=center valign=center color=#fafafaff font=Tizen:style=Regular font_size=30 text_class=tizen ellipsis=1.0";
+      STYLE_TAGS
+   }
+}

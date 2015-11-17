@@ -64,7 +64,6 @@ create_pending_progressbar(Evas_Object *parent)
 	elm_progressbar_pulse(progressbar, EINA_TRUE);
 	evas_object_show(progressbar);
 
-	elm_object_part_text_set(progressbar, "elm.text.top.left", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.top.right", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.bottom.left", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.bottom.right", "Lorem");
@@ -99,7 +98,6 @@ create_default_progressbar(Evas_Object *parent)
 	elm_progressbar_value_set(progressbar, 0.0);
 	evas_object_show(progressbar);
 
-	elm_object_part_text_set(progressbar, "elm.text.top.left", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.top.right", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.bottom.left", "Lorem");
 	elm_object_part_text_set(progressbar, "elm.text.bottom.right", "Lorem");
@@ -186,10 +184,15 @@ static Evas_Object
 void
 progressbar_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
-	Evas_Object *content;
+	Evas_Object *content, *layout;
 	Evas_Object *nf = data;
 
-	content = create_content(nf);
-	elm_naviframe_item_push(nf, "Progressbar", NULL, NULL, content, NULL);
+	layout = elm_layout_add(nf);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_layout_file_set(layout, ELM_DEMO_EDJ, "white_bg_layout");
+
+	content = create_content(layout);
+	elm_object_part_content_set(layout, "elm.swallow.content", content);
+	elm_naviframe_item_push(nf, "Progressbar", NULL, NULL, layout, NULL);
 }
 

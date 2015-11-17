@@ -9,10 +9,12 @@ BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(efl-extension)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-system-system-settings)
+BuildRequires:  pkgconfig(capi-appfw-app-manager)
 BuildRequires:  app-core-efl-devel
 BuildRequires:  efl-extension-devel
 BuildRequires:  cmake
 BuildRequires:  edje-bin
+BuildRequires:  gettext-tools
 
 %description
 Tizen mobile theme demo
@@ -39,6 +41,7 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/%{_datadir}/license/%{name}
 %defattr(-,root,root,-)
 /usr/apps/org.tizen.elm-demo-tizen-mobile/bin/*
 /usr/apps/org.tizen.elm-demo-tizen-mobile/res/*
+/usr/apps/org.tizen.elm-demo-tizen-mobile/res/locale/*/LC_MESSAGES/*
 %{_datadir}/packages/org.tizen.elm-demo-tizen-mobile.xml
 %{_datadir}/icons/default/small/org.tizen.elm-demo-tizen-mobile.png
 %{_datadir}/license/%{name}
