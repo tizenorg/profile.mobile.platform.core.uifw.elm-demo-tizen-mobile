@@ -173,6 +173,7 @@ static void
 _popup_block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	//elm_popup_dismiss(obj);
+	evas_object_del(obj);
 }
 
 static void
@@ -180,12 +181,14 @@ _popup_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *popup = data;
 	//elm_popup_dismiss(popup);
+	evas_object_del(popup);
 }
 
 static void
 _popup_hide_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	//elm_popup_dismiss(obj);
+	evas_object_del(obj);
 }
 
 static void
