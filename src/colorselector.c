@@ -34,7 +34,7 @@ create_colorselector(Evas_Object *parent)
 	color_list = elm_colorselector_palette_items_get(colorselector);
 	it = eina_list_nth(color_list, 3);
 
-	elm_object_item_signal_emit(it, "elm,state,selected", "elm");
+	elm_colorselector_palette_item_selected_set(it, EINA_TRUE);
 
 	return colorselector;
 }
