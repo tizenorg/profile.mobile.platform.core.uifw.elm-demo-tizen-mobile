@@ -61,6 +61,7 @@ create_pending_progressbar(Evas_Object *parent)
 	elm_object_style_set(progressbar, "pending");
 	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
 	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_progressbar_pulse_set(progressbar, EINA_TRUE);
 	elm_progressbar_pulse(progressbar, EINA_TRUE);
 	evas_object_show(progressbar);
 
@@ -81,6 +82,7 @@ create_process_progressbar(Evas_Object *parent, const char *style)
 	elm_object_style_set(progressbar, style);
 	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
 	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_progressbar_pulse_set(progressbar, EINA_TRUE);
 	elm_progressbar_pulse(progressbar, EINA_TRUE);
 	evas_object_show(progressbar);
 
@@ -126,7 +128,7 @@ static Evas_Object
 	Evas_Object *box;
 	Evas_Object *label;
 	Evas_Object *progressbar;
-   Ecore_Timer *progress_timer;
+	Ecore_Timer *progress_timer;
 
 
 	/* Scroller */
