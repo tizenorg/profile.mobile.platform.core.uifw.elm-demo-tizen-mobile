@@ -776,6 +776,8 @@ list_it_scrollable_text(void *data, Evas_Object *obj, void *event_info)
 	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
+	elm_popup_scrollable_set(popup, EINA_TRUE);
+
 	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, _popup_hide_cb, NULL);
 	evas_object_smart_callback_add(popup, "dismissed", _popup_hide_finished_cb, NULL);
 	evas_object_smart_callback_add(popup, "block,clicked", _popup_block_clicked_cb, NULL);
