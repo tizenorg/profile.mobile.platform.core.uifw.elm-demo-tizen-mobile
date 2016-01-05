@@ -150,7 +150,9 @@ create_gengrid(view_data_s *vd)
 	w = (int)(ELM_SCALE_SIZE(vd->item_width)); /* 177 as per UX ver 1.7. */
 	h = (int)(ELM_SCALE_SIZE(vd->item_height));
 	elm_gengrid_item_size_set(gengrid, w, h);
-	elm_gengrid_align_set(gengrid, 0.5, 0.5);
+	// To set align on horizontal or vertical axis,
+	// call align set on gengrid with 0.0 - 1.0 values.
+	// elm_gengrid_align_set(gengrid, 0.5, 0.5);
 	elm_gengrid_horizontal_set(gengrid, EINA_TRUE);
 	elm_gengrid_multi_select_set(gengrid, EINA_TRUE);
 	evas_object_smart_callback_add(gengrid, "moved", gengrid_moved_cb, NULL);
