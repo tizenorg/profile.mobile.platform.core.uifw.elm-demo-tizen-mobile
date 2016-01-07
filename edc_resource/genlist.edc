@@ -31,6 +31,7 @@ group { name: "gl_custom_item";
          type: SPACER;
          scale: 1;
          description { state: "default" 0.0;
+            min: 0 120; //GENLIST_ITEM_1LINE_HEIGHT
          }
       }
       part { name: "left_padding";
