@@ -3,7 +3,7 @@ Version:    0.1
 Release:    1
 Summary: Tizen TV theme demo
 Source: %{name}-%{version}.tar.gz
-License: Apache License, Version 2.0
+License: Apache-2.0
 Group: tizen/Application
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(efl-extension)
