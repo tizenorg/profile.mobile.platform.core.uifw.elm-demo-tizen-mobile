@@ -29,7 +29,7 @@ static bool is_screen_reader_running()
 static Eina_Bool screen_reader_on = EINA_FALSE;
 void launch_reply_callback(app_control_h request, app_control_h reply, app_control_result_e result, void *user_data)
 {
-//	dlog_print(DLOG_DEBUG, LOG_TAG, "reply has been delivered");
+	dlog_print(DLOG_DEBUG, LOG_TAG, "reply has been delivered");
 }
 
 void
@@ -38,21 +38,21 @@ screen_reader_launch(void)
 	if (!screen_reader_on)
 		return;
 	if (is_screen_reader_running()) {
-//		dlog_print(DLOG_DEBUG, LOG_TAG, "screen reader already running");
+		dlog_print(DLOG_DEBUG, LOG_TAG, "screen reader already running");
 		return;
 	}
 	app_control_h app_control;
 	int ret = app_control_create(&app_control);
-//	dlog_print(DLOG_DEBUG, LOG_TAG, "app_control_create: %i", ret);
+	dlog_print(DLOG_DEBUG, LOG_TAG, "app_control_create: %i", ret);
 
 	if (ret == APP_CONTROL_ERROR_NONE) {
 		ret = app_control_set_app_id(app_control, "org.tizen.screen-reader");
-//		dlog_print(DLOG_DEBUG, LOG_TAG, "app_control_set_app_id: %i", ret);
+		dlog_print(DLOG_DEBUG, LOG_TAG, "app_control_set_app_id: %i", ret);
 	}
 
 	if (ret == APP_CONTROL_ERROR_NONE) {
 		ret = app_control_send_launch_request(app_control, launch_reply_callback, NULL);
-//		dlog_print(DLOG_DEBUG, LOG_TAG, "app_control_send_launch_request: %i", ret);
+		dlog_print(DLOG_DEBUG, LOG_TAG, "app_control_send_launch_request: %i", ret);
 	}
 
 	screen_reader_on = ret == APP_CONTROL_ERROR_NONE;
@@ -67,14 +67,14 @@ screen_reader_terminate(void)
 	int res = app_manager_get_app_context("org.tizen.screen-reader", &app_context);
 
 	if (res != APP_MANAGER_ERROR_NONE) {
-		//dlog_print(DLOG_ERROR, LOG_TAG, "Can't get screen reader app context - error code: %i", res);
+		dlog_print(DLOG_ERROR, LOG_TAG, "Can't get screen reader app context - error code: %i", res);
 		return;
 	}
-//	dlog_print(DLOG_DEBUG, LOG_TAG, "app_context: %p", app_context);
+	dlog_print(DLOG_DEBUG, LOG_TAG, "app_context: %p", app_context);
 	res = app_manager_request_terminate_bg_app(app_context);
 
 	if (res != APP_MANAGER_ERROR_NONE) {
-		//dlog_print(DLOG_ERROR, LOG_TAG, "Can't terminate screen reader app - error code: %i", res);
+		dlog_print(DLOG_ERROR, LOG_TAG, "Can't terminate screen reader app - error code: %i", res);
 		return;
 	}
 }

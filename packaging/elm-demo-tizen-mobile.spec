@@ -15,6 +15,7 @@ BuildRequires:  efl-extension-devel
 BuildRequires:  cmake
 BuildRequires:  edje-bin
 BuildRequires:  gettext-tools
+BuildRequires:  pkgconfig(dlog)
 
 %description
 Tizen mobile theme demo
