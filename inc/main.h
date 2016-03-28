@@ -23,6 +23,7 @@
 #ifndef TIZEN_ENGINEER_MODE
 #define TIZEN_ENGINEER_MODE
 #endif
+#include <dlog.h>
 
 #ifdef  LOG_TAG
 #undef  LOG_TAG

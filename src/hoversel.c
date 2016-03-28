@@ -20,23 +20,23 @@ static void
 hoversel_clicked_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                      void *event_info EINA_UNUSED)
 {
-	//dlog_print(DLOG_INFO, LOG_TAG, "Hover button is clicked and 'clicked' callback is called.\n");
+	dlog_print(DLOG_INFO, LOG_TAG, "Hover button is clicked and 'clicked' callback is called.\n");
 }
 
 static void
 hoversel_selected_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                       void *event_info)
 {
-	//const char *txt = elm_object_item_text_get(event_info);
+	const char *txt = elm_object_item_text_get(event_info);
 
-	//dlog_print(DLOG_INFO, LOG_TAG, "'selected' callback is called. (selected item : %s)\n", txt);
+	dlog_print(DLOG_INFO, LOG_TAG, "'selected' callback is called. (selected item : %s)\n", txt);
 }
 
 static void
 hoversel_dismissed_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                        void *event_info EINA_UNUSED)
 {
-	//dlog_print(DLOG_INFO, LOG_TAG, "'dismissed' callback is called.\n");
+	dlog_print(DLOG_INFO, LOG_TAG, "'dismissed' callback is called.\n");
 }
 
 static Evas_Object*
