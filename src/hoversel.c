@@ -27,7 +27,7 @@ static void
 hoversel_selected_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                       void *event_info)
 {
-	const char *txt = elm_object_item_text_get(event_info);
+	//const char *txt = elm_object_item_text_get(event_info);
 
 	//dlog_print(DLOG_INFO, LOG_TAG, "'selected' callback is called. (selected item : %s)\n", txt);
 }

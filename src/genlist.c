@@ -458,7 +458,7 @@ multiline_text_get_cb(void *data, Evas_Object *obj, const char *part)
 static Evas_Object*
 full_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
-	item_data_s *id = data;
+	//item_data_s *id = data;
 	Evas_Object *layout, *slider, *label;
 
 	// Set custom layout style
@@ -640,7 +640,7 @@ genlist_test_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 	Evas_Object *genlist;
 	Evas_Object *nf = data;
 	Elm_Object_Item *it = event_info;
-	Elm_Genlist_Item_Class *itc, *itc2 = NULL;
+	Elm_Genlist_Item_Class *itc = NULL, *itc2 = NULL;
 
 	int index;
 	int n_items = NUM_OF_ITEMS;

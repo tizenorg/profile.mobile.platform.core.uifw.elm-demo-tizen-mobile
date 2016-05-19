@@ -146,7 +146,6 @@ create_gengrid(view_data_s *vd)
 	evas_object_size_hint_weight_set(gengrid, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(gengrid, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-	double scale = elm_config_scale_get();
 	w = (int)(ELM_SCALE_SIZE(vd->item_width)); /* 177 as per UX ver 1.7. */
 	h = (int)(ELM_SCALE_SIZE(vd->item_height));
 	elm_gengrid_item_size_set(gengrid, w, h);

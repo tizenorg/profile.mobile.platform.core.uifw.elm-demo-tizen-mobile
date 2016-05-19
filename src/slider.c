@@ -47,8 +47,6 @@ static Evas_Object
 	Evas_Object *scroller;
 	Evas_Object *box;
 	Evas_Object *slider;
-	Evas_Object *label;
-	int idx = 0;
 
 	//Scroller
 	scroller = elm_scroller_add(parent);
@@ -106,7 +104,6 @@ create_horizontal_content(Evas_Object* parent)
 	Evas_Object *box;
 	Evas_Object *slider;
 	Evas_Object *label;
-	int idx = 0;
 
 	//Scroller
 	scroller = elm_scroller_add(parent);

@@ -70,7 +70,7 @@ static Evas_Object*
 gl_radio_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
 	int index = (int) data;
-	Elm_Object_Item *it = elm_genlist_nth_item_get(obj, index);
+	//Elm_Object_Item *it = elm_genlist_nth_item_get(obj, index);
 
 	if (!strcmp(part, "elm.swallow.end")) {
 		Evas_Object *radio;

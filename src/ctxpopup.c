@@ -247,7 +247,6 @@ create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
 void
 ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *bg_layout;
 	Evas_Object *layout;
 	Evas_Object *box;
 	Evas_Object *btn;
