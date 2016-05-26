@@ -62,6 +62,7 @@ create_list_view(appdata_s *ad)
 	evas_object_smart_callback_add(list, "selected", list_selected_cb, NULL);
 
 	/* Main Menu Items Here */
+	elm_list_item_append(list, "Map", NULL, NULL, map_cb, nf);
 	elm_list_item_append(list, "Accessibility", NULL, NULL, accessibility_cb, nf);
 	elm_list_item_append(list, "Bg", NULL, NULL, bg_cb, nf);
 	elm_list_item_append(list, "Button", NULL, NULL, button_cb, nf);
