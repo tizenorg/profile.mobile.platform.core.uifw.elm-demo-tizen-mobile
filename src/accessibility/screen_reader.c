@@ -131,8 +131,10 @@ screen_reader_cb(void *data, Evas_Object *obj, void *event_info)
 	evas_object_propagate_events_set(screen_reader_onoff_check, EINA_FALSE);
 
 	elm_list_item_append(list, "UI Descriptions", NULL, NULL, description_cb, nf);
+	elm_list_item_append(list, "UI Descriptions 2", NULL, NULL, description_2_cb, nf);
 	elm_list_item_append(list, "UI Reading order", NULL, NULL, reading_order_cb, nf);
 	elm_list_item_append(list, "Custom Frame", NULL, NULL, custom_frame_cb, nf);
+	elm_list_item_append(list, "Using Access Object", NULL, NULL, using_access_object_cb, nf);
 
 	elm_list_item_prepend(list, "Screen Reader (TTS)", NULL, screen_reader_onoff_check, screen_reader_item_cb,
 							screen_reader_onoff_check);
