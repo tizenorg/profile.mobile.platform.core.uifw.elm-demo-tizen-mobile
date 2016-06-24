@@ -31,8 +31,9 @@ make %{?jobs:-j%jobs}
 %install
 %make_install
 
-mkdir -p %{buildroot}/%{_datadir}/packages/
-cp %{_builddir}/%{buildsubdir}/org.tizen.elm-demo-tizen-mobile.xml %{buildroot}/%{_datadir}/packages/org.tizen.elm-demo-tizen-mobile.xml
+#mkdir -p %{buildroot}/%{_datadir}/packages/
+mkdir -p %{buildroot}/%{TZ_SYS_RO_PACKAGES}
+cp %{_builddir}/%{buildsubdir}/org.tizen.elm-demo-tizen-mobile.xml %{buildroot}/%{TZ_SYS_RO_PACKAGES}/org.tizen.elm-demo-tizen-mobile.xml
 
 mkdir -p %{buildroot}/%{_datadir}/license
 cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/%{_datadir}/license/%{name}
@@ -41,8 +42,9 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/%{_datadir}/license/%{name}
 %defattr(-,root,root,-)
 /usr/apps/org.tizen.elm-demo-tizen-mobile/bin/*
 /usr/apps/org.tizen.elm-demo-tizen-mobile/res/*
+/usr/apps/org.tizen.elm-demo-tizen-mobile/shared/*
 /usr/apps/org.tizen.elm-demo-tizen-mobile/res/locale/*/LC_MESSAGES/*
-%{_datadir}/packages/org.tizen.elm-demo-tizen-mobile.xml
-%{_datadir}/icons/default/small/org.tizen.elm-demo-tizen-mobile.png
+%{TZ_SYS_RO_PACKAGES}/org.tizen.elm-demo-tizen-mobile.xml
+#%{_datadir}/icons/default/small/org.tizen.elm-demo-tizen-mobile.png
 %{_datadir}/license/%{name}
 %manifest %{name}.manifest
