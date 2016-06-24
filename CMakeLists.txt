@@ -2,50 +2,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(elm-demo-tizen-mobile C)
 SET(PACKAGE org.tizen.elm-demo-tizen-mobile)
 
-SET(SRCS
-	src/main.c
-	src/accessibility.c
-	src/accessibility/screen_reader.c
-	src/accessibility/screen_reader/description.c
-	src/accessibility/screen_reader/reading_order.c
-	src/accessibility/screen_reader/custom_frame.c
-	src/accessibility/screen_reader/access_object.c
-	src/bg.c
-	src/button.c
-	src/calendar.c
-	src/check.c
-	src/colorselector.c
-	src/ctxpopup.c
-	src/datetime.c
-	src/entry.c
-	src/fastscroll.c
-	src/flipselector.c
-	src/gengrid.c
-	src/genlist.c
-	src/handler.c
-	src/hoversel.c
-	src/indicator.c
-	src/label.c
-	src/label_colorstyles.c
-	src/label_ellipsis.c
-	src/label_linebreakmodes.c
-	src/label_slide.c
-	src/label_fontsizes.c
-	src/multibuttonentry.c
-	src/naviframe.c
-	src/nocontents.c
-	src/pagecontrol.c
-	src/pagecontrol_horizontal.c
-	src/pagecontrol_horizontal_loop.c
-	src/popup.c
-	src/progressbar.c
-	src/radio.c
-	src/slider.c
-	src/spinner.c
-	src/toolbar.c
-	src/toolbar_navigationbar.c
-	src/toolbar_tab.c
-	src/vector.c
+FILE(GLOB SRCS
+	src/*.c
+	src/accessibility/*.c
+	src/accessibility/screen_reader/*.c
 	)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/inc)
@@ -77,6 +37,7 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${PKG_CFLAGS}")
 # install desktop file & icon
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 SET(BINDIR "${PREFIX}/bin")
+SET(SHDIR "${PREFIX}/shared")
 SET(RESDIR "${PREFIX}/res")
 SET(LOCALEDIR "${RESDIR}/locale")
 SET(IMGDIR "${RESDIR}/images")
@@ -100,11 +61,13 @@ ADD_DEPENDENCIES(${PROJECT_NAME} ${PROJECT_NAME}.edj)
 
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${BINDIR})
 # for workaround taskmanager behaviour
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/${PACKAGE}.png DESTINATION /usr/share/icons/default/small/)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/${PACKAGE}.png DESTINATION ${SHDIR}/res/)
 INSTALL(FILES ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.edj DESTINATION ${RESDIR})
 INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/res/images/ DESTINATION ${IMGDIR} FILES_MATCHING PATTERN "*.png")
 INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/res/images/ DESTINATION ${IMGDIR} FILES_MATCHING PATTERN "*.jpg")
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PACKAGE}.xml DESTINATION /usr/share/packages/)
+
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/${PACKAGE}.xml.in ${CMAKE_SOURCE_DIR}/${PACKAGE}.xml @ONLY)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/${PACKAGE}.xml DESTINATION ${PKG_MANIFEST_PATH})
 
 # i18n
 ADD_SUBDIRECTORY(po)
