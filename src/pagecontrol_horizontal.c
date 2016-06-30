@@ -24,7 +24,23 @@ typedef struct page_data {
 	Elm_Object_Item *last_it;
 	Elm_Object_Item *new_it;
 	int current_page;
+	int total_page;
 } page_data_s;
+
+static void
+_index_change_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Elm_Object_Item *lit = event_info;
+	page_data_s *pd = data;
+	int selected_page;
+	char buf[64] = {0,};
+
+	selected_page = elm_object_item_data_get(lit);
+	sprintf(buf, _("IDS_INDEX_PAGECONTROL_DESCRIPTION"), selected_page + 1, pd->total_page);
+	elm_atspi_accessible_description_set(pd->index, buf);
+	if (selected_page == pd->current_page) return;
+	elm_scroller_page_show(pd->scroller, selected_page, 0);
+}
 
 static void
 index_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
@@ -116,7 +132,7 @@ create_index(Evas_Object *parent)
 {
 	Evas_Object *layout, *scroller, *box, *index, *page_layout, *page;
 	Elm_Object_Item *it;
-
+	char buf[64] = {0,};
 	page_data_s *pd = calloc(1, sizeof(page_data_s));
 
 	/* Create Layout */
@@ -200,6 +216,7 @@ create_index(Evas_Object *parent)
 	elm_box_pack_end(box, page_layout);
 
 	pd->current_page = 0;
+	pd->total_page = 3;
 
 	/* Create Index */
 	index = elm_index_add(layout);
@@ -216,6 +233,8 @@ create_index(Evas_Object *parent)
 
 	elm_index_level_go(index, 0);
 	elm_index_item_selected_set(it, EINA_TRUE);
+	sprintf(buf, _("IDS_INDEX_PAGECONTROL_DESCRIPTION"), elm_object_item_data_get(it) + 1, pd->total_page);
+	elm_atspi_accessible_description_set(index, buf);
 	pd->index = index;
 	pd->last_it = it;
 
@@ -223,6 +242,7 @@ create_index(Evas_Object *parent)
 	evas_object_event_callback_add(index, EVAS_CALLBACK_MOUSE_MOVE, index_mouse_move_cb, pd);
 	evas_object_event_callback_add(index, EVAS_CALLBACK_MOUSE_UP, index_mouse_up_cb, pd);
 	evas_object_event_callback_add(layout, EVAS_CALLBACK_DEL, index_del_cb, pd);
+	evas_object_smart_callback_add(index, "changed", _index_change_cb, pd);
 
 	return layout;
 }
