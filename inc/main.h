@@ -37,6 +37,11 @@
 #define ELM_DEMO_EDJ "/usr/apps/org.tizen.elm-demo-tizen-mobile/res/elm-demo-tizen-mobile.edj"
 #define ICON_DIR "/usr/apps/org.tizen.elm-demo-tizen-mobile/res/images"
 
+#ifdef _
+#undef _
+#endif
+
+#define _(str) (gettext(str))
 
 typedef struct appdata {
 	Evas_Object *win;
