@@ -6,3 +6,12 @@ msgstr "Button accessiblity name"
 
 msgid "IDS_GENLIST_GROUP_CHECKBOX_TICK_BOX"
 msgstr "Tick box for the entire group"
+
+msgid "IDS_INDEX_FASTSCROLL_DESCRIPTION"
+msgstr "Swipe right or left to adjust value"
+
+msgid "IDS_INDEX_PAGECONTROL_DESCRIPTION"
+msgstr "Page %d of %d"
+
+msgid "IDS_SLIDER_NAME"
+msgstr "Slider accessiblity name"

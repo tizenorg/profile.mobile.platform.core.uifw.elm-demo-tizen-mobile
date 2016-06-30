@@ -126,6 +126,7 @@ create_horizontal_content(Evas_Object* parent)
 	elm_box_pack_end(box, label);
 
 	slider = create_slider(box, NULL, EINA_TRUE, EINA_TRUE);
+	elm_atspi_accessible_name_set(slider, _("IDS_SLIDER_NAME"));
 	elm_slider_value_set(slider, 0);
 	elm_box_pack_end(box, slider);
 

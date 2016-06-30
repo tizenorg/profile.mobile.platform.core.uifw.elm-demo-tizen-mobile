@@ -70,7 +70,7 @@ static Evas_Object*
 gl_radio_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
 	int index = (int) data;
-	//Elm_Object_Item *it = elm_genlist_nth_item_get(obj, index);
+	Elm_Object_Item *it = elm_genlist_nth_item_get(obj, index);
 
 	if (!strcmp(part, "elm.swallow.end")) {
 		Evas_Object *radio;
@@ -82,8 +82,8 @@ gl_radio_content_get_cb(void *data, Evas_Object *obj, const char *part)
 		evas_object_size_hint_weight_set(radio, EVAS_HINT_EXPAND,EVAS_HINT_EXPAND);
 		evas_object_size_hint_align_set(radio, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_propagate_events_set(radio, EINA_FALSE);
-//		elm_atspi_accessible_relationship_append(it, ELM_ATSPI_RELATION_DESCRIBED_BY, radio);
-//		elm_atspi_accessible_relationship_append(radio, ELM_ATSPI_RELATION_CONTROLLED_BY, it);
+		elm_atspi_accessible_relationship_append(it, ELM_ATSPI_RELATION_DESCRIBED_BY, radio);
+		elm_atspi_accessible_relationship_append(radio, ELM_ATSPI_RELATION_CONTROLLED_BY, it);
 		return radio;
 	}
 	return NULL;
