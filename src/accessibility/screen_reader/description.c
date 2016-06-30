@@ -45,8 +45,8 @@ create_description(Evas_Object *parent)
 	elm_object_text_set(btn, "Test Name");
 	elm_object_style_set(btn, "default");
 	elm_object_part_content_set(layout, "button_a11y_name", btn);
-	//elm_atspi_accessible_name_set(btn, "IDS_BUTTON_NAME");
-	//elm_atspi_accessible_translation_domain_set(btn, PACKAGE);
+	elm_atspi_accessible_name_set(btn, "IDS_BUTTON_NAME");
+	elm_atspi_accessible_translation_domain_set(btn, PACKAGE);
 
 	label = elm_label_add(layout);
 	elm_object_text_set(label, _("<font_size=33><align=center>Button with description</align></font_size>"));
@@ -56,8 +56,8 @@ create_description(Evas_Object *parent)
 	elm_object_text_set(btn, "Test Name");
 	elm_object_style_set(btn, "elm/button/base/default");
 	elm_object_part_content_set(layout, "button_description", btn);
-	//elm_atspi_accessible_description_set(btn, "IDS_BUTTON_DESCRIPTION");
-	//elm_atspi_accessible_translation_domain_set(btn, PACKAGE);
+	elm_atspi_accessible_description_set(btn, "IDS_BUTTON_DESCRIPTION");
+	elm_atspi_accessible_translation_domain_set(btn, PACKAGE);
 
 	label = elm_label_add(layout);
 	elm_object_text_set(label, _("<font_size=33><align=center>Button without name and description</align></font_size>"));
