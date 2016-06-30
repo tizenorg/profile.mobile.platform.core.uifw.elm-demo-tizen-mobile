@@ -45,6 +45,33 @@ progress_timer1_cb(void *data)
 	return ECORE_CALLBACK_RENEW;
 }
 
+static Eina_Bool
+progress_status_timer_cb(void *data)
+{
+	double value = 0.0;
+	char buf[16] = {0,};
+	Evas_Object *progressbar = data;
+
+	value = elm_progressbar_value_get(progressbar);
+	if (value == 1.0) value = 0.0;
+	value = value + 0.1;
+	elm_progressbar_value_set(progressbar, value);
+	sprintf(buf, "%f", value*14000);
+	elm_object_part_text_set(progressbar, "elm.text.bottom.left", buf);
+	return ECORE_CALLBACK_RENEW;
+}
+
+static char *
+my_progressbar_format_cb(double val)
+{
+	char buf[1024];
+	int files;
+
+	files = (val)*14000;
+	snprintf(buf, 30, "%i of 14000", files);
+	return strdup(buf);
+}
+
 static void
 progressbar_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -108,6 +135,23 @@ create_default_progressbar(Evas_Object *parent)
 }
 
 static Evas_Object *
+create_status_progressbar(Evas_Object *parent)
+{
+	Evas_Object *progressbar;
+
+	progressbar = elm_progressbar_add(parent);
+	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
+	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_progressbar_value_set(progressbar, 0.0);
+	evas_object_show(progressbar);
+
+	elm_object_part_text_set(progressbar, "elm.text.top.right", "Status");
+	elm_object_part_text_set(progressbar, "elm.text.bottom.right", "14000");
+
+	return progressbar;
+}
+
+static Evas_Object *
 create_label(Evas_Object *parent, const char *text)
 {
    Evas_Object *label;
@@ -154,6 +198,14 @@ static Evas_Object
 	progressbar = create_default_progressbar(box);
 	elm_box_pack_end(box, progressbar);
 	progress_timer = ecore_timer_add(2, progress_timer1_cb, progressbar);
+	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
+
+	/* Status Progressbar */
+	progressbar = create_status_progressbar(box);
+	elm_box_pack_end(box, progressbar);
+	progress_timer = ecore_timer_add(2, progress_status_timer_cb, progressbar);
+	elm_progressbar_unit_format_function_set(progressbar, my_progressbar_format_cb,
+		NULL);
 	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
 
 	/* Pending Progressbar */

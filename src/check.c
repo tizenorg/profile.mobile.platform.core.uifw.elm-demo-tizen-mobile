@@ -143,7 +143,7 @@ create_checks(Evas_Object *parent)
 
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
-	//elm_atspi_accessible_name_set(check, "Favorite button");
+	elm_atspi_accessible_name_set(check, "Favorite button");
 	elm_check_state_set(check, EINA_FALSE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
@@ -163,7 +163,7 @@ create_checks(Evas_Object *parent)
 	elm_object_style_set(check, "on&off");
 	elm_object_text_set(check, "On&amp;Off");
 	elm_check_state_set(check, EINA_TRUE);
-	//elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
+	elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);
 	evas_object_show(check);
 
@@ -179,7 +179,7 @@ create_checks(Evas_Object *parent)
 
 	check = elm_check_add(box);
 	elm_object_style_set(check, "on&off");
-	//elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
+	elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
 	elm_object_text_set(check, "On&amp;Off");
 	elm_check_state_set(check, EINA_TRUE);
 	elm_object_disabled_set(check, EINA_TRUE);
@@ -198,8 +198,8 @@ create_checks(Evas_Object *parent)
 
 	check = elm_check_add(box);
 	elm_object_style_set(check, "on&off");
-	//elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
-	//elm_atspi_accessible_name_set(check, "On, off");
+	elm_atspi_accessible_role_set(check, ELM_ATSPI_ROLE_TOGGLE_BUTTON);
+	elm_atspi_accessible_name_set(check, "On, off");
 	elm_check_state_set(check, EINA_FALSE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)3);

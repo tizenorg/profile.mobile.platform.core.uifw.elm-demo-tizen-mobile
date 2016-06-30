@@ -17,7 +17,7 @@
 
 #include "main.h"
 
-#define NUM_OF_ITEMS 8000
+#define NUM_OF_ITEMS 8
 
 typedef struct item_data
 {
@@ -458,7 +458,7 @@ multiline_text_get_cb(void *data, Evas_Object *obj, const char *part)
 static Evas_Object*
 full_content_get_cb(void *data, Evas_Object *obj, const char *part)
 {
-	//item_data_s *id = data;
+	item_data_s *id = data;
 	Evas_Object *layout, *slider, *label;
 
 	// Set custom layout style
@@ -474,8 +474,8 @@ full_content_get_cb(void *data, Evas_Object *obj, const char *part)
 	elm_object_text_set(label, "Description Text");
 	elm_object_part_content_set(layout, "elm.text", label);
 
-	//elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_LABELLED_BY, label);
-	//elm_atspi_accessible_relationship_append(label, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item);
+	elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_LABELLED_BY, label);
+	elm_atspi_accessible_relationship_append(label, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item);
 
 	// Set slider into layout
 	slider = elm_slider_add(obj);
@@ -503,13 +503,13 @@ group_index_content_get_cb(void *data, Evas_Object *obj, const char *part)
 	else if ((id->index / 7) % 3 == 1)
 	{
 		ret = create_check(obj);
-		//elm_atspi_accessible_description_set(ret, "IDS_GENLIST_GROUP_CHECKBOX_TICK_BOX");
-		//elm_atspi_accessible_translation_domain_set(ret, PACKAGE);
+		elm_atspi_accessible_description_set(ret, _("IDS_GENLIST_GROUP_CHECKBOX_TICK_BOX"));
+		elm_atspi_accessible_translation_domain_set(ret, PACKAGE);
 	}
 	if (ret)
 	{
-		//elm_atspi_accessible_relationship_append(ret, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item);
-		//elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_DESCRIBED_BY, ret);
+		elm_atspi_accessible_relationship_append(ret, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item);
+		elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_DESCRIBED_BY, ret);
 	}
 
 	return ret;

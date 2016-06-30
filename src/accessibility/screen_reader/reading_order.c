@@ -103,16 +103,16 @@ create_reading_order(Evas_Object *parent)
 
 	// inform Assisitve Technology that UI information should be prosented in
 	// following order:
-//	elm_atspi_accessible_relationship_append(labelCustom, ELM_ATSPI_RELATION_FLOWS_TO, btnD);
+	elm_atspi_accessible_relationship_append(labelCustom, ELM_ATSPI_RELATION_FLOWS_TO, btnD);
 
-//	elm_atspi_accessible_relationship_append(btnD, ELM_ATSPI_RELATION_FLOWS_TO, btnE);
-//	elm_atspi_accessible_relationship_append(btnE, ELM_ATSPI_RELATION_FLOWS_TO, btnB);
-//	elm_atspi_accessible_relationship_append(btnB, ELM_ATSPI_RELATION_FLOWS_TO, btnC);
+	elm_atspi_accessible_relationship_append(btnD, ELM_ATSPI_RELATION_FLOWS_TO, btnE);
+	elm_atspi_accessible_relationship_append(btnE, ELM_ATSPI_RELATION_FLOWS_TO, btnB);
+	elm_atspi_accessible_relationship_append(btnB, ELM_ATSPI_RELATION_FLOWS_TO, btnC);
 
-//	elm_atspi_accessible_relationship_append(btnC, ELM_ATSPI_RELATION_FLOWS_FROM, btnB);
-//	elm_atspi_accessible_relationship_append(btnB, ELM_ATSPI_RELATION_FLOWS_FROM, btnE);
-//	elm_atspi_accessible_relationship_append(btnE, ELM_ATSPI_RELATION_FLOWS_FROM, btnD);
-//	elm_atspi_accessible_relationship_append(btnD, ELM_ATSPI_RELATION_FLOWS_FROM, labelCustom);
+	elm_atspi_accessible_relationship_append(btnC, ELM_ATSPI_RELATION_FLOWS_FROM, btnB);
+	elm_atspi_accessible_relationship_append(btnB, ELM_ATSPI_RELATION_FLOWS_FROM, btnE);
+	elm_atspi_accessible_relationship_append(btnE, ELM_ATSPI_RELATION_FLOWS_FROM, btnD);
+	elm_atspi_accessible_relationship_append(btnD, ELM_ATSPI_RELATION_FLOWS_FROM, labelCustom);
 	return layout;
 }
 
