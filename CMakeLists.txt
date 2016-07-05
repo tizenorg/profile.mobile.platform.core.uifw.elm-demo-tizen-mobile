@@ -55,7 +55,7 @@ SET(PKG_LDFLAGS "-pthread ${LIB_M} -pie")
 SET(PKG_CFLAGS "-g -Wall -fPIE")
 
 INCLUDE(FindPkgConfig)
-pkg_check_modules(BASE_PKG REQUIRED elementary efl-extension)
+pkg_check_modules(BASE_PKG REQUIRED elementary ecore ecore-wayland efl-extension)
 FOREACH(flag ${BASE_PKG_CFLAGS})
 	SET(PKG_CFLAGS "${PKG_CFLAGS} ${flag}")
 ENDFOREACH(flag)

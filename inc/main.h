@@ -18,6 +18,7 @@
 #include <Elementary.h>
 #include <system_settings.h>
 #include <efl_extension.h>
+#include <Ecore_Wayland.h>
 
 //uncomment if you want debug
 #ifndef TIZEN_ENGINEER_MODE

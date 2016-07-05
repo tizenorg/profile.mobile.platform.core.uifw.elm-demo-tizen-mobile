@@ -174,6 +174,32 @@ create_base_gui(appdata_s *ad)
 	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
 	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
 
+	char **list = (char**)malloc(sizeof(char*) * 3);
+	list[0] = (char *)malloc(sizeof(char)*30);
+	snprintf(list[0], 30, "XF86AudioLowerVolume");
+	list[1] = (char *)malloc(sizeof(char)*30);
+	snprintf(list[1], 30, "XF86AudioRaiseVolume");
+	list[2] = (char *)malloc(sizeof(char)*30);
+	snprintf(list[2], 30, "XF86Back");
+
+	int *modes = (int*) malloc(sizeof(int) * 3);
+	modes[0] = 1;
+	modes[1] = 1;
+	modes[2] = 1;
+	char **errors = NULL;
+	int err =ecore_wl_window_keygrab_list_set(elm_win_wl_window_get(ad->win), list, 0, 0, 0, modes, errors, 3);
+	printf("KHS 1.keygrab set err count %d\n",err);
+	if (err > 0)
+	free(errors);
+	err = ecore_wl_window_keygrab_list_unset(elm_win_wl_window_get(ad->win), list, 0, 0, errors, 3);
+	if (err > 0)
+	free(errors);
+	printf("KHS 3. keygrab unset err count %d\n",err);
+	free(list[0]);
+	free(list[1]);
+	free(list[2]);
+	free(list);
+	free(modes);
 	/* Show window after base gui is set up */
 	evas_object_show(ad->win);
 }

@@ -6,6 +6,8 @@ Source: %{name}-%{version}.tar.gz
 License: Apache-2.0
 Group: tizen/Application
 BuildRequires:  pkgconfig(elementary)
+BuildRequires:  pkgconfig(ecore)
+BuildRequires:  pkgconfig(ecore-wayland)
 BuildRequires:  pkgconfig(efl-extension)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-system-system-settings)
