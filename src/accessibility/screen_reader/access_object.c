@@ -17,28 +17,59 @@
 
 #include "main.h"
 
+static int highlight_keep_count = 0;
+
 static Eina_Bool
 _access_action_cb(void *data, Evas_Object *obj, Elm_Access_Action_Info *action_info)
 {
+	char buf[1024];
+	char *action_by;
 	Evas_Object *label;
-	dlog_print(DLOG_DEBUG, LOG_TAG, "action type: %d", action_info->action_type);
+	dlog_print(DLOG_DEBUG, LOG_TAG, "action type: %d, action_by: %d", action_info->action_type, action_info->action_by);
 
 	label = data;
 	switch (action_info->action_type) {
 		case ELM_ACCESS_ACTION_HIGHLIGHT:
-			elm_object_text_set(label, "<font_size=33>HIGHLIGHT</font_size>");
+			if (action_info->action_by == ELM_ACCESS_ACTION_HIGHLIGHT_NEXT) {
+				highlight_keep_count = 1;
+				action_by = "Next";
+			}
+			else if (action_info->action_by == ELM_ACCESS_ACTION_HIGHLIGHT_PREV) {
+				highlight_keep_count = 3;
+				action_by = "Prev";
+			}
+			else {
+				highlight_keep_count = 2;
+				action_by = "Default";
+			}
+
+			snprintf(buf, sizeof(buf), "<font_size=33>HIGHLIGHT by %s (index: %d)</font_size>", action_by, highlight_keep_count);
+			elm_object_text_set(label, buf);
 			break;
 
 		case ELM_ACCESS_ACTION_UNHIGHLIGHT:
-			elm_object_text_set(label, "<font_size=33>UNHIGHLIGHT</font_size>");
+			highlight_keep_count = 0;
+			snprintf(buf, sizeof(buf), "<font_size=33>UNHIGHLIGHT (index restored: %d)</font_size>", highlight_keep_count);
+			elm_object_text_set(label, buf);
 			break;
 
 		case ELM_ACCESS_ACTION_HIGHLIGHT_NEXT:
-			elm_object_text_set(label, "<font_size=33>HIGHLIGHT NEXT</font_size>");
+			highlight_keep_count++;
+			if (highlight_keep_count > 3) return EINA_FALSE;
+			/* keep the highlight on the access object */
+			snprintf(buf, sizeof(buf), "<font_size=33>HIGHLIGHT NEXT (index: %d)</font_size>", highlight_keep_count);
+			elm_object_text_set(label, buf);
+			return EINA_TRUE;
 			break;
 
 		case ELM_ACCESS_ACTION_HIGHLIGHT_PREV:
-			elm_object_text_set(label, "<font_size=33>HIGHLIGHT PREV</font_size>");
+			highlight_keep_count--;
+			if (highlight_keep_count < 1) return EINA_FALSE;
+
+			/* keep the highlight on the access object */
+			snprintf(buf, sizeof(buf), "<font_size=33>HIGHLIGHT PREV (index: %d)</font_size>", highlight_keep_count);
+			elm_object_text_set(label, buf);
+			return EINA_TRUE;
 			break;
 
 		case ELM_ACCESS_ACTION_ACTIVATE:
