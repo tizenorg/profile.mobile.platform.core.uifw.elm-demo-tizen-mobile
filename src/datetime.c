@@ -172,8 +172,10 @@ datetime_cb(void *data, Evas_Object *obj, void *event_info)
 
 	time_t local_time = time(NULL);
 	char buff[200] = {0};
-	struct tm *time_info = localtime(&local_time);
-	dd->saved_time = *time_info;
+	struct tm time_info;
+
+	localtime_r(&local_time, &time_info);
+	dd->saved_time = time_info;
 
 	layout = elm_layout_add(ad->nf);
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
