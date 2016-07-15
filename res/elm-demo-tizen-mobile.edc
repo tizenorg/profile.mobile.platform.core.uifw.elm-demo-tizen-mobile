@@ -33,5 +33,6 @@ collections {
    #include "../edc_resource/accessibility/screen_reader/reading_order.edc"
    #include "../edc_resource/accessibility/screen_reader/custom_frame.edc"
    #include "../edc_resource/accessibility/screen_reader/access_object.edc"
+   #include "../edc_resource/svg.edc"
 }
 
