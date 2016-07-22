@@ -8,7 +8,7 @@ msgid "IDS_GENLIST_GROUP_CHECKBOX_TICK_BOX"
 msgstr "Tick box for the entire group"
 
 msgid "IDS_INDEX_FASTSCROLL_DESCRIPTION"
-msgstr "Swipe right or left to adjust value"
+msgstr "Alphabetical index bar, Swipe right or left with one finger to select next or previous letter"
 
 msgid "IDS_INDEX_PAGECONTROL_DESCRIPTION"
 msgstr "Page %d of %d"
