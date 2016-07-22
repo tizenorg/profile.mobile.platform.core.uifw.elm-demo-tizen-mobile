@@ -108,6 +108,8 @@ create_checks(Evas_Object *parent)
 
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
+	elm_atspi_accessible_name_set(check, _("IDS_FAVOURITE_NAME"));
+	elm_atspi_accessible_translation_domain_set(check, PACKAGE);
 	elm_object_text_set(check, "Favorite");
 	elm_check_state_set(check, EINA_FALSE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
@@ -125,6 +127,8 @@ create_checks(Evas_Object *parent)
 
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
+	elm_atspi_accessible_name_set(check, _("IDS_FAVOURITE_NAME"));
+	elm_atspi_accessible_translation_domain_set(check, PACKAGE);
 	elm_object_text_set(check, "Favorite");
 	elm_check_state_set(check, EINA_TRUE);
 	elm_object_disabled_set(check, EINA_TRUE);
@@ -143,7 +147,8 @@ create_checks(Evas_Object *parent)
 
 	check = elm_check_add(box);
 	elm_object_style_set(check, "favorite");
-	elm_atspi_accessible_name_set(check, "Favorite button");
+	elm_atspi_accessible_name_set(check, _("IDS_FAVOURITE_NAME"));
+	elm_atspi_accessible_translation_domain_set(check, PACKAGE);
 	elm_check_state_set(check, EINA_FALSE);
 	elm_object_disabled_set(check, EINA_TRUE);
 	evas_object_smart_callback_add(check, "changed", check_changed_cb, (void *)2);
