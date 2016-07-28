@@ -93,6 +93,7 @@ void description_cb(void *data, Evas_Object *obj, void *event_info);
 void description_2_cb(void *data, Evas_Object *obj, void *event_info);
 void reading_order_cb(void *data, Evas_Object *obj, void *event_info);
 void custom_frame_cb(void *data, Evas_Object *obj, void *event_info);
+void reading_list_cb(void *data, Evas_Object *obj, void *event_info);
 void using_access_object_cb(void *data, Evas_Object *obj, void *event_info);
 void screen_reader_launch(void);
 void screen_reader_terminate(void);
