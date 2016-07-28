@@ -80,6 +80,36 @@ progressbar_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static Evas_Object *
+create_default_progressbar_without_name(Evas_Object *parent)
+{
+	Evas_Object *progressbar;
+
+	progressbar = elm_progressbar_add(parent);
+	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
+	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_progressbar_value_set(progressbar, 0.0);
+	evas_object_show(progressbar);
+
+	return progressbar;
+}
+
+static Evas_Object *
+create_pending_progressbar_without_name(Evas_Object *parent)
+{
+	Evas_Object *progressbar;
+
+	progressbar = elm_progressbar_add(parent);
+	elm_object_style_set(progressbar, "pending");
+	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
+	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_progressbar_pulse_set(progressbar, EINA_TRUE);
+	elm_progressbar_pulse(progressbar, EINA_TRUE);
+	evas_object_show(progressbar);
+
+	return progressbar;
+}
+
+static Evas_Object *
 create_pending_progressbar(Evas_Object *parent)
 {
 	Evas_Object *progressbar;
@@ -200,6 +230,11 @@ static Evas_Object
 	progress_timer = ecore_timer_add(2, progress_timer1_cb, progressbar);
 	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
 
+	progressbar = create_default_progressbar_without_name(box);
+	elm_box_pack_end(box, progressbar);
+	progress_timer = ecore_timer_add(2, progress_timer_cb, progressbar);
+	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
+
 	/* Status Progressbar */
 	progressbar = create_status_progressbar(box);
 	elm_box_pack_end(box, progressbar);
@@ -212,6 +247,9 @@ static Evas_Object
 	label = create_label(box, "pending:");
 	elm_box_pack_end(box, label);
 	progressbar = create_pending_progressbar(box);
+	elm_box_pack_end(box, progressbar);
+
+	progressbar = create_pending_progressbar_without_name(box);
 	elm_box_pack_end(box, progressbar);
 
 	/* Process Large */
