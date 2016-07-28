@@ -96,3 +96,23 @@ group { name: "check_layout";
    }
 }
 
+group { name: "perf_button_layout";
+   parts {
+      part { name: "base";
+         type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 600 78;
+            color: 0 0 0 0;
+         }
+      }
+      part { name: "elm.swallow.content";
+         type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+         }
+      }
+   }
+}
