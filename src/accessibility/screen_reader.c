@@ -138,6 +138,7 @@ screen_reader_cb(void *data, Evas_Object *obj, void *event_info)
 
 	elm_list_item_prepend(list, "Screen Reader (TTS)", NULL, screen_reader_onoff_check, screen_reader_item_cb,
 							screen_reader_onoff_check);
+	elm_list_item_append(list, "List Sample", NULL, NULL, reading_list_cb, nf);
 
 	elm_list_go(list);
 
