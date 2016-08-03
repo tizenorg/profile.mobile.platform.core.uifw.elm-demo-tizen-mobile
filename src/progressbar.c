@@ -49,15 +49,12 @@ static Eina_Bool
 progress_status_timer_cb(void *data)
 {
 	double value = 0.0;
-	char buf[16] = {0,};
 	Evas_Object *progressbar = data;
 
 	value = elm_progressbar_value_get(progressbar);
 	if (value == 1.0) value = 0.0;
 	value = value + 0.1;
 	elm_progressbar_value_set(progressbar, value);
-	sprintf(buf, "%f", value*14000);
-	elm_object_part_text_set(progressbar, "elm.text.bottom.left", buf);
 	return ECORE_CALLBACK_RENEW;
 }
 
@@ -176,7 +173,6 @@ create_status_progressbar(Evas_Object *parent)
 	evas_object_show(progressbar);
 
 	elm_object_part_text_set(progressbar, "elm.text.top.right", "Status");
-	elm_object_part_text_set(progressbar, "elm.text.bottom.right", "14000");
 
 	return progressbar;
 }
@@ -240,7 +236,7 @@ static Evas_Object
 	elm_box_pack_end(box, progressbar);
 	progress_timer = ecore_timer_add(2, progress_status_timer_cb, progressbar);
 	elm_progressbar_unit_format_function_set(progressbar, my_progressbar_format_cb,
-		NULL);
+		(void (*)(char *)) free);
 	evas_object_event_callback_add(progressbar, EVAS_CALLBACK_DEL, progressbar_del_cb, progress_timer);
 
 	/* Pending Progressbar */
